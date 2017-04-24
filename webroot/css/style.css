@@ -1,0 +1,229 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?ah7x8i');
+  src:  url('../fonts/icomoon.eot?ah7x8i#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?ah7x8i') format('truetype'),
+    url('../fonts/icomoon.woff?ah7x8i') format('woff'),
+    url('../fonts/icomoon.svg?ah7x8i#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.centrar {
+	text-align: center;
+  
+}
+
+.justificado {
+	text-align:justify;
+  
+}
+
+.tx_celeste{
+	
+   color: #0268a5!important;
+	
+}
+
+.tx_gris{
+	
+   color: #333!important;
+   line-height: 30px;
+}
+.marg{
+
+    margin-bottom: 5px;
+}
+
+.bkg{
+	background-image:url(../img/bk2.jpg)!important;
+
+  
+}
+
+
+
+.ie-container {
+  display: inline-block;
+  position: relative;
+}
+
+.ie-container:before {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  bottom: 4px;
+  left: 4px;
+  border: 1px solid white;
+}
+
+
+
+.border{
+
+    border:1px solid  #3e3e3e;
+	 box-shadow: 2px 2px 4px   #999999;
+ 
+}
+
+
+	
+
+
+.bg-imgg {
+	
+    background-color: #e5edc1 !important;
+	background-position:top;
+}
+
+.margin {
+	margin:auto !important;
+	text-align:center;
+	
+}
+
+.verde{
+	
+    background-color: #89c9af !important;
+	
+}
+
+
+.rojo{
+	
+    background-color: #e9444a !important;
+	
+}
+
+.gris{
+	
+    background-color: #f4f4f4!important;
+	
+}
+
+.celeste{
+	
+    background-color: #a9e3ea!important;
+	
+}
+
+
+.blanco{
+	
+    background-color: #fff!important;
+	
+}
+
+
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-mail:before {
+  content: "\e900";
+}
+.icon-phone:before {
+  content: "\e942";
+}
+.icon-location:before {
+  content: "\e947";
+}
+.icon-sphere:before {
+  content: "\e9c9";
+}
+.icon-paperclip:before {
+  content: "\e9cd";
+}
+.icon-google-plus:before {
+  content: "\ea8b";
+}
+.icon-facebook:before {
+  content: "\ea90";
+}
+.icon-instagram:before {
+  content: "\ea92";
+}
+.icon-twitter:before {
+  content: "\ea96";
+}
+.icon-youtube:before {
+  content: "\ea9d";
+}
+.icon-linkedin2:before {
+  content: "\eaca";
+}
+
+
+
+
+.social {
+	position: fixed; /* Hacemos que la posición en pantalla sea fija para que siempre se muestre en pantalla*/
+	left: 0; /* Establecemos la barra en la izquierda */
+	top:200px; /* Bajamos la barra 200px de arriba a abajo */
+	z-index:1000; /* Utilizamos la propiedad z-index para que no se superponga algún otro elemento como sliders, galerías, etc */
+}
+ 
+	.social ul {
+		list-style: none;
+	}
+ 
+	.social ul li a {
+		display: inline-block;
+		color:#fff;
+		background: #000;
+		padding: 10px 15px;
+		text-decoration: none;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease; /* Establecemos una transición a todas las propiedades */
+	}
+ 
+	.social ul li .icon-facebook {background:#3b5998;} /* Establecemos los colores de cada red social, aprovechando su class */
+	.social ul li .icon-twitter {background: #00abf0;}
+	.social ul li .icon-google-plus {background: #d95232;}
+	.social ul li .icon-instagram {background: #ae181f;}
+	.social ul li .icon-linkedin2 {background: #666666;}
+	.social ul li .icon-youtube {background: #F00;}
+ 
+	.social ul li a:hover {
+		background: #46aaa7; /* Cambiamos el fondo cuando el usuario pase el mouse */
+		padding: 10px 30px; /* Hacemos mas grande el espacio cuando el usuario pase el mouse */
+	}
+	
+	
+.load-more{text-align:center;background:#89c9af;transition:background .2s ease-in}.load-more:hover{background:rgba(121,212,223,0.8)}.load-more>span{width:100%;display:inline-block;padding-top:45px;padding-bottom:45px;cursor:pointer;color:black;font-weight:300;font-size:34px;-webkit-transition:transform .2s ease-in-out;transition:transform .2s ease-in-out}.load-more>span span.plus{width:62px;height:62px;display:inline-block;vertical-align:middle;position:relative;top:-3px;margin-right:20px;border:1px solid #000000;border-radius:50%;-webkit-transition:all 0.3s cubic-bezier(0.55, 0, 0.1, 1);transition:all 0.3s cubic-bezier(0.55, 0, 0.1, 1)}.load-more>span span.plus>.plus{position:absolute;top:50%;right:auto;bottom:auto;left:50%;width:21px;height:21px;margin-top:-10px;margin-left:-10px;-webkit-transition:all .5s ease-in-out;transition:all .5s ease-in-out}.load-more>span span.plus>.plus::before,.load-more>span span.plus>.plus::after{content:'';display:block;position:absolute;background:black;-webkit-transition:all 0.3s cubic-bezier(0.55, 0, 0.1, 1);transition:all 0.3s cubic-bezier(0.55, 0, 0.1, 1)}.load-more>span span.plus>.plus::before{top:10px;left:0;width:21px;height:1px}.load-more>span span.plus>.plus::after{top:0;left:10px;width:1px;height:21px}.load-more>span:hover span.plus{border-width:31px}.load-more>span:hover span.plus .plus::before,.load-more>span:hover span.plus .plus::after{background:#89c9af}.load-more>span:active{-webkit-transform:scale(0.9, 0.9);transform:scale(0.9, 0.9)}#load-more-row{overflow:hidden;height:auto;transition:all .4s ease-in-out}#load-more-row.done{height:15px;opacity:1}#load-more-row.done span{cursor:default !important}
+
+
+A.neg:Link {
+	color : #000;
+	text-decoration: none;
+}
+A.neg:Visited {
+	color : #000;
+	text-decoration: none;
+}
+A.neg:Active {
+	color : #000;
+	text-decoration: none;
+}
+A.neg:Hover {
+	color : #000;
+	text-decoration: none;
+}
