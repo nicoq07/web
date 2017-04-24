@@ -15,6 +15,7 @@
 				
 -->
 		<span class="background-image-holder parallax-background"></span>
+
 				<section class="hero-slider">
 					<ul class="slides">
 						<li class="overlay">
@@ -26,7 +27,7 @@
 							    <div class="col-lg-9 margin">
 							      <h1 class="text-white">Fun Club</br>
 							        Juegos para eventos</h1>
-							      <a target="_blank" href="contacto.php" class="btn btn-primary btn-white">Nuestros juegos</a> <a href="grandes.php" class="btn btn-primary btn-filled">Contacto</a>
+							      <a target="_blank" href="" class="btn btn-primary btn-white">Nuestros juegos</a> <a href=".php" class="btn btn-primary btn-filled">Contacto</a>
 							  	</div>
 						      </div>
 						  	</div>
@@ -54,7 +55,6 @@
 
 				</section>
 
-			
 				<section class="pure-text-centered gris celeste">
 					<div class="container ">
 						<div class="row ">

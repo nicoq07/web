@@ -6,21 +6,23 @@
     <title>
         <?= $this->fetch('title') ?>
     </title>
+    
     <?= $this->Html->meta('icon') ?>
-<!--    /,'login','home' 'font-awesome.css' ,'bootstrap-theme'-->
-    <?= $this->Html->css(['bootstrap.css','elegant-icons.min','flexslider.min','lightbox.min','line-icons.min','theme','style']) ?>
+    <?= $this->Html->css(['bootstrap.min','elegant-icons.min','flexslider.min','lightbox.min','line-icons.min','theme','style']) ?>
     
     <?= $this->Html->script(['bootstrap.min','funcionesAjax.js','isotope.min.js','jquery.countdown.min',
     'jquery.flexslider-min','jquery.min','jquery.plugin.min','lightbox.min','modernizr-2.6.2-respond-1.1.0.min',
     'scripts','scrollReveal.min','skrollr.min','smooth-scroll.min','spectragram.min','twitterFetcher_v10_min']) ?>
-    
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+       <?= $this->fetch('script') ?> 
+       <?= $this->fetch('css') ?>
+       <?= $this->fetch('meta') ?>
+     
+
 </head>
 
 <body>
         <?= $this->element('menu') ?>
+        
             <div class="container-fluid">
                 <?= $this->Flash->render() ?>
                 <?= $this->fetch('content') ?>
@@ -32,7 +34,7 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<span class="text-white">
-							<p>© 2017 Fun Club SRL</p>
+							<p>2017 Fun Club SRL</p>
                             <p> CABA - Bs As - Argentina</p>
 							<p>Diseño :: <a href="http://www.h2oestudio.com/" target="_blank">MNM.com.ar</a></p></span>
                             
