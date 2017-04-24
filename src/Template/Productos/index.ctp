@@ -1,16 +1,10 @@
-
 	    <div class="social">
 			<ul>
 				<li><a href="https://www.facebook.com/" target="_blank" class="icon-facebook"></a></li>
 				<li><a href="https://twitter.com/" target="_blank" class="icon-twitter"></a></li>
-				<!--<li><a href="https://plus.google.com/" target="_blank" class="icon-google-plus"></a></li>-->
 				<li><a href="https://www.instagram.com/" target="_blank" class="icon-instagram"></a></li>
-				<!--<li><a href="https://ar.linkedin.com/" target="_blank" class="icon-linkedin2"></a></li>
-	            <li><a href="https://www.youtube.com/" target="_blank" class="icon-youtube"></a></li>-->
 			</ul>
 		</div>    
-    
-
 <!--
     	<div class="loader">
     		<div class="spinner">
@@ -20,10 +14,7 @@
     	</div>    	
 				
 -->
-
-		
 		<span class="background-image-holder parallax-background"></span>
-			<div id="principal">
 				<section class="hero-slider">
 					<ul class="slides">
 						<li class="overlay">
@@ -32,7 +23,7 @@
 							</div>
 							<div class="container align-vertical">
 							  <div class="row">
-							    <div class="col-md-12 col-sm-9 margin">
+							    <div class="col-lg-9 margin">
 							      <h1 class="text-white">Fun Club</br>
 							        Juegos para eventos</h1>
 							      <a target="_blank" href="contacto.php" class="btn btn-primary btn-white">Nuestros juegos</a> <a href="grandes.php" class="btn btn-primary btn-filled">Contacto</a>
@@ -60,7 +51,9 @@
 							</div>
 						</li>	
 					</ul>
+
 				</section>
+
 			
 				<section class="pure-text-centered gris celeste">
 					<div class="container ">
@@ -114,7 +107,7 @@
 								</div>
 							</div>
 							
-							<div class="col-md-4 col-sm-6">
+							<div class="col-lg-4">
 								<div class="blog-snippet-1">
 	                            	<a href="clientes.php">
 										<img alt="Blog Thumb" src="img/blog-thumb-3.png" >
@@ -132,7 +125,7 @@
 				</section>	            
 	          
 	        	<div class="row" id="load-more-row">
-	        		<div class="load-more col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	        		<div class="load-more col-lg-12">
 	        			<span id="load-more">
 	        				<span class="plus">
 	        					<div class="plus">
@@ -142,38 +135,7 @@
 	        			</span>
 	        		</div>
 	        	</div>
-	        </div>
+	       
 	  
 	           
-		
-		<div class="footer-container">
-			<footer class="bg-primary short-2">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-12">
-							<span class="text-white">
-							<p>© 2017 Fun Club SRL</p>
-                            <p> CABA - Bs As - Argentina</p>
-							<p>Diseño :: <a href="http://www.h2oestudio.com/" target="_blank">MNM.com.ar</a></p></span>
-                            
-                              <span class="text-white"><p>Contacto</p><p>info@funclub.com.ar</p>
-                              <p>Tel. 011 4321-5678 </p></span>
-                              <span class="text-white"><p>Horario de atención telefónica</p>
-							<p> L a V de 9 a 12.30hs y de 13.30 a 18hs </p>
-							<p>Sab, dom y feriados Guardia de 9 a 14hs</p></span>                              
-						</div>
-					</div>
-				</div>
-				
-				<div class="contact-action">
-					<div class="align-vertical">
-						<i class="icon text-white icon-mail"></i>
-						<a href="#" class="text-white" onclick="Mostrar('contacto')"><span class="text-white">Enviar un mensaje <i class="icon arrow_right"></i></span></a>
-					</div>
-				</div>
-			</footer>
-		</div>
-
-  
-</html>
 				
