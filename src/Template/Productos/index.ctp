@@ -1,3 +1,5 @@
+	  
+	    
 	    <div class="social">
 			<ul>
 				<li><a href="https://www.facebook.com/" target="_blank" class="icon-facebook"></a></li>
@@ -5,15 +7,10 @@
 				<li><a href="https://www.instagram.com/" target="_blank" class="icon-instagram"></a></li>
 			</ul>
 		</div>    
-<!--
-    	<div class="loader">
-    		<div class="spinner">
-			  <div class="double-bounce1"></div>
-			  <div class="double-bounce2"></div>
-			</div>
-    	</div>    	
+
+    	  	
 				
--->
+
 		<span class="background-image-holder parallax-background"></span>
 
 				<section class="hero-slider">

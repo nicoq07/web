@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="es" class="no-js">
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,26 +8,57 @@
     </title>
     
     <?= $this->Html->meta('icon') ?>
-    <?= $this->Html->css(['bootstrap.min','elegant-icons.min','flexslider.min','lightbox.min','line-icons.min','theme','style']) ?>
+    <?= $this->Html->css(['https://fonts.googleapis.com/css?family=Roboto+Condensed|Varela+Round|Permanent+Marker',
+    		'http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600,700%7CRaleway:700',
+    		'bootstrap.min',
+    		'elegant-icons.min',
+    		'flexslider.min',
+    		'lightbox.min',
+    		'line-icons.min',
+    		'theme.css',
+    	    'style']) ?>
     
-    <?= $this->Html->script(['bootstrap.min','funcionesAjax.js','isotope.min.js','jquery.countdown.min',
-    'jquery.flexslider-min','jquery.min','jquery.plugin.min','lightbox.min','modernizr-2.6.2-respond-1.1.0.min',
-    'scripts','scrollReveal.min','skrollr.min','smooth-scroll.min','spectragram.min','twitterFetcher_v10_min']) ?>
+    <?= $this->Html->script([
+    		'https://www.youtube.com/iframe_api',
+    		'jquery.min',
+    		'jquery.plugin.min',
+    		'bootstrap.min',
+    		'jquery.flexslider-min',	
+    		'smooth-scroll.min',
+    		'skrollr.min',
+    		'spectragram.min',
+    		'scrollReveal.min',
+    		'isotope.min.js',
+    		'twitterFetcher_v10_min',
+    		'funcionesAjax.js',
+    		'lightbox.min',
+    		'jquery.countdown.min',
+			'modernizr-2.6.2-respond-1.1.0.min.js',		  			
+    		'scripts'
+    		]) ?>
+    	
+    	<?= $this->fetch('meta') ?>
        <?= $this->fetch('script') ?> 
        <?= $this->fetch('css') ?>
-       <?= $this->fetch('meta') ?>
+       
      
 
 </head>
 
 <body>
-        <?= $this->element('menu') ?>
-        
-            <div class="container-fluid">
-                <?= $this->Flash->render() ?>
-                <?= $this->fetch('content') ?>
-          </div>
-   
+	 <div class="loader">
+    		<div class="spinner">
+			  <div class="double-bounce1"></div>
+			  <div class="double-bounce2"></div>
+			</div>
+    	</div>  
+ 	<?= $this->element('menu') ?>
+ 	<div class= "main-container" >
+ 		<?= $this->Flash->render() ?>
+		<?= $this->fetch('content') ?>
+ 	</div>
+  	
+
         <div class="footer-container">
 			<footer class="bg-primary short-2">
 				<div class="container">
@@ -36,11 +67,11 @@
 							<span class="text-white">
 							<p>2017 Fun Club SRL</p>
                             <p> CABA - Bs As - Argentina</p>
-							<p>Diseño :: <a href="http://www.h2oestudio.com/" target="_blank">MNM.com.ar</a></p></span>
+							<p>Dise�o :: UTN 2017</p></span>
                             
                               <span class="text-white"><p>Contacto</p><p>info@funclub.com.ar</p>
                               <p>Tel. 011 4321-5678 </p></span>
-                              <span class="text-white"><p>Horario de atención telefónica</p>
+                              <span class="text-white"><p>Horario de atencion telefonica</p>
 							<p> L a V de 9 a 12.30hs y de 13.30 a 18hs </p>
 							<p>Sab, dom y feriados Guardia de 9 a 14hs</p></span>                              
 						</div>
