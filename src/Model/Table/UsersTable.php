@@ -9,12 +9,13 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Personas
  * @property \Cake\ORM\Association\BelongsTo $Roles
  * @property \Cake\ORM\Association\HasMany $CalificacionesProductos
+ * @property \Cake\ORM\Association\HasMany $Domicilios
  * @property \Cake\ORM\Association\HasMany $MultasUser
  * @property \Cake\ORM\Association\HasMany $PagosReserva
  * @property \Cake\ORM\Association\HasMany $Reservas
+ * @property \Cake\ORM\Association\HasMany $Telefonos
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -45,14 +46,13 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Personas', [
-            'foreignKey' => 'persona_id',
-            'joinType' => 'INNER'
-        ]);
         $this->belongsTo('Roles', [
             'foreignKey' => 'rol_id'
         ]);
         $this->hasMany('CalificacionesProductos', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->hasMany('Domicilios', [
             'foreignKey' => 'user_id'
         ]);
         $this->hasMany('MultasUser', [
@@ -62,6 +62,9 @@ class UsersTable extends Table
             'foreignKey' => 'user_id'
         ]);
         $this->hasMany('Reservas', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->hasMany('Telefonos', [
             'foreignKey' => 'user_id'
         ]);
     }
@@ -77,6 +80,19 @@ class UsersTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
+
+        $validator
+            ->requirePresence('dni', 'create')
+            ->notEmpty('dni')
+            ->add('dni', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+        $validator
+            ->requirePresence('nombre', 'create')
+            ->notEmpty('nombre');
+
+        $validator
+            ->requirePresence('apellido', 'create')
+            ->notEmpty('apellido');
 
         $validator
             ->email('email')
@@ -105,7 +121,7 @@ class UsersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->existsIn(['persona_id'], 'Personas'));
+        $rules->add($rules->isUnique(['dni']));
         $rules->add($rules->existsIn(['rol_id'], 'Roles'));
 
         return $rules;

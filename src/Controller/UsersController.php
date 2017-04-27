@@ -19,7 +19,7 @@ class UsersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Personas', 'Roles']
+            'contain' => ['Roles']
         ];
         $users = $this->paginate($this->Users);
 
@@ -37,7 +37,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Personas', 'Roles', 'CalificacionesProductos', 'MultasUser', 'PagosReserva', 'Reservas']
+            'contain' => ['Roles', 'CalificacionesProductos', 'Domicilios', 'MultasUser', 'PagosReserva', 'Reservas', 'Telefonos']
         ]);
 
         $this->set('user', $user);
@@ -61,9 +61,8 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $personas = $this->Users->Personas->find('list', ['limit' => 200]);
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'personas', 'roles'));
+        $this->set(compact('user', 'roles'));
         $this->set('_serialize', ['user']);
     }
 
@@ -88,9 +87,8 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $personas = $this->Users->Personas->find('list', ['limit' => 200]);
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'personas', 'roles'));
+        $this->set(compact('user', 'roles'));
         $this->set('_serialize', ['user']);
     }
 
@@ -113,12 +111,4 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-    
-    
-    public function login()
-    {
-    	
-    }
-    
-    
 }

@@ -7,7 +7,9 @@ use Cake\ORM\Entity;
  * User Entity
  *
  * @property int $id
- * @property int $persona_id
+ * @property string $dni
+ * @property string $nombre
+ * @property string $apellido
  * @property string $email
  * @property string $password
  * @property int $rol_id
@@ -15,12 +17,13 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $modified
  * @property bool $active
  *
- * @property \App\Model\Entity\Persona $persona
  * @property \App\Model\Entity\Role $role
  * @property \App\Model\Entity\CalificacionesProducto[] $calificaciones_productos
+ * @property \App\Model\Entity\Domicilio[] $domicilios
  * @property \App\Model\Entity\MultasUser[] $multas_user
  * @property \App\Model\Entity\PagosReserva[] $pagos_reserva
  * @property \App\Model\Entity\Reserva[] $reservas
+ * @property \App\Model\Entity\Telefono[] $telefonos
  */
 class User extends Entity
 {

@@ -10,26 +10,36 @@
         <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Personas'), ['controller' => 'Personas', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Persona'), ['controller' => 'Personas', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Calificaciones Productos'), ['controller' => 'CalificacionesProductos', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Calificaciones Producto'), ['controller' => 'CalificacionesProductos', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Domicilios'), ['controller' => 'Domicilios', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Domicilio'), ['controller' => 'Domicilios', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Multas User'), ['controller' => 'MultasUser', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Multas User'), ['controller' => 'MultasUser', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Pagos Reserva'), ['controller' => 'PagosReserva', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Pagos Reserva'), ['controller' => 'PagosReserva', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Reserva'), ['controller' => 'Reservas', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Telefonos'), ['controller' => 'Telefonos', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Telefono'), ['controller' => 'Telefonos', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="users view large-9 medium-8 columns content">
     <h3><?= h($user->id) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Persona') ?></th>
-            <td><?= $user->has('persona') ? $this->Html->link($user->persona->id, ['controller' => 'Personas', 'action' => 'view', $user->persona->id]) : '' ?></td>
+            <th scope="row"><?= __('Dni') ?></th>
+            <td><?= h($user->dni) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Nombre') ?></th>
+            <td><?= h($user->nombre) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Apellido') ?></th>
+            <td><?= h($user->apellido) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Email') ?></th>
@@ -87,6 +97,43 @@
                     <?= $this->Html->link(__('View'), ['controller' => 'CalificacionesProductos', 'action' => 'view', $calificacionesProductos->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'CalificacionesProductos', 'action' => 'edit', $calificacionesProductos->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'CalificacionesProductos', 'action' => 'delete', $calificacionesProductos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $calificacionesProductos->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
+    <div class="related">
+        <h4><?= __('Related Domicilios') ?></h4>
+        <?php if (!empty($user->domicilios)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('User Id') ?></th>
+                <th scope="col"><?= __('Piso') ?></th>
+                <th scope="col"><?= __('Numero') ?></th>
+                <th scope="col"><?= __('Direccion') ?></th>
+                <th scope="col"><?= __('Localidad Id') ?></th>
+                <th scope="col"><?= __('Created') ?></th>
+                <th scope="col"><?= __('Modified') ?></th>
+                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
+            </tr>
+            <?php foreach ($user->domicilios as $domicilios): ?>
+            <tr>
+                <td><?= h($domicilios->id) ?></td>
+                <td><?= h($domicilios->user_id) ?></td>
+                <td><?= h($domicilios->piso) ?></td>
+                <td><?= h($domicilios->numero) ?></td>
+                <td><?= h($domicilios->direccion) ?></td>
+                <td><?= h($domicilios->localidad_id) ?></td>
+                <td><?= h($domicilios->created) ?></td>
+                <td><?= h($domicilios->modified) ?></td>
+                <td><?= h($domicilios->active) ?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['controller' => 'Domicilios', 'action' => 'view', $domicilios->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'Domicilios', 'action' => 'edit', $domicilios->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Domicilios', 'action' => 'delete', $domicilios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $domicilios->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -188,6 +235,39 @@
                     <?= $this->Html->link(__('View'), ['controller' => 'Reservas', 'action' => 'view', $reservas->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Reservas', 'action' => 'edit', $reservas->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'Reservas', 'action' => 'delete', $reservas->id], ['confirm' => __('Are you sure you want to delete # {0}?', $reservas->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
+    <div class="related">
+        <h4><?= __('Related Telefonos') ?></h4>
+        <?php if (!empty($user->telefonos)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('User Id') ?></th>
+                <th scope="col"><?= __('Tipo Telefono Id') ?></th>
+                <th scope="col"><?= __('Numero') ?></th>
+                <th scope="col"><?= __('Created') ?></th>
+                <th scope="col"><?= __('Modified') ?></th>
+                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
+            </tr>
+            <?php foreach ($user->telefonos as $telefonos): ?>
+            <tr>
+                <td><?= h($telefonos->id) ?></td>
+                <td><?= h($telefonos->user_id) ?></td>
+                <td><?= h($telefonos->tipo_telefono_id) ?></td>
+                <td><?= h($telefonos->numero) ?></td>
+                <td><?= h($telefonos->created) ?></td>
+                <td><?= h($telefonos->modified) ?></td>
+                <td><?= h($telefonos->active) ?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['controller' => 'Telefonos', 'action' => 'view', $telefonos->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'Telefonos', 'action' => 'edit', $telefonos->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Telefonos', 'action' => 'delete', $telefonos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $telefonos->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

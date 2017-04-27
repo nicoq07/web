@@ -21,10 +21,10 @@
 								</li>
                                 <li><a href="#" onclick="Mostrar('juegos')">JUEGOS</a></li>
                                 <li><a href="#" onclick="Mostrar('reservas')">RESERVAS</a></li>
-                                <li><a href="#" onclick="Mostrar('envios')">ENVÍOS</a></li>
+                                <li><a href="#" onclick="Mostrar('envios')">ENVIOS</a></li>
                                 <li><a href="#" onclick="Mostrar('empleados')">EMPLEADOS</a></li>
                                 <li><a href="#" onclick="Mostrar('pagos')">PAGOS</a></li>
-                                <li><a href="#" onclick="Mostrar('estadisticas')">ESTADÍSTICAS</a></li>
+                                <li><a href="#" onclick="Mostrar('estadisticas')">ESTADISTICAS</a></li>
                                 <li><a href="#" onclick="Mostrar('contacto')">CONTACTO</a></li>
                                 <li><a href="#" onclick="Mostrar('carrito')">CARRITO</a></li>
                                 <li><a href="#" onclick="Mostrar('login')">LOGIN</a></li>
