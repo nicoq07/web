@@ -14,7 +14,7 @@
 							</div>
 							<div class="container align-vertical">
 							  <div class="row">
-							    <div class="col-lg-9 margin">
+							    <div class="col-lg-12 margin">
 							      <h1 class="text-white">Fun Club</br>
 							        Juegos para eventos</h1>
 							      <a target="_blank" href="" class="btn btn-primary btn-white">Nuestros juegos</a> <a href=".php" class="btn btn-primary btn-filled">Contacto</a>
@@ -47,7 +47,7 @@
 <section class="pure-text-centered gris celeste">
 					<div class="container ">
 						<div class="row ">
-							<div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 text-center ">
+							<div class="col-lg-10 col-lg-offset-1 text-center ">
 								
 						      <h1>QUIENES SOMOS</h1>
 								<h4 class="tx_gris">Somos una empresa especializada en el  entretenimiento móvil, desde el año 2007 llevamos toda la diversión al lugar  que el cliente lo solicite. Contamos con amplia variedad de juegos para niños y adultos. <br>
@@ -68,7 +68,7 @@
 <section class="duplicatable-content rojo">
 					<div class="container">					
 						<div class="row">
-							<div class="col-md-4 col-sm-6">
+							<div class="col-lg-4">
 								<div class="blog-snippet-1">
 									<a href="http://www.angelesyglamorosas.com" target="_blank">
 										<img alt="Blog Thumb" src="img/blog-thumb-1.png" >
@@ -82,7 +82,7 @@
 								</div>
 							</div>
 							
-							<div class="col-md-4 col-sm-6">
+							<div class="col-lg-4">
 								<div class="blog-snippet-1">
 									<a href="toro.php">
 										<img alt="Blog Thumb" src="img/blog-thumb-2.png" >
