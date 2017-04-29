@@ -6,7 +6,7 @@
 							<span class="text-white">
 							<p>2017 Fun Club SRL</p>
                             <p> CABA - Bs As - Argentina</p>
-							<p>Diseño :: UTN 2017</p></span>
+							<p><?= h('DiseÃ±o :: UTN 2017')?></p></span>
                             
                               <span class="text-white"><p>Contacto</p><p>info@funclub.com.ar</p>
                               <p>Tel. 011 4321-5678 </p></span>
