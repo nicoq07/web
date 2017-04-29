@@ -17,7 +17,9 @@
 							    <div class="col-lg-12 margin">
 							      <h1 class="text-white">Fun Club</br>
 							        Juegos para eventos</h1>
-							      <a target="_blank" href="" class="btn btn-primary btn-white">Nuestros juegos</a> <a href=".php" class="btn btn-primary btn-filled">Contacto</a>
+							      <?= $this->Html->link('Nuestros juegos',['controller' => 'productos', 'action' => 'index'],['class' => 'btn btn-primary btn-white'])?>
+							      <?= $this->Html->link('Contacto',['controller' => 'users', 'action' => 'contacto'],['class' => 'btn btn-primary btn-filled'])?>
+							      <!--<a target="_blank" href="" class="btn btn-primary btn-white">Nuestros juegos</a> <a href=".php" class="btn btn-primary btn-filled">Contacto</a>-->
 							  	</div>
 						      </div>
 						  	</div>
@@ -66,51 +68,49 @@
 					</div>
 </section>
 <section class="duplicatable-content rojo">
+					
 					<div class="container">					
+						
 						<div class="row">
-							<div class="col-lg-4">
-								<div class="blog-snippet-1">
-									<a href="http://www.angelesyglamorosas.com" target="_blank">
-										<img alt="Blog Thumb" src="img/blog-thumb-1.png" >
+							<h1 class="text-white centrar">PRODUCTOS DESTACADOS</h1><br>
+							<div class="col-md-4 col-sm-6">
+								<div class="blog-snippet-1">									
+									<a href="#">
+										<img alt="Blog Thumb" src="webroot/img/chicos/cubo/1.jpg" >
 									</a>
-									<h2 class=" text-white centrar">Angeles y Glamorosas</h2>
-									
-									<p class=" text-white centrar">
-										Animaciones para fiestas infantiles y cumpleaños de niños. Un servicio ideal para la fiesta o evento de los más chiquitos. Animaciones y shows, spa de nenas, animaciones tematicas, futbol para vanores, stand de maquillaje y peinados, spa móvil para adolescentes y mujeres.
-								  	</p>
-								 <a href="http://www.angelesyglamorosas.com/" class="text-white" target="_blank"><span class="text-white">Ver más <i class="icon arrow_right"></i></span></a>
+									<h2 class="text-white centrar">Cubo / opcional con pelotas</h2>
+									<p class="text-white"><strong>Medida: </strong>ancho 2 - largo 2,50 - alto 2,30</p>
+									<p class="text-white"><strong>Precio: $</strong> ..... </p>
+									<a href="#" class="text-white"><span class="text-white">Ver más <i class="icon arrow_right"></i></span></a>
 								</div>
 							</div>
 							
-							<div class="col-lg-4">
+							<div class="col-md-4 col-sm-6">
 								<div class="blog-snippet-1">
-									<a href="toro.php">
-										<img alt="Blog Thumb" src="img/blog-thumb-2.png" >
+									<a href="#">
+										<img alt="Blog Thumb" src="webroot/img/chicos/mickey/1.jpg" >
 									</a>
-									<h2 class="text-white centrar">Toro Mecánico</h2>
-
-									<p class="centrar text-white">
-									Toro mecánico gira y corcovea. Posee un amplio colchón inflable de 5,5 m x 5,5 m. El toro es estructura metálica cubierto por un paño de piel simil vaca que protege de raspaduras y a la vez no permite resbalarse al subir. Apto para niños a partir de 5 años y adultos.</p>
-									<a href="toro.php" class="text-white"><span class="text-white">Ver más <i class="icon arrow_right"></i></span></a>
+									<h2 class="text-white centrar">Mickey y Minnie</h2>
+									<p class="text-white"><strong>Medida: </strong>ancho 3 - largo 3,50 - alto 2,30</p>
+									<p class="text-white"><strong>Precio: $</strong> ..... </p>
+									<a href="#" class="text-white"><span class="text-white">Ver más <i class="icon arrow_right"></i></span></a>
 								</div>
 							</div>
 							
-							<div class="col-lg-4">
+							<div class="col-md-4 col-sm-6">
 								<div class="blog-snippet-1">
-	                            	<a href="clientes.php">
-										<img alt="Blog Thumb" src="img/blog-thumb-3.png" >
+									<a href="#">
+										<img alt="Blog Thumb" src="webroot/img/chicos/ringv/1.jpg" >
 									</a>
-	                            
-									<h2 class="text-white centrar">Nuestros Clientes</h2>
-									<p class="centrar text-white" >
-										Conocé las fotos de nuestros clientes..
-									</p>
-									<a href="clientes.php" class="text-white"><span class="text-white">Ver más <i class="icon arrow_right"></i></span></a>
+									<h2 class="text-white centrar">Ring V</h2>
+									<p class="text-white"><strong>Medida:</strong> ancho 4,50 - largo 4    - alto 3,60</p>
+									<p class="text-white"><strong>Precio: $</strong> ..... </p>
+									<a href="#" class="text-white"><span class="text-white">Ver más <i class="icon arrow_right"></i></span></a>
 								</div>
 							</div>
 						</div>	
 					</div>
-</section>	            
+				</section>
 <div class="row" id="load-more-row">
 	        		<div class="load-more col-lg-12">
 	        			<span id="load-more">

@@ -21,19 +21,19 @@
                 <div class="carousel-inner" role="listbox">
 
                     <div class="item active">
-                        <img src="inflables/chicos/3a/1.jpg">                   
+                        <img src="../../webroot/img/chicos/3a/1.jpg">                   
                     </div>
 
                     <div class="item">
-                        <img src="inflables/chicos/casti2/1.jpg">
+                        <img src="../../webroot/img/chicos/casti2/1.jpg">
                     </div>
                 
                     <div class="item">
-                        <img src="inflables/chicos/casti3/1.jpg">
+                        <img src="../../webroot/img/chicos/casti3/1.jpg">
                     </div>
 
                     <div class="item">
-                        <img src="inflables/chicos/castitobogan/1.jpg">
+                        <img src="../../webroot/img/chicos/castitobogan/1.jpg">
                     </div>            
                 </div>
 
