@@ -126,5 +126,9 @@ class ProductosController extends AppController
     	
     }
     
+    public function galeria()
+    {
+        
+    }
     
 }

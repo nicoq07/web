@@ -1,4 +1,65 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="container ">
+        <div class="row ">
+            <div class="col-sm-8">              
+                <div class="container">
+                    <h1 class="azul text-center">Envíos</h1>
+                    <div>
+                        <label>Ordenar por:</label>
+                        <select name="orden">
+                            <option value="cliente">Cliente</option>
+                            <option value="estado">Estado</option>
+                            <option value="fecha">Fecha</option>
+                            <option value="numero">Número</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Filtrar por:</label>
+                        <input type="text" placeholder="Mail del cliente">
+                        <input type="button" value="Buscar">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha</th>
+                                    <th>Horario</th>
+                                    <th>Domicilio</th>
+                                    <th>Localidad</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>157</td>
+                                    <td>usuario1@gmail.com</td>
+                                    <td>29/04/2017</td>
+                                    <td>14:00 - 18:00 hs.</td>
+                                    <td>Av. Mitre 750</td>
+                                    <td>Avellaneda</td>
+                                    <td><input type="button" class="btn btn-primary" value="Ver detalles"></td>
+                                </tr>
+                                <tr>
+                                    <td>158</td>
+                                    <td>usuario2@gmail.com</td>
+                                    <td>30/04/2017</td>
+                                    <td>10:00 - 15:00 hs.</td>
+                                    <td>Av. San Martín 1234</td>
+                                    <td>Lanús Oeste</td>
+                                    <td><input type="button" class="btn btn-primary" value="Ver detalles"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -59,4 +120,4 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
-</div>
+</div>-->
