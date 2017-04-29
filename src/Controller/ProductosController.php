@@ -124,11 +124,5 @@ class ProductosController extends AppController
     public function condiciones()
     {
     	
-    }
-    
-    public function galeria()
-    {
-        
-    }
-    
+    }    
 }

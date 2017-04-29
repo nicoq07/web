@@ -1,4 +1,354 @@
-<?php
+<link rel = "stylesheet" href = "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link href="css/theme.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+
+<span class="background-image-holder parallax-background"></span>
+
+<div class="container">
+    <div class="row">
+        <br>
+        <div class="col-lg-6">          
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                    <li data-target="#myCarousel" data-slide-to="3"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+
+                    <div class="item active">
+                        <img src="inflables/chicos/3a/1.jpg">                   
+                    </div>
+
+                    <div class="item">
+                        <img src="inflables/chicos/casti2/1.jpg">
+                    </div>
+                
+                    <div class="item">
+                        <img src="inflables/chicos/casti3/1.jpg">
+                    </div>
+
+                    <div class="item">
+                        <img src="inflables/chicos/castitobogan/1.jpg">
+                    </div>            
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h1 style="color: black">Cubo / opcional con pelotas</h1>
+            <h4 style="color: black"><strong>Categoría: </strong>Inflables Chicos</h4><br>
+            <h4 style="color: black"><strong>Stock: </strong>3</h4><br>
+            <h4 style="color: black"><strong>Descripción: </strong>ancho 2 - largo 2,50 - alto 2,30</h4><br>
+            <button class="btn btn-primary right">Reservar <i class="icon-cart"></i></button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <br>
+            <h1 style="color: black">Disponibilidad:</h1>
+            <h4 style="color: black"><strong>Referencias: </strong></h4><br>
+            <h4 style="color: black">Verde | Disponible</h4><br>
+            <h4 style="color: black">Amarillo | Reservar al %50</h4><br>
+            <h4 style="color: black">Rojo | No Disponible</h4><br>
+            <br>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fecha\Hora</th>
+                        <th>9:00</th>
+                        <th>10:00</th>
+                        <th>11:00</th>
+                        <th>12:00</th>
+                        <th>13:00</th>
+                        <th>14:00</th>
+                        <th>15:00</th>
+                        <th>16:00</th>
+                        <th>17:00</th>
+                        <th>18:00</th>
+                        <th>19:00</th>
+                        <th>20:00</th>
+                        <th>21:00</th>
+                        <th>22:00</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>25/04</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>26/04</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="warning"></td>
+                        <td class="warning"></td>
+                        <td class="warning"></td>
+                        <td class="warning"></td>
+                        <td class="warning"></td>
+                        <td class="warning"></td>
+                        <td class="warning"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>27/04</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>28/04</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>29/04</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>30/04</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>01/05</td>
+                        <td class="danger"></td>
+                        <td class="danger"></td>
+                        <td class="danger"></td>
+                        <td class="danger"></td>
+                        <td class="danger"></td>
+                        <td class="danger"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>02/05</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>03/05</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>04/05</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>05/05</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>06/05</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>07/05</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>08/05</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <tr>
+                        <td>09/05</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -202,4 +552,4 @@
         </table>
         <?php endif; ?>
     </div>
-</div>
+</div>-->
