@@ -44,7 +44,7 @@ use Cake\Routing\Route\DashedRoute;
 Router::defaultRouteClass(DashedRoute::class);
 Router::scope('/', function (RouteBuilder $routes) {
 	
-	$routes->connect('/', ['controller' => 'Productos', 'action' => 'index']);
+	$routes->connect('/', ['controller' => 'Productos', 'action' => 'home']);
 	/**
 	 * ...and connect the rest of 'Pages' controller's URLs.
 	 */
