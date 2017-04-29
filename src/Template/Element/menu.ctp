@@ -11,14 +11,6 @@
 						<div class="col-lg-10 columns text-center">
 							<ul class="menu">
 								<li><?= $this->Html->link('Home',['controller' => 'productos', 'action' => 'home'])?></li>                                
-<!-- 								<li class="has-dropdown"><a href="#">INFLABLES</a>        -->
-<!-- 									<ul class="subnav"> -->
-<!--										<li><a href="#" onclick="Mostrar('inflablesChicos')"> - Chicos y Medianos</a></li>
-										<li><a href="#" onclick="Mostrar('inflablesGrandes')">- Grandes</a></li>
-										<li><a href="#" onclick="Mostrar('inflablesExtragrandes')">- Extragrandes</a></li>
-										<li><a href="#" onclick="Mostrar('acuaticos')">- Acuáticos</a></li>
-<!-- 								    </ul> -->
-<!-- 								</li> -->
 								<li><?= $this->Html->link('Productos',['controller' => 'productos', 'action' => 'index'])?></li>
 								
 								
