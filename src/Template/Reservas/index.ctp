@@ -1,4 +1,69 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="container ">
+        <div class="row ">
+            <div class="col-sm-8">              
+                <div class="container">
+                    <h1 class="azul text-center">Reservas</h1>
+                    <div>
+                        <label>Ordenar por:</label>
+                        <select name="orden">
+                            <option value="cliente">Cliente</option>
+                            <option value="estado">Estado</option>
+                            <option value="fecha">Fecha</option>
+                            <option value="numero">Número</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Filtrar por:</label>
+                        <input type="text" placeholder="Mail del cliente">
+                        <input type="button" value="Buscar">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha</th>
+                                    <th>Horario</th>
+                                    <th>Domicilio</th>
+                                    <th>Localidad</th>
+                                    <th>Estado</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>168</td>
+                                    <td>usuario1@gmail.com</td>
+                                    <td>29/04/2017</td>
+                                    <td>14:00 - 18:00 hs.</td>
+                                    <td>Av. Mitre 750</td>
+                                    <td>Avellaneda</td>
+                                    <td>Pagada</td>
+                                    <td><input type="button" class="btn btn-primary" value="Detalles"><input type="button" class="btn btn-primary" value="Cancelar"></td>
+                                </tr>
+                                <tr>
+                                    <td>169</td>
+                                    <td>usuario2@gmail.com</td>
+                                    <td>30/04/2017</td>
+                                    <td>10:00 - 15:00 hs.</td>
+                                    <td>Av. San Martín 1234</td>
+                                    <td>Lanús Oeste</td>
+                                    <td>Señada</td>
+                                    <td><input type="button" class="btn btn-primary" value="Detalles"><input type="button" class="btn btn-primary" value="Cancelar"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -67,4 +132,4 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
-</div>
+</div>-->
