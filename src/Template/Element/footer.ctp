@@ -20,7 +20,8 @@
 				<div class="contact-action">
 					<div class="align-vertical">
 						<i class="icon text-white icon-mail"></i>
-						<a href="#" class="text-white" onclick="Mostrar('contacto')"><span class="text-white">Enviar un mensaje <i class="icon arrow_right"></i></span></a>
+						
+						<?= $this->Html->link('Enviar mensaje',['controller' => 'users', 'action' => 'contacto'], ['class' => 'text-white'])?><span class="text-white"><i class="icon arrow_right"></i></span>
 					</div>
 				</div>
 			</footer>
