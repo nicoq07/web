@@ -1,4 +1,26 @@
-<?php
+
+<section class="duplicatable-content bkg">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <?= $this->Form->create($reserva) ?>
+            <fieldset>
+                <legend>Nueva Reserva</legend>
+                <?php
+                    echo $this->Form->control('user_id', ['options' => $users, 'label' => 'Usuario']);
+                    echo $this->Form->control('estado_reserva_id', ['options' => $estadosReservas, 'label' => 'Estado']);
+                    echo $this->Form->control('fecha_inicio', ['empty' => true, 'label' => 'Inicio del evento']);
+                    echo $this->Form->control('fecha_fin', ['empty' => true, 'label' => 'Fin del evento']);
+                    echo $this->Form->control('active');
+                    echo $this->Form->control('productos._ids', ['options' => $productos]);
+                ?>
+            </fieldset>
+            <?= $this->Form->button('Enviar') ?>
+            <?= $this->Form->end() ?>
+        </div>
+    </div>
+</section>
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -36,4 +58,4 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+</div>-->
