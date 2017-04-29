@@ -1,7 +1,10 @@
 <?php
 namespace App\Controller;
 
+
 use App\Controller\AppController;
+use Cake\Mailer\MailerAwareTrait;
+use Cake\Mailer\Email;
 
 /**
  * Users Controller
@@ -117,9 +120,18 @@ class UsersController extends AppController
     	
     }
 
+    use MailerAwareTrait;
     public function contacto()
     {
-        
+    	
+    	
+//     	$email = new Email('funclub');
+//     	$email
+//     	->setTo('nicoq07@gmail.com')
+//     	->setSubject('Test !')
+//     	->send("Hello Nico");
+    	
+    	
     }
     
 }
