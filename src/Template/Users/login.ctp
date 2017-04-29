@@ -3,15 +3,15 @@
 		<div class="row">				
 			<div class="col-lg-8 col-lg-offset-2">
 				<h5>&nbsp;</h5>
-				<h3>Iniciar sesión</h3>
+				<h3><?php h('Iniciar sesiÃ³n?')?></h3>
                 <p>&nbsp; </p>
 				<div class="form-wrapper clearfix">
 					<form class="form-contact email-form">
 						<div class="inputs-wrapper">
 							<input class="form validate-required" type="text" placeholder="Usuario" name="usuario">
-							<input class="form validate-required validate-email" type="text" placeholder="Contraseña" name="contraseña">
+							<input class="form validate-required validate-email" type="text" placeholder="<?= h('ContraseÃ±a')?>" name="contrasena">
                         </div>
-                        <a href="#">¿No estás registrado?</a>
+                        <a href="#"><?php h('No estÃ¡s registrado?')?></a>
                         <br>
                         <br>
 						<input type="submit" class="send-form" value="Enviar">
