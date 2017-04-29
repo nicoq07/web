@@ -6,12 +6,13 @@
             <fieldset>
                 <legend>Nueva Reserva</legend>
                 <?php
-                    echo $this->Form->control('user_id', ['options' => $users, 'label' => 'Usuario']);
-                    echo $this->Form->control('estado_reserva_id', ['options' => $estadosReservas, 'label' => 'Estado']);
+                    //echo $this->Form->control('user_id', ['options' => $users, 'label' => 'Usuario']);
+                    //echo $this->Form->control('estado_reserva_id', ['options' => $estadosReservas, 'label' => 'Estado']);
                     echo $this->Form->control('fecha_inicio', ['empty' => true, 'label' => 'Inicio del evento']);
+                    echo $this->Form->text('my_date',array('type' => 'date'));
                     echo $this->Form->control('fecha_fin', ['empty' => true, 'label' => 'Fin del evento']);
-                    echo $this->Form->control('active');
-                    echo $this->Form->control('productos._ids', ['options' => $productos]);
+                    //echo $this->Form->control('active');
+                    //echo $this->Form->control('productos._ids', ['options' => $productos]);
                 ?>
             </fieldset>
             <?= $this->Form->button('Enviar') ?>
