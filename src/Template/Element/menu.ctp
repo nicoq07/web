@@ -10,7 +10,7 @@
 					
 						<div class="col-lg-10 columns text-center">
 							<ul class="menu">
-								<li><a href="index.html">HOME</a></li>                                
+								<li><?= $this->Html->link('Home',['controller' => 'productos', 'action' => 'home'])?></li>                                
 <!-- 								<li class="has-dropdown"><a href="#">INFLABLES</a>        -->
 <!-- 									<ul class="subnav"> -->
 <!--										<li><a href="#" onclick="Mostrar('inflablesChicos')"> - Chicos y Medianos</a></li>
@@ -19,16 +19,18 @@
 										<li><a href="#" onclick="Mostrar('acuaticos')">- Acuáticos</a></li>
 <!-- 								    </ul> -->
 <!-- 								</li> -->
-								<li><a href="#" onclick="Mostrar('juegos')">PRODUCTOS</a></li>
+								<li><?= $this->Html->link('Productos',['controller' => 'productos', 'action' => 'index'])?></li>
+								
+								
                                 <!--<li><a href="#" onclick="Mostrar('juegos')">JUEGOS</a></li>-->
-                                <li><a href="#" onclick="Mostrar('reservas')">RESERVAS</a></li>
+                                <li><?= $this->Html->link('Reservas',['controller' => 'reservas', 'action' => 'index'])?></li>
                                <!--   <li><a href="#" onclick="Mostrar('envios')">ENVIOS</a></li>
                                <li><a href="#" onclick="Mostrar('empleados')">EMPLEADOS</a></li>
                                 <li><a href="#" onclick="Mostrar('pagos')">PAGOS</a></li>
                                 <li><a href="#" onclick="Mostrar('estadisticas')">ESTADISTICAS</a></li>-->
-                                <li><a href="#" onclick="Mostrar('contacto')">CONTACTO</a></li> 
+                                <li><?= $this->Html->link('Contactos',['controller' => 'users', 'action' => 'contacto'])?></li> 
                                 <li><a href="#" onclick="Mostrar('carrito')">CARRITO</a></li>
-                                <li><a href="#" onclick="Mostrar('login')">LOGIN</a></li>
+                                <li><?= $this->Html->link('Login',['controller' => 'users', 'action' => 'login'])?></li>
                             </ul>							
 						</div>
 					</div>
