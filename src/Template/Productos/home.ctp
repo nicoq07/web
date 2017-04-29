@@ -1,6 +1,3 @@
-<title>
-    hola
-</title>
  <div class="social">
 			<ul>
 				<li><a href="https://www.facebook.com/" target="_blank" class="icon-facebook"></a></li>
@@ -121,7 +118,8 @@
 	        					<div class="plus">
 	        					</div>
 	        				</span>
-	        				<a href="#" class="neg" onclick="Mostrar('condiciones')">Condiciones Generales</a>
+	        				<?= $this->Html->link('Condiciones Generales',['controller' => 'productos', 'action' => 'condiciones'],['class' => 'neg'])?>
+<!-- 	        				<a href="#" class="neg">Condiciones Generales</a> -->
 	        			</span>
 	        		</div>
 </div>

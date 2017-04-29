@@ -121,5 +121,10 @@ class ProductosController extends AppController
     	
     }
     
+    public function condiciones()
+    {
+    	
+    }
+    
     
 }
