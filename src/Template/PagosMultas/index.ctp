@@ -4,8 +4,9 @@
   */
 ?>
 <div class="container">
-    <h3>Pago de multas</h3>
-    <?= $this->Html->link('Nuevo', ['action' => 'add'], ['class' => 'btn btn-default']) ?>
+    <br>
+    <h3 class="centrar">Pago de multas</h3>
+    <div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?></div>
     <div class="table-responsive">
         <table class="table table-striped" cellpadding="0" cellspacing="0">
             <thead>
@@ -35,7 +36,7 @@
             </tbody>
         </table>
     </div>
-    <div class="paginator">
+    <div class="paginator centrar">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . 'Primera') ?>
             <?= $this->Paginator->prev('< ' . 'Anterior') ?>

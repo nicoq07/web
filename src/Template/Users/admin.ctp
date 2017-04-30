@@ -66,7 +66,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-10">
+  <div class="col-lg-10 centrar">
       <h1>Página de admin</h1>
   	</div>
 </div>

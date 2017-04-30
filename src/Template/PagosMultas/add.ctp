@@ -1,4 +1,23 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="row">   
+        <div class="col-lg-8 col-lg-offset-2">
+            <?= $this->Form->create($pagosMulta) ?>
+            <fieldset>
+                <legend>Nuevo pago</legend>
+                <?php
+                    echo $this->Form->control('multas_user_id', ['options' => $multasUser]);
+                    echo $this->Form->control('medio_pago_id', ['options' => $mediosPagos]);
+                    echo $this->Form->control('monto');
+                ?>
+            </fieldset>
+            <?= $this->Form->button(__('Crear')) ?>
+            <?= $this->Form->end() ?>
+           </div>
+      </div>
+</section>
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -26,4 +45,4 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+</div>-->

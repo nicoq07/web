@@ -4,9 +4,9 @@
   */
 ?>
 <div class="container">
-    <h3>Roles</h3>
-    <?= $this->Html->link('Nuevo', ['action' => 'add'], ['class' => 'btn btn-default']) ?>
-    <div class="table-responsive">
+    <br>
+    <h3 class="centrar">Roles</h3>
+    <div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?></div>
         <table class="table table-striped" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
@@ -31,7 +31,7 @@
             </tbody>
         </table>
     </div>
-    <div class="paginator">
+    <div class="paginator centrar">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . 'Primera') ?>
             <?= $this->Paginator->prev('< ' . 'Anterior') ?>

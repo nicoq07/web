@@ -1,4 +1,23 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="row">   
+        <div class="col-lg-8 col-lg-offset-2">
+            <?= $this->Form->create($recibo) ?>
+            <fieldset>
+                <legend>Nuevo recibo</legend>
+                <?php
+                    echo $this->Form->control('factura_id', ['options' => $facturas]);
+                    echo $this->Form->control('monto');
+                    echo $this->Form->control('pagado');
+                ?>
+            </fieldset>
+            <?= $this->Form->button(__('Crear')) ?>
+            <?= $this->Form->end() ?>
+           </div>
+      </div>
+</section>
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -23,4 +42,4 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+</div>-->

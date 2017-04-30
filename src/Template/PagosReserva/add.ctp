@@ -1,4 +1,23 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="row">   
+        <div class="col-lg-8 col-lg-offset-2">
+            <?= $this->Form->create($pagosReserva) ?>
+            <fieldset>
+                <legend>Nuevo pago</legend>
+                <?php
+                    echo $this->Form->control('reserva_id', ['options' => $reservas]);
+                    echo $this->Form->control('user_id', ['options' => $users]);
+                    echo $this->Form->control('medio_pago_id', ['options' => $mediosPagos]);
+                ?>
+            </fieldset>
+            <?= $this->Form->button(__('Crear')) ?>
+            <?= $this->Form->end() ?>
+           </div>
+      </div>
+</section>
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -28,4 +47,4 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+</div>-->

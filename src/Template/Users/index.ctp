@@ -4,8 +4,9 @@
   */
 ?>
 <div class="container">
-    <h3>Usuarios</h3>
-    <?= $this->Html->link('Nuevo', ['action' => 'add'], ['class' => 'btn btn-default']) ?>
+    <br>
+    <h3 class="centrar">Usuarios</h3>
+    <div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?></div>
     <div class="table-responsive">
         <table class="table table-striped" cellpadding="0" cellspacing="0">
             <thead>
@@ -31,7 +32,7 @@
                     <td><?= $user->has('role') ? $this->Html->link($user->role->id, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
                     <td><?= h($user->active) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link('Detalles', ['action' => 'view', $user->id], ['class' => 'btn btn-default']) ?>
+                        <?= $this->Html->link('Modificar', ['action' => 'edit', $user->id], ['class' => 'btn btn-default']) ?>
                         <?= $this->Html->link('Multar', [ 'controller' => 'multasUser', 'action' => 'add', $user->id], ['class' => 'btn btn-default']) ?>
                         <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $user->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $user->id, 'class' => 'btn btn-default']) ?>
                     </td>
@@ -40,7 +41,7 @@
             </tbody>
         </table>
     </div>
-    <div class="paginator">
+    <div class="paginator centrar">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . 'Primera') ?>
             <?= $this->Paginator->prev('< ' . 'Anterior') ?>

@@ -4,12 +4,18 @@
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <div class="col-sm-10 col-sm-offset-1">
-                        <h1 class="azul">INFLABLES - Chicos y Medianos</h1>                   
+                        <h1 class="azul">INFLABLES - Chicos y Medianos</h1>
                     </div>
                     <h1>&nbsp;</h1>
                 </div>
             </div>
             
+            <div class="row">
+                <div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
+
+                </div>
+            </div>
+            <br>
             <div class="row">
                 <div class="col-md-4 col-sm-6">
                     <div class="blog-snippet-1">

@@ -1,4 +1,21 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="row">   
+        <div class="col-lg-8 col-lg-offset-2">
+            <?= $this->Form->create($rangoEdade) ?>
+            <fieldset>
+                <legend>Nuevo rango de edades</legend>
+                <?php
+                    echo $this->Form->control('rango');
+                ?>
+            </fieldset>
+            <?= $this->Form->button(__('Crear')) ?>
+            <?= $this->Form->end() ?>
+           </div>
+      </div>
+</section>
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -20,4 +37,4 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+</div>-->

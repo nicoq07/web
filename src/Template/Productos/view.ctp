@@ -52,7 +52,8 @@
             <h1 style="color: black">Cubo / opcional con pelotas</h1>
             <h4 style="color: black"><strong>Categoría: </strong>Inflables Chicos</h4><br>
             <h4 style="color: black"><strong>Stock: </strong>3</h4><br>
-            <h4 style="color: black"><strong>Descripción: </strong>ancho 2 - largo 2,50 - alto 2,30</h4><br>
+            <h4 style="color: black"><strong>Información: </strong>Detalle del producto</h4><br>
+            <h4 style="color: black"><strong>Medidas: </strong>ancho 2 - largo 2,50 - alto 2,30</h4><br>
             <button class="btn btn-primary right">Reservar <i class="icon-cart"></i></button>
         </div>
     </div>

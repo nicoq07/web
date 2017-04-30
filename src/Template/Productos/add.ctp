@@ -1,4 +1,28 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="row">   
+        <div class="col-lg-8 col-lg-offset-2">
+            <?= $this->Form->create($producto) ?>
+            <fieldset>
+                <legend>Nuevo producto</legend>
+                <?php
+                    echo $this->Form->control('rango_edad_id', ['options' => $rangoEdades]);
+                    echo $this->Form->control('categoria_id', ['options' => $categorias]);
+                    echo $this->Form->control('descripcion');
+                    echo $this->Form->control('informacion');
+                    echo $this->Form->control('dimensiones');
+                    echo $this->Form->control('precio');
+                    echo $this->Form->control('cantidad');
+                    echo $this->Form->control('fotos');
+                ?>
+            </fieldset>
+            <?= $this->Form->button(__('Crear')) ?>
+            <?= $this->Form->end() ?>
+           </div>
+      </div>
+</section>
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -38,4 +62,4 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+</div>-->
