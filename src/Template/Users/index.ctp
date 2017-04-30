@@ -3,6 +3,59 @@
   * @var \App\View\AppView $this
   */
 ?>
+<div class="container">
+    <h3>Usuarios</h3>
+    <?= $this->Html->link('Nuevo', ['action' => 'add'], ['class' => 'btn btn-default']) ?>
+    <div class="table-responsive">
+        <table class="table table-striped" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('dni') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('nombre') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('apellido') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('email') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('rol_id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('active') ?></th>
+                    <th scope="col" class="actions">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($users as $user): ?>
+                <tr>
+                    <td><?= $this->Number->format($user->id) ?></td>
+                    <td><?= h($user->dni) ?></td>
+                    <td><?= h($user->nombre) ?></td>
+                    <td><?= h($user->apellido) ?></td>
+                    <td><?= h($user->email) ?></td>
+                    <td><?= $user->has('role') ? $this->Html->link($user->role->id, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
+                    <td><?= h($user->active) ?></td>
+                    <td class="actions">
+                        <?= $this->Html->link('Detalles', ['action' => 'view', $user->id], ['class' => 'btn btn-default']) ?>
+                        <?= $this->Html->link('Multar', [ 'controller' => 'multasUser', 'action' => 'add', $user->id], ['class' => 'btn btn-default']) ?>
+                        <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $user->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $user->id, 'class' => 'btn btn-default']) ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . 'Primera') ?>
+            <?= $this->Paginator->prev('< ' . 'Anterior') ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next('Siguiente' . ' >') ?>
+            <?= $this->Paginator->last('Última' . ' >>') ?>
+        </ul>
+    </div>
+</div>
+
+<!--<?php
+/**
+  * @var \App\View\AppView $this
+  */
+?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
@@ -73,4 +126,4 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
-</div>
+</div>-->

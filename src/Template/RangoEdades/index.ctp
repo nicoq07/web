@@ -3,6 +3,51 @@
   * @var \App\View\AppView $this
   */
 ?>
+<div class="container">
+    <h3>Rango de edades</h3>
+    <?= $this->Html->link('Nuevo', ['action' => 'add'], ['class' => 'btn btn-default']) ?>
+    <div class="table-responsive">
+        <table class="table table-striped" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('rango') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('active') ?></th>
+                    <th scope="col" class="actions">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($rangoEdades as $rangoEdade): ?>
+                <tr>
+                    <td><?= $this->Number->format($rangoEdade->id) ?></td>
+                    <td><?= h($rangoEdade->rango) ?></td>
+                    <td><?= h($rangoEdade->active) ?></td>
+                    <td class="actions">
+                        <?= $this->Html->link('Modificar', ['action' => 'edit', $rangoEdade->id], ['class' => 'btn btn-default']) ?>
+                        <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $rangoEdade->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $rangoEdade->id, 'class' => 'btn btn-default']) ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . 'Primera') ?>
+            <?= $this->Paginator->prev('< ' . 'Anterior') ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next('Siguiente' . ' >') ?>
+            <?= $this->Paginator->last('Última' . ' >>') ?>
+        </ul>
+    </div>
+</div>
+
+
+<!--<?php
+/**
+  * @var \App\View\AppView $this
+  */
+?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
@@ -49,4 +94,4 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
-</div>
+</div>-->

@@ -3,6 +3,55 @@
   * @var \App\View\AppView $this
   */
 ?>
+<div class="container">
+    <h3>Pago de reservas</h3>
+    <?= $this->Html->link('Nuevo', ['action' => 'add'], ['class' => 'btn btn-default']) ?>
+    <div class="table-responsive">
+        <table class="table table-striped" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('reserva_id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('medio_pago_id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('pagado') ?></th>
+                    <th scope="col" class="actions">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pagosReserva as $pagosReserva): ?>
+                <tr>
+                    <td><?= $this->Number->format($pagosReserva->id) ?></td>
+                    <td><?= $pagosReserva->has('reserva') ? $this->Html->link($pagosReserva->reserva->id, ['controller' => 'Reservas', 'action' => 'view', $pagosReserva->reserva->id]) : '' ?></td>
+                    <td><?= $pagosReserva->has('user') ? $this->Html->link($pagosReserva->user->id, ['controller' => 'Users', 'action' => 'view', $pagosReserva->user->id]) : '' ?></td>
+                    <td><?= $pagosReserva->has('medios_pago') ? $this->Html->link($pagosReserva->medios_pago->id, ['controller' => 'MediosPagos', 'action' => 'view', $pagosReserva->medios_pago->id]) : '' ?></td>
+                    <td><?= h($pagosReserva->pagado) ?></td>
+                    <td class="actions">
+                        <?= $this->Html->link('Modificar', ['action' => 'edit', $pagosReserva->id], ['class' => 'btn btn-default']) ?>
+                        <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $pagosReserva->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $pagosReserva->id, 'class' => 'btn btn-default']) ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . 'Primera') ?>
+            <?= $this->Paginator->prev('< ' . 'Anterior') ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next('Siguiente' . ' >') ?>
+            <?= $this->Paginator->last('Última' . ' >>') ?>
+        </ul>
+    </div>
+</div>
+
+
+<!--<?php
+/**
+  * @var \App\View\AppView $this
+  */
+?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
@@ -59,4 +108,4 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
-</div>
+</div>-->

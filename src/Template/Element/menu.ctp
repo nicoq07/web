@@ -24,6 +24,7 @@
                                 <li><?= $this->Html->link('Carrito',['controller' => 'reservas', 'action' => 'add'])?></li> 
                                 <!--<li><a href="#" onclick="Mostrar('carrito')">CARRITO</a></li>-->
                                 <li><?= $this->Html->link('Login',['controller' => 'users', 'action' => 'login'])?></li>
+                                <li><?= $this->Html->link('Administrador',['controller' => 'users', 'action' => 'admin'])?></li>
                             </ul>							
 						</div>
 					</div>

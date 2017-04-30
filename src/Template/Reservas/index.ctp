@@ -1,4 +1,55 @@
-<section class="duplicatable-content bkg">
+<?php
+/**
+  * @var \App\View\AppView $this
+  */
+?>
+<div class="container">
+    <h3>Reservas</h3>
+    <?= $this->Html->link('Nuevo', ['action' => 'add'], ['class' => 'btn btn-default']) ?>
+    <div class="table-responsive">
+        <table class="table table-striped" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('estado_reserva_id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('fecha_inicio') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('fecha_fin') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('active') ?></th>
+                    <th scope="col" class="actions">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($reservas as $reserva): ?>
+                <tr>
+                    <td><?= $this->Number->format($reserva->id) ?></td>
+                    <td><?= $reserva->has('user') ? $this->Html->link($reserva->user->id, ['controller' => 'Users', 'action' => 'view', $reserva->user->id]) : '' ?></td>
+                    <td><?= $reserva->has('estados_reserva') ? $this->Html->link($reserva->estados_reserva->id, ['controller' => 'EstadosReservas', 'action' => 'view', $reserva->estados_reserva->id]) : '' ?></td>
+                    <td><?= h($reserva->fecha_inicio) ?></td>
+                    <td><?= h($reserva->fecha_fin) ?></td>
+                    <td><?= h($reserva->active) ?></td>
+                    <td class="actions">
+                        <?= $this->Html->link('Modificar', ['action' => 'edit', $reserva->id], ['class' => 'btn btn-default']) ?>
+                        <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $reserva->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $reserva->id, 'class' => 'btn btn-default']) ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . 'Primera') ?>
+            <?= $this->Paginator->prev('< ' . 'Anterior') ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next('Siguiente' . ' >') ?>
+            <?= $this->Paginator->last('Última' . ' >>') ?>
+        </ul>
+    </div>
+</div>
+
+
+<!--<section class="duplicatable-content bkg">
     <div class="container ">
         <div class="row ">
             <div class="col-sm-8">              
@@ -60,7 +111,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
 
 
 <!--<?php
