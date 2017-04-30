@@ -4,6 +4,31 @@
 
 <span class="background-image-holder parallax-background"></span>
 
+<style type="text/css">
+
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  color: grey;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover ~ label {
+  color: orange;
+}
+
+input[type="radio"]:checked ~ label {
+  color: orange;
+}
+</style>
+
 <div class="container">
     <div class="row">
         <br>
@@ -54,17 +79,17 @@
             <h4 style="color: black"><strong>Stock: </strong>3</h4><br>
             <h4 style="color: black"><strong>Información: </strong>Detalle del producto</h4><br>
             <h4 style="color: black"><strong>Medidas: </strong>ancho 2 - largo 2,50 - alto 2,30</h4><br>
-            <button class="btn btn-primary right">Reservar <i class="icon-cart"></i></button>
+            <button class="btn btn-default right">Reservar <i class="icon-cart"></i></button>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
             <br>
-            <h1 style="color: black">Disponibilidad:</h1>
-            <h4 style="color: black"><strong>Referencias: </strong></h4><br>
-            <h4 style="color: black">Verde | Disponible</h4><br>
-            <h4 style="color: black">Amarillo | Reservar al %50</h4><br>
-            <h4 style="color: black">Rojo | No Disponible</h4><br>
+            <h1 style="color: black">Disponibilidad:</h1><br>
+            <h4 style="color: black"><strong>Referencias: </strong></h4>
+            <h4 style="color: green">Disponible</h4>
+            <h4 style="color: yellow">   Existen reservas</h4>   
+            <h4 style="color: red">   No Disponible</h4><br>
             <br>
 
             <table class="table table-bordered">
@@ -345,9 +370,102 @@
                     </tr>
                 </tbody>
             </table>
+            <!--<div class="paginator centrar">
+                <ul class="pagination">
+                    <?= $this->Paginator->first('<< ' . 'Primera') ?>
+                    <?= $this->Paginator->prev('< ' . 'Anterior') ?>
+                    <?= $this->Paginator->numbers() ?>
+                    <?= $this->Paginator->next('Siguiente' . ' >') ?>
+                    <?= $this->Paginator->last('Última' . ' >>') ?>
+                </ul>
+            </div>-->
         </div>
     </div>
 </div>
+
+<div class="container">
+<h2>Calificaciones</h2>
+    <div class="row">
+        <div class="col-lg-2">
+            <h4 class="clasificacion centrar">
+                <input id="radio1" type="radio" name="estrellas1" value="5" disabled="true">
+                <label for="radio1">★</label>
+                <input id="radio2" type="radio" name="estrellas1" value="4" disabled="true">
+                <label for="radio2">★</label>
+                <input id="radio3" type="radio" name="estrellas1" value="3" checked="checked" disabled="true">
+                <label for="radio3">★</label>
+                <input id="radio4" type="radio" name="estrellas1" value="2" disabled="true">
+                <label for="radio4">★</label>
+                <input id="radio5" type="radio" name="estrellas1" value="1" disabled="true">
+                <label for="radio5">★</label>
+            </h4>
+        </div>
+        <div class="col-lg-10">
+            <blockquote>
+                <p>
+                    Buen producto, pero podría ser más grande.
+                </p>
+            </blockquote>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            <h4 class="clasificacion centrar">
+                <input id="radio11" type="radio" name="estrellas2" value="5" checked="checked" disabled="true">
+                <label for="radio11">★</label>
+                <input id="radio12" type="radio" name="estrellas2" value="4" disabled="true">
+                <label for="radio12">★</label>
+                <input id="radio13" type="radio" name="estrellas2" value="3" disabled="true">
+                <label for="radio13">★</label>
+                <input id="radio14" type="radio" name="estrellas2" value="2" disabled="true">
+                <label for="radio14">★</label>
+                <input id="radio15" type="radio" name="estrellas2" value="1" disabled="true">
+                <label for="radio15">★</label>
+            </h4>
+        </div>
+        <div class="col-lg-10">
+            <blockquote>
+                <p>
+                    Muy buen producto, excelente calidad.
+                </p>
+            </blockquote>
+        </div>
+    </div>
+
+    <h2>Calificá este producto</h2>
+
+    <div class="row">
+        <div class="col-lg-2">
+            <h4 class="clasificacion centrar">
+                <input id="radio21" type="radio" name="estrellas3" value="5">
+                <label for="radio21">★</label>
+                <input id="radio22" type="radio" name="estrellas3" value="4">
+                <label for="radio22">★</label>
+                <input id="radio23" type="radio" name="estrellas3" value="3">
+                <label for="radio23">★</label>
+                <input id="radio24" type="radio" name="estrellas3" value="2">
+                <label for="radio24">★</label>
+                <input id="radio25" type="radio" name="estrellas3" value="1">
+                <label for="radio25">★</label>
+            </h4>
+        </div>
+        <div class="col-lg-10">
+            <blockquote>
+                <?php echo $this->Form->control('comentario'); ?>
+                <?= $this->Form->button('Enviar', ['action' => 'add'], ['class' => 'btn btn-default']); ?>
+            </blockquote>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
 
 <!--<?php
 /**
