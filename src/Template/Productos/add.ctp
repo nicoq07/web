@@ -12,7 +12,7 @@
                     echo $this->Form->control('dimensiones');
                     echo $this->Form->control('precio');
                     echo $this->Form->control('cantidad');
-                    echo $this->Form->control('fotos');
+                    echo $this->Form->control('fotos', ['type'=>'file']);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Crear')) ?>
