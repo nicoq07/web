@@ -13,6 +13,31 @@ use Cake\Mailer\Email;
  */
 class UsersController extends AppController
 {
+	
+	public function beforeFilter(\Cake\Event\Event $event)
+	{
+		parent::beforeFilter($event);
+		$this->Auth->allow(['add']);
+	}
+	
+	public function isAuthorized($user)
+	{
+		if(isset($user['role_id']) &&  $user['role_id'] == CLIENTE)
+		{
+			if(in_array($this->request->action, ['index','view']))
+			{
+				return true;
+			}
+		}
+		elseif (isset($user['role_id']) && $user['role_id'] == EMPLEADO) {
+			
+			return true;
+		}
+		
+		return parent::isAuthorized($user);
+
+		return true;
+	}
 
     /**
      * Index method
@@ -117,7 +142,27 @@ class UsersController extends AppController
     
     public function login()
     {
-    	
+    	if($this->request->is('post'))
+    	{
+    		$user = $this->Auth->identify();
+    		if($user)
+    		{
+    			$this->Auth->setUser($user);
+    			return $this->redirect($this->Auth->redirectUrl());
+    		}
+    		else
+    		{
+    			$this->Flash->error('Datos invalidos, por favor intente nuevamente', ['key' => 'auth']);
+    		}
+    	}
+    	if ($this->Auth->user())
+    	{
+    		return $this->redirect(['controller' => 'Productos', 'action' => 'home']);
+    	}
+    }
+    public function logout()
+    {
+    	return $this->redirect($this->Auth->logout());
     }
 
     use MailerAwareTrait;
