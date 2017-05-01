@@ -24,7 +24,7 @@
                 <th scope="col"><?= $this->Paginator->sort('calificacion') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('active') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>

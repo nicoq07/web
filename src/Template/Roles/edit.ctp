@@ -12,7 +12,7 @@
                 ['confirm' => __('Are you sure you want to delete # {0}?', $role->id)]
             )
         ?></li>
-        <li><?= $this->Html->link(__('List Roles'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('Roles'), ['action' => 'index']) ?></li>
     </ul>
 </nav>
 <div class="roles form large-9 medium-8 columns content">
@@ -21,7 +21,7 @@
         <legend><?= __('Edit Role') ?></legend>
         <?php
             echo $this->Form->control('descripcion');
-            echo $this->Form->control('active');
+            echo $this->Form->control('active' , ['label' => 'Activo' ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

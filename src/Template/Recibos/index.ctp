@@ -14,7 +14,7 @@
                     <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('factura_id') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('monto') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('active') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('active' , ['label' => 'Activo' ]) ?></th>
                     <th scope="col" class="actions">Acciones</th>
                 </tr>
             </thead>
@@ -69,7 +69,7 @@
                 <th scope="col"><?= $this->Paginator->sort('monto') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('active') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>

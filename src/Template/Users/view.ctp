@@ -66,7 +66,7 @@
             <td><?= h($user->modified) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Active') ?></th>
+            <th scope="row"><?= __('active' , ['label' => 'Activo' ]) ?></th>
             <td><?= $user->active ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
@@ -81,7 +81,7 @@
                 <th scope="col"><?= __('Calificacion') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($user->calificaciones_productos as $calificacionesProductos): ?>
@@ -116,7 +116,7 @@
                 <th scope="col"><?= __('Localidad Id') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($user->domicilios as $domicilios): ?>
@@ -151,7 +151,7 @@
                 <th scope="col"><?= __('Precio') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($user->multas_user as $multasUser): ?>
@@ -218,7 +218,7 @@
                 <th scope="col"><?= __('Fecha Fin') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($user->reservas as $reservas): ?>
@@ -252,7 +252,7 @@
                 <th scope="col"><?= __('Numero') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($user->telefonos as $telefonos): ?>

@@ -21,7 +21,7 @@
             echo $this->Form->control('reserva_id', ['options' => $reservas]);
             echo $this->Form->control('producto_id', ['options' => $productos]);
             echo $this->Form->control('cantidad');
-            echo $this->Form->control('active');
+            echo $this->Form->control('active' , ['label' => 'Activo' ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

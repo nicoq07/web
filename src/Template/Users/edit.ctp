@@ -40,7 +40,7 @@
             echo $this->Form->control('email');
             echo $this->Form->control('password');
             echo $this->Form->control('rol_id', ['options' => $roles, 'empty' => true]);
-            echo $this->Form->control('active');
+            echo $this->Form->control('active' , ['label' => 'Activo' ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

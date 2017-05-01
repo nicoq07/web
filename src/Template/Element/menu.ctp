@@ -24,8 +24,7 @@
                                 <li><?= $this->Html->link('Carrito',['controller' => 'reservas', 'action' => 'add'])?></li> 
                                 <!--<li><a href="#" onclick="Mostrar('carrito')">CARRITO</a></li>-->
                                 <li><?= $this->Html->link('Login',['controller' => 'users', 'action' => 'login'])?></li>
-                                <li><?= $this->Html->link('Administrador',['controller' => 'users', 'action' => 'admin'])?></li>
-                                <!--<li>
+                                <li>
 				                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
 				                    <ul class="dropdown-menu">
 				                    	<li class="dropdown-submenu">
@@ -62,6 +61,9 @@
 					                    		 </li>
 					                    		  <li>
 					                    		 	<?= $this->Html->link('Ver todos',['controller' => 'users', 'action' => 'index'])?>
+					                    		 </li>
+					                    		 <li>
+					                    		 	<?= $this->Html->link('Agregar rol',['controller' => 'roles', 'action' => 'add'])?>
 					                    		 </li>
 					                    		 <li>
 					                    		 	<?= $this->Html->link('Ver roles',['controller' => 'roles', 'action' => 'index'])?>
@@ -101,7 +103,7 @@
 				                    	</li>
 				                    </ul>
 				                    
-				                </li>-->
+				                </li>
                             </ul>							
 						</div>
 					</div>

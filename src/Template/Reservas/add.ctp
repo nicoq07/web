@@ -73,7 +73,7 @@ function ocultarOtros(nombre, nombreOtros)
                         ]
                     );
                     //echo $this->Form->control('fecha_fin', ['empty' => true]);
-                    //echo $this->Form->control('active');
+                    //echo $this->Form->control('active' , ['label' => 'Activo' ]);
                     //echo $this->Form->control('productos._ids', ['options' => $productos]);
                 ?>
                 </div>
@@ -196,7 +196,7 @@ function ocultarOtros(nombre, nombreOtros)
             echo $this->Form->control('estado_reserva_id', ['options' => $estadosReservas]);
             echo $this->Form->control('fecha_inicio', ['empty' => true]);
             echo $this->Form->control('fecha_fin', ['empty' => true]);
-            echo $this->Form->control('active');
+            echo $this->Form->control('active' , ['label' => 'Activo' ]);
             echo $this->Form->control('productos._ids', ['options' => $productos]);
         ?>
     </fieldset>

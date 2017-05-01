@@ -44,7 +44,7 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Persona Id') ?></th>
+                <th scope="col"><?= __('User Id') ?></th>
                 <th scope="col"><?= __('Tipo Telefono Id') ?></th>
                 <th scope="col"><?= __('Numero') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
@@ -55,7 +55,7 @@
             <?php foreach ($tipoTelefono->telefonos as $telefonos): ?>
             <tr>
                 <td><?= h($telefonos->id) ?></td>
-                <td><?= h($telefonos->persona_id) ?></td>
+                <td><?= h($telefonos->user_id) ?></td>
                 <td><?= h($telefonos->tipo_telefono_id) ?></td>
                 <td><?= h($telefonos->numero) ?></td>
                 <td><?= h($telefonos->created) ?></td>

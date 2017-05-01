@@ -60,7 +60,7 @@
                 <th scope="col"><?= __('Precio') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($factura->factura_productos as $facturaProductos): ?>
@@ -93,7 +93,7 @@
                 <th scope="col"><?= __('Monto') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($factura->recibos as $recibos): ?>
@@ -123,7 +123,7 @@
                 <th scope="col"><?= __('Factura Id') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($factura->remitos as $remitos): ?>

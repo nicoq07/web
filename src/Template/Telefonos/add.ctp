@@ -7,8 +7,6 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('List Telefonos'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Personas'), ['controller' => 'Personas', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Persona'), ['controller' => 'Personas', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Tipo Telefonos'), ['controller' => 'TipoTelefonos', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Tipo Telefono'), ['controller' => 'TipoTelefonos', 'action' => 'add']) ?></li>
     </ul>
@@ -18,7 +16,7 @@
     <fieldset>
         <legend><?= __('Add Telefono') ?></legend>
         <?php
-            echo $this->Form->control('persona_id', ['options' => $personas]);
+            echo $this->Form->control('user_id');
             echo $this->Form->control('tipo_telefono_id', ['options' => $tipoTelefonos]);
             echo $this->Form->control('numero');
             echo $this->Form->control('active');

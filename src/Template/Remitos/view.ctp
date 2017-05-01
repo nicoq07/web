@@ -36,7 +36,7 @@
             <td><?= h($remito->modified) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Active') ?></th>
+            <th scope="row"><?= __('active' , ['label' => 'Activo' ]) ?></th>
             <td><?= $remito->active ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
@@ -51,7 +51,7 @@
                 <th scope="col"><?= __('Domicilio Id') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($remito->envios as $envios): ?>

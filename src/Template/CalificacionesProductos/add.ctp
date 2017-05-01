@@ -21,7 +21,7 @@
             echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('producto_id', ['options' => $productos]);
             echo $this->Form->control('calificacion');
-            echo $this->Form->control('active');
+            echo $this->Form->control('active' , ['label' => 'Activo' ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

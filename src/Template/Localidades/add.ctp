@@ -40,7 +40,7 @@
             echo $this->Form->control('duracion_viaje');
             echo $this->Form->control('precio');
             echo $this->Form->control('descripcion');
-            echo $this->Form->control('active');
+            echo $this->Form->control('active' , ['label' => 'Activo' ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

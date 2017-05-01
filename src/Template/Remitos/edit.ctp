@@ -25,7 +25,7 @@
         <legend><?= __('Edit Remito') ?></legend>
         <?php
             echo $this->Form->control('factura_id', ['options' => $facturas]);
-            echo $this->Form->control('active');
+            echo $this->Form->control('active' , ['label' => 'Activo' ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

@@ -533,7 +533,7 @@ input[type="radio"]:checked ~ label {
             <td><?= h($producto->modified) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Active') ?></th>
+            <th scope="row"><?= __('active' , ['label' => 'Activo' ]) ?></th>
             <td><?= $producto->active ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
@@ -548,7 +548,7 @@ input[type="radio"]:checked ~ label {
                 <th scope="col"><?= __('Calificacion') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($producto->calificaciones_productos as $calificacionesProductos): ?>
@@ -582,7 +582,7 @@ input[type="radio"]:checked ~ label {
                 <th scope="col"><?= __('Precio') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($producto->factura_productos as $facturaProductos): ?>
@@ -615,7 +615,7 @@ input[type="radio"]:checked ~ label {
                 <th scope="col"><?= __('File') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($producto->fotos_productos as $fotosProductos): ?>
@@ -648,7 +648,7 @@ input[type="radio"]:checked ~ label {
                 <th scope="col"><?= __('Fecha Fin') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
+                <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($producto->reservas as $reservas): ?>

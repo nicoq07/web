@@ -10,8 +10,6 @@
         <li><?= $this->Form->postLink(__('Delete Telefono'), ['action' => 'delete', $telefono->id], ['confirm' => __('Are you sure you want to delete # {0}?', $telefono->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Telefonos'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Telefono'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Personas'), ['controller' => 'Personas', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Persona'), ['controller' => 'Personas', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Tipo Telefonos'), ['controller' => 'TipoTelefonos', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Tipo Telefono'), ['controller' => 'TipoTelefonos', 'action' => 'add']) ?> </li>
     </ul>
@@ -19,10 +17,6 @@
 <div class="telefonos view large-9 medium-8 columns content">
     <h3><?= h($telefono->id) ?></h3>
     <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Persona') ?></th>
-            <td><?= $telefono->has('persona') ? $this->Html->link($telefono->persona->id, ['controller' => 'Personas', 'action' => 'view', $telefono->persona->id]) : '' ?></td>
-        </tr>
         <tr>
             <th scope="row"><?= __('Tipo Telefono') ?></th>
             <td><?= $telefono->has('tipo_telefono') ? $this->Html->link($telefono->tipo_telefono->id, ['controller' => 'TipoTelefonos', 'action' => 'view', $telefono->tipo_telefono->id]) : '' ?></td>
@@ -34,6 +28,10 @@
         <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($telefono->id) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('User Id') ?></th>
+            <td><?= $this->Number->format($telefono->user_id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>

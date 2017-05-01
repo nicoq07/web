@@ -42,7 +42,7 @@
             echo $this->Form->control('remito_id', ['options' => $remitos]);
             echo $this->Form->control('reserva_id', ['options' => $reservas]);
             echo $this->Form->control('domicilio_id', ['options' => $domicilios]);
-            echo $this->Form->control('active');
+            echo $this->Form->control('active' , ['label' => 'Activo' ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

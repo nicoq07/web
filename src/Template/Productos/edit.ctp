@@ -38,7 +38,7 @@
             echo $this->Form->control('informacion');
             echo $this->Form->control('dimensiones');
             echo $this->Form->control('precio');
-            echo $this->Form->control('active');
+            echo $this->Form->control('active' , ['label' => 'Activo' ]);
             echo $this->Form->control('reservas._ids', ['options' => $reservas]);
         ?>
     </fieldset>

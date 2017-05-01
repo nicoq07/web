@@ -32,7 +32,7 @@
         <legend><?= __('Add Medios Pago') ?></legend>
         <?php
             echo $this->Form->control('descripcion');
-            echo $this->Form->control('active');
+            echo $this->Form->control('active' , ['label' => 'Activo' ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

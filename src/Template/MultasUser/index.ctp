@@ -15,7 +15,7 @@
                     <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('descripcion') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('precio') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('active') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('active' , ['label' => 'Activo' ]) ?></th>
                     <th scope="col" class="actions">Acciones</th>
                 </tr>
             </thead>
@@ -74,7 +74,7 @@
                 <th scope="col"><?= $this->Paginator->sort('precio') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('active') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>

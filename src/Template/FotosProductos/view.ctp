@@ -38,7 +38,7 @@
             <td><?= h($fotosProducto->modified) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Active') ?></th>
+            <th scope="row"><?= __('active' , ['label' => 'Activo' ]) ?></th>
             <td><?= $fotosProducto->active ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>

@@ -32,7 +32,7 @@
             <td><?= h($rangoEdade->modified) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Active') ?></th>
+            <th scope="row"><?= __('active' , ['label' => 'Activo' ]) ?></th>
             <td><?= $rangoEdade->active ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>

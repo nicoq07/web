@@ -10,8 +10,6 @@
         <li><?= $this->Form->postLink(__('Delete Domicilio'), ['action' => 'delete', $domicilio->id], ['confirm' => __('Are you sure you want to delete # {0}?', $domicilio->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Domicilios'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Domicilio'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Personas'), ['controller' => 'Personas', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Persona'), ['controller' => 'Personas', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Localidades'), ['controller' => 'Localidades', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Localidade'), ['controller' => 'Localidades', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Envios'), ['controller' => 'Envios', 'action' => 'index']) ?> </li>
@@ -21,10 +19,6 @@
 <div class="domicilios view large-9 medium-8 columns content">
     <h3><?= h($domicilio->id) ?></h3>
     <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Persona') ?></th>
-            <td><?= $domicilio->has('persona') ? $this->Html->link($domicilio->persona->id, ['controller' => 'Personas', 'action' => 'view', $domicilio->persona->id]) : '' ?></td>
-        </tr>
         <tr>
             <th scope="row"><?= __('Piso') ?></th>
             <td><?= h($domicilio->piso) ?></td>
@@ -44,6 +38,10 @@
         <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($domicilio->id) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('User Id') ?></th>
+            <td><?= $this->Number->format($domicilio->user_id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>

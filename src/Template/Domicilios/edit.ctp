@@ -13,8 +13,6 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Domicilios'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Personas'), ['controller' => 'Personas', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Persona'), ['controller' => 'Personas', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Localidades'), ['controller' => 'Localidades', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Localidade'), ['controller' => 'Localidades', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Envios'), ['controller' => 'Envios', 'action' => 'index']) ?></li>
@@ -26,7 +24,7 @@
     <fieldset>
         <legend><?= __('Edit Domicilio') ?></legend>
         <?php
-            echo $this->Form->control('persona_id', ['options' => $personas]);
+            echo $this->Form->control('user_id');
             echo $this->Form->control('piso');
             echo $this->Form->control('numero');
             echo $this->Form->control('direccion');

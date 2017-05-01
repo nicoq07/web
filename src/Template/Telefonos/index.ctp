@@ -7,8 +7,6 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New Telefono'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Personas'), ['controller' => 'Personas', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Persona'), ['controller' => 'Personas', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Tipo Telefonos'), ['controller' => 'TipoTelefonos', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Tipo Telefono'), ['controller' => 'TipoTelefonos', 'action' => 'add']) ?></li>
     </ul>
@@ -19,7 +17,7 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('persona_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('tipo_telefono_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('numero') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
@@ -32,7 +30,7 @@
             <?php foreach ($telefonos as $telefono): ?>
             <tr>
                 <td><?= $this->Number->format($telefono->id) ?></td>
-                <td><?= $telefono->has('persona') ? $this->Html->link($telefono->persona->id, ['controller' => 'Personas', 'action' => 'view', $telefono->persona->id]) : '' ?></td>
+                <td><?= $this->Number->format($telefono->user_id) ?></td>
                 <td><?= $telefono->has('tipo_telefono') ? $this->Html->link($telefono->tipo_telefono->id, ['controller' => 'TipoTelefonos', 'action' => 'view', $telefono->tipo_telefono->id]) : '' ?></td>
                 <td><?= h($telefono->numero) ?></td>
                 <td><?= h($telefono->created) ?></td>
