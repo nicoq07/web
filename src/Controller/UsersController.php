@@ -22,14 +22,14 @@ class UsersController extends AppController
 	
 	public function isAuthorized($user)
 	{
-		if(isset($user['role_id']) &&  $user['role_id'] == CLIENTE)
+		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
 		{
 			if(in_array($this->request->action, ['index','view']))
 			{
 				return true;
 			}
 		}
-		elseif (isset($user['role_id']) && $user['role_id'] == EMPLEADO) {
+		elseif (isset($user['rol_id']) && $user['rol_id'] == EMPLEADO) {
 			
 			return true;
 		}
@@ -177,6 +177,11 @@ class UsersController extends AppController
 //     	->send("Hello Nico");
     	
     	
+    }
+
+    public function admin()
+    {
+        
     }
     
 }

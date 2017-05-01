@@ -100,7 +100,7 @@ class AppController extends Controller
     }
     public function isAuthorized($user)
     {
-    	if(isset($user['role_id']) and $user['role_id'] === ADMINISTRADOR)
+    	if(isset($user['rol_id']) and $user['rol_id'] === ADMINISTRADOR)
     	{
     		return true;
     	}

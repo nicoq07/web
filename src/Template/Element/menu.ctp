@@ -23,11 +23,17 @@
                                 <li><?= $this->Html->link('Contactos',['controller' => 'users', 'action' => 'contacto'])?></li>
                                 <li><?= $this->Html->link('Carrito',['controller' => 'reservas', 'action' => 'add'])?></li> 
                                 <!--<li><a href="#" onclick="Mostrar('carrito')">CARRITO</a></li>-->
-                                <li><?= $this->Html->link('Login',['controller' => 'users', 'action' => 'login'])?></li>
+                                <?php if (empty($current_user)) : ?>
+                                <li><?= $this->Html->link('Ingresar',['controller' => 'users', 'action' => 'login'])?></li>
+                               
+                               
+                                <?php endif;?>
+                                <?php if (!empty($current_user)) : ?>
                                 <li>
-				                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+				                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo h($current_user['nombre'])?>  <b class="caret"></b></a>
 				                    <ul class="dropdown-menu">
 				                    	<li class="dropdown-submenu">
+				                    	<?php if (!empty($current_user) && $current_user['rol_id'] == ADMINISTRADOR ) : ?>
 				                    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Productos <b class="caret"></b></a>
 				                    		 <ul class="dropdown-menu">
 					                    		 <li>
@@ -99,11 +105,23 @@
 					                    		 	<?= $this->Html->link('Nuevo',['controller' => 'pagosReserva', 'action' => 'add'])?>
 					                    		 </li>
 					                    		 
+					                    		 
 				                    		 </ul>
 				                    	</li>
+				                    	<?php elseif (!empty($current_user) && $current_user['rol_id'] == CLIENTE ) :?>
+				                    	<li>
+					                    	<?= $this->Html->link('Perfil',['controller' => 'users', 'action' => 'view' , $current_user['id'] ])?>
+					                    </li>
+					                     <li>
+					                    	<?= $this->Html->link('Agregar domicilio',['controller' => 'domicilios', 'action' => 'add'])?>
+					                    </li>
+				                    	<?php endif; ?>
+				                    	
+				                    	<li><?= $this->Html->link('Salir',['controller' => 'users', 'action' => 'logout'])?></li>
 				                    </ul>
 				                    
 				                </li>
+				               <?php endif;	?>
                             </ul>							
 						</div>
 					</div>
