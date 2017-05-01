@@ -131,6 +131,7 @@ function ocultarOtros(nombre, nombreOtros)
                                 <th>Precio p/hora</th>
                                 <th>Cantidad de horas</th>
                                 <th>Precio Total</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,6 +142,7 @@ function ocultarOtros(nombre, nombreOtros)
                                 <td>$100</td>
                                 <td>5</td>
                                 <td>$1000</td>
+                                <td><button class="btn btn-default"> X </button></td>
                             </tr>
                             <tr>
                                 <td>238</td>
@@ -149,6 +151,7 @@ function ocultarOtros(nombre, nombreOtros)
                                 <td>$150</td>
                                 <td>5</td>
                                 <td>$750</td>
+                                <td><button class="btn btn-default"> X </button></td>
                             </tr>
                         </tbody>
                     </table>

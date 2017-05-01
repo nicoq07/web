@@ -11,7 +11,7 @@
 					<br>
 					3- La banda horaria tanto de entrega como de retiro es de 2 a 4hs. Por ejemplo: si la fiesta comienza a las 16hs, el horario de entrega será entre las 10 y las 15hs. Durante esa banda horaria el cliente deberá estar presente o dejar a alguien responsable en el lugar de entrega para recibir al reparto. El reparto comienza a entregar a partir de las 9hs y retira hasta las 22 hs. Luego de este horario no se realizan entregas y retiros.
 					<br>
-					4- Para todas las reservas, se solicitará una seña que irá del 50% al 100% del total, dentro de los 2 días hábiles de realizado el pedido. La misma podrá ser realizada por MercadoPago o transferencia bancaria y para que sea válida se requerirá presentar el comprobante correspondiente. El saldo restante se abonará en efectivo al momento de la entrega de los juegos. La empresa no garantiza la disponibilidad de los juegos para todas aquellas reservas, realizadas por cualquier vía, que no tengan la seña efectuada. 
+					4- Para todas las reservas, se solicitará una seña que irá del 50% al 100% del total. La misma podrá ser realizada mediante tarjeta de crédito o MercadoPago. El saldo restante se abonará en efectivo al momento de la entrega de los juegos. La empresa no garantiza la disponibilidad de los juegos para todas aquellas reservas, realizadas por cualquier vía, que no tengan la seña efectuada. 
 					<br>
 					5- La empresa no se responsabilizará por los eventuales daños y/o lesiones
 que puedan ocasionarse por el mal uso del inflable y/o otros juegos. El locatario será responsable de controlar la seguridad de los niños/adultos que estén utilizándolos. Los niños siempre deben estar supervisados por algún adulto responsable.

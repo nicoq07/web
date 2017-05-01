@@ -28,8 +28,9 @@ class ProductosController extends AppController
             'contain' => ['RangoEdades', 'Categorias']
         ];
         $productos = $this->paginate($this->Productos);
+        $categorias = $this->Productos->Categorias->find('list', ['limit' => 200]);
 
-        $this->set(compact('productos'));
+        $this->set(compact('productos', 'categorias'));
         $this->set('_serialize', ['productos']);
     }
 

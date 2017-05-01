@@ -10,9 +10,22 @@
                 </div>
             </div>
             
-            <div class="row">
+            <div class="row">                
                 <div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
-
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <?php echo $this->Form->control('categoria_id', ['options' => $categorias, 'empty' => 'Selecione una categoría', 'label'=>'Filtrar por:']); ?>
+                </div>
+                <div class="col-lg-3">
+                    <?php 
+                    echo $this->Form->label('Ordenar por:');
+                    echo $this->Form->select('precio', [
+                        '0'=>'Selecione precio',
+                        '1'=>'Mayor precio',
+                        '2'=>'Menor precio',
+                    ]); ?>
                 </div>
             </div>
             <br>
@@ -26,6 +39,8 @@
                         <p><strong>Medida: </strong>ancho 2 - largo 2,50 - alto 2,30</p>
                         <p><strong>Precio: $</strong> ..... </p>
                         <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <button class="btn btn-primary">Modificar</button>
+                        <button class="btn btn-primary">Baja</button>
                     </div>
                 </div>              
                 <div class="col-md-4 col-sm-6">
@@ -37,6 +52,8 @@
                         <p><strong>Medida: </strong>ancho 2 - largo 4    - alto 2,30</p>
                         <p><strong>Precio: $</strong> ..... </p>
                         <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <button class="btn btn-primary">Modificar</button>
+                        <button class="btn btn-primary">Baja</button>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -47,7 +64,9 @@
                         <h4 class="tx_celeste marg">3A</h4>
                         <p><strong>Medida:</strong> ancho 2,50 - largo 3    - alto 2,30 </p>
                         <p><strong>Precio: $</strong> ..... </p>
-                        <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>            
+                        <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <button class="btn btn-primary">Modificar</button>
+                        <button class="btn btn-primary">Baja</button>          
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -58,7 +77,9 @@
                         <h4 class="tx_celeste marg">Ring V</h4>
                         <p><strong>Medida: </strong>ancho 3 - largo 3,50 - alto 2,30</p>
                         <p><strong>Precio: $</strong> ..... </p>
-                        <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>            
+                        <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <button class="btn btn-primary">Modificar</button>
+                        <button class="btn btn-primary">Baja</button>           
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -70,6 +91,8 @@
                         <p><strong>Medida:</strong> ancho 4,50 - largo 4    - alto 3,60</p>
                         <p><strong>Precio: $</strong> ..... </p>
                         <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <button class="btn btn-primary">Modificar</button>
+                        <button class="btn btn-primary">Baja</button>
                     </div>
                 </div>            
                 <div class="col-md-4 col-sm-6">
@@ -80,7 +103,9 @@
                         <h4 class="tx_celeste marg">Castitobogan</h4>
                         <p><strong>Medida:</strong> ancho 3 - largo 5 -   alto 3,20</p>
                         <p><strong>Precio: $</strong> ..... </p>
-                        <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button> 
+                        <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <button class="btn btn-primary">Modificar</button>
+                        <button class="btn btn-primary">Baja</button>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -92,6 +117,8 @@
                         <p><strong>Medida:</strong> ancho 3,50 - largo 5,50 - alto 3,20</p>
                         <p><strong>Precio: $</strong> ..... </p>
                         <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <button class="btn btn-primary">Modificar</button>
+                        <button class="btn btn-primary">Baja</button>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -103,6 +130,8 @@
                         <p><strong>Medida:</strong> ancho 4,50 - largo 5,50 - alto 3,30</p>
                         <p><strong>Precio: $</strong> ..... </p>
                         <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <button class="btn btn-primary">Modificar</button>
+                        <button class="btn btn-primary">Baja</button>
                     </div>
                 </div>
                 
@@ -115,6 +144,8 @@
                         <p><strong>Medida:</strong> ancho 4,50 - largo 5,50 - alto 3,60</p>
                         <p><strong>Precio: $</strong> ..... </p>
                         <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <button class="btn btn-primary">Modificar</button>
+                        <button class="btn btn-primary">Baja</button>
                     </div>
                 </div>
               
@@ -127,6 +158,8 @@
                         <p><strong>Medida:</strong> ancho 4,50 - largo 7,50 - alto 3,50</p>
                         <p><strong>Precio: $</strong> ..... </p>
                         <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <button class="btn btn-primary">Modificar</button>
+                        <button class="btn btn-primary">Baja</button>
                     </div>
                 </div>
             </div>  
