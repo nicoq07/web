@@ -16,6 +16,12 @@ class PagosReservaController extends AppController
      *
      * @return \Cake\Network\Response|null
      */
+    public function beforeFilter(\Cake\Event\Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['add']);
+    }
+
     public function index()
     {
         $this->paginate = [

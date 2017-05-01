@@ -7,7 +7,13 @@
                 <?php
                     echo $this->Form->control('reserva_id', ['options' => $reservas]);
                     echo $this->Form->control('user_id', ['options' => $users]);
-                    echo $this->Form->control('medio_pago_id', ['options' => $mediosPagos]);
+                    echo $this->Form->control('Porcentaje a pagar', ['options' => array('%50', '%75', '%100'), 'empty' => 'Seleccione % a pagar']);
+                    echo $this->Form->control('medio_pago_id', ['options' => $mediosPagos, 'empty' => true]);
+                    echo $this->Form->control('Tarjeta', ['options' => array(
+                        'VISA', 
+                        'MASTERCARD', 
+                        'AMERICAN EXPRESS'
+                        ), 'empty' => 'Elija su tarjeta...']);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Crear')) ?>
