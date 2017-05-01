@@ -1,16 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.1
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 01-05-2017 a las 03:49:30
--- Versión del servidor: 5.6.34
--- Versión de PHP: 7.1.0
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 01-05-2017 a las 20:16:13
+-- Versión del servidor: 10.1.13-MariaDB
+-- Versión de PHP: 5.6.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `fun_club`
@@ -99,21 +103,6 @@ CREATE TABLE `estados_reservas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `facturas`
---
-
-CREATE TABLE `facturas` (
-  `id` int(11) NOT NULL,
-  `reserva_id` int(11) NOT NULL,
-  `monto` decimal(30,2) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `pagado` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci ROW_FORMAT=COMPACT;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `factura_productos`
 --
 
@@ -126,6 +115,21 @@ CREATE TABLE `factura_productos` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci ROW_FORMAT=COMPACT;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `facturas`
+--
+
+CREATE TABLE `facturas` (
+  `id` int(11) NOT NULL,
+  `reserva_id` int(11) NOT NULL,
+  `monto` decimal(30,2) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `pagado` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
@@ -193,6 +197,21 @@ CREATE TABLE `multas_user` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `pagos_efectivo`
+--
+
+CREATE TABLE `pagos_efectivo` (
+  `id` int(11) NOT NULL,
+  `reserva_id` int(11) NOT NULL,
+  `recibo_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `pagos_multas`
 --
 
@@ -215,7 +234,7 @@ CREATE TABLE `pagos_multas` (
 CREATE TABLE `pagos_reserva` (
   `id` int(11) NOT NULL,
   `reserva_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `tarjeta_id` int(11) NOT NULL,
   `medio_pago_id` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -364,6 +383,24 @@ CREATE TABLE `roles` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tarjetas_credito_user`
+--
+
+CREATE TABLE `tarjetas_credito_user` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `numero` int(11) NOT NULL,
+  `vencimientoMes` int(11) NOT NULL,
+  `vencimientoAnio` int(11) NOT NULL,
+  `codSeguridad` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `telefonos`
 --
 
@@ -452,19 +489,19 @@ ALTER TABLE `estados_reservas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `facturas`
---
-ALTER TABLE `facturas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_facturas_reserva_idx` (`reserva_id`);
-
---
 -- Indices de la tabla `factura_productos`
 --
 ALTER TABLE `factura_productos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_factura_producto_idx` (`producto_id`),
   ADD KEY `fk_factura_idx` (`factura_id`);
+
+--
+-- Indices de la tabla `facturas`
+--
+ALTER TABLE `facturas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_facturas_reserva_idx` (`reserva_id`);
 
 --
 -- Indices de la tabla `fotos_productos`
@@ -494,6 +531,14 @@ ALTER TABLE `multas_user`
   ADD KEY `fk_multa_user_idx` (`user_id`);
 
 --
+-- Indices de la tabla `pagos_efectivo`
+--
+ALTER TABLE `pagos_efectivo`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reserva_id` (`reserva_id`),
+  ADD KEY `recibo_id` (`recibo_id`);
+
+--
 -- Indices de la tabla `pagos_multas`
 --
 ALTER TABLE `pagos_multas`
@@ -507,7 +552,8 @@ ALTER TABLE `pagos_multas`
 ALTER TABLE `pagos_reserva`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_reserva_pago_idx` (`reserva_id`),
-  ADD KEY `fk_medio_pago_reserva_idx` (`medio_pago_id`);
+  ADD KEY `fk_medio_pago_reserva_idx` (`medio_pago_id`),
+  ADD KEY `tarjeta_id` (`tarjeta_id`);
 
 --
 -- Indices de la tabla `paises`
@@ -573,6 +619,13 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `tarjetas_credito_user`
+--
+ALTER TABLE `tarjetas_credito_user`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indices de la tabla `telefonos`
 --
 ALTER TABLE `telefonos`
@@ -624,14 +677,14 @@ ALTER TABLE `envios`
 ALTER TABLE `estados_reservas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `facturas`
---
-ALTER TABLE `facturas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT de la tabla `factura_productos`
 --
 ALTER TABLE `factura_productos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `facturas`
+--
+ALTER TABLE `facturas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `fotos_productos`
@@ -652,6 +705,11 @@ ALTER TABLE `medios_pagos`
 -- AUTO_INCREMENT de la tabla `multas_user`
 --
 ALTER TABLE `multas_user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `pagos_efectivo`
+--
+ALTER TABLE `pagos_efectivo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `pagos_multas`
@@ -707,7 +765,12 @@ ALTER TABLE `reservas_productos`
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `tarjetas_credito_user`
+--
+ALTER TABLE `tarjetas_credito_user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `telefonos`
 --
@@ -722,7 +785,7 @@ ALTER TABLE `tipo_telefonos`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Restricciones para tablas volcadas
 --
@@ -750,17 +813,17 @@ ALTER TABLE `envios`
   ADD CONSTRAINT `fk_envio_reserva` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`);
 
 --
--- Filtros para la tabla `facturas`
---
-ALTER TABLE `facturas`
-  ADD CONSTRAINT `fk_facturas_reserva` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`);
-
---
 -- Filtros para la tabla `factura_productos`
 --
 ALTER TABLE `factura_productos`
   ADD CONSTRAINT `fk_factura` FOREIGN KEY (`factura_id`) REFERENCES `facturas` (`id`),
   ADD CONSTRAINT `fk_factura_producto` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`);
+
+--
+-- Filtros para la tabla `facturas`
+--
+ALTER TABLE `facturas`
+  ADD CONSTRAINT `fk_facturas_reserva` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`);
 
 --
 -- Filtros para la tabla `fotos_productos`
@@ -781,6 +844,13 @@ ALTER TABLE `multas_user`
   ADD CONSTRAINT `fk_multa_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
+-- Filtros para la tabla `pagos_efectivo`
+--
+ALTER TABLE `pagos_efectivo`
+  ADD CONSTRAINT `pagos_efectivo_ibfk_1` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`),
+  ADD CONSTRAINT `pagos_efectivo_ibfk_2` FOREIGN KEY (`recibo_id`) REFERENCES `recibos` (`id`);
+
+--
 -- Filtros para la tabla `pagos_multas`
 --
 ALTER TABLE `pagos_multas`
@@ -792,7 +862,8 @@ ALTER TABLE `pagos_multas`
 --
 ALTER TABLE `pagos_reserva`
   ADD CONSTRAINT `fk_medio_pago_reserva` FOREIGN KEY (`medio_pago_id`) REFERENCES `medios_pagos` (`id`),
-  ADD CONSTRAINT `fk_reserva_pago` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`);
+  ADD CONSTRAINT `fk_reserva_pago` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`),
+  ADD CONSTRAINT `pagos_reserva_ibfk_1` FOREIGN KEY (`tarjeta_id`) REFERENCES `tarjetas_credito_user` (`id`);
 
 --
 -- Filtros para la tabla `productos`
@@ -834,6 +905,12 @@ ALTER TABLE `reservas_productos`
   ADD CONSTRAINT `fk_reserva_reserva` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`);
 
 --
+-- Filtros para la tabla `tarjetas_credito_user`
+--
+ALTER TABLE `tarjetas_credito_user`
+  ADD CONSTRAINT `tarjetas_credito_user_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
 -- Filtros para la tabla `telefonos`
 --
 ALTER TABLE `telefonos`
@@ -845,4 +922,7 @@ ALTER TABLE `telefonos`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `fk_user_rol` FOREIGN KEY (`rol_id`) REFERENCES `roles` (`id`);
-COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
