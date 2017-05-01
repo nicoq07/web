@@ -33,7 +33,7 @@ class MediosPagosTable extends Table
         parent::initialize($config);
 
         $this->setTable('medios_pagos');
-        $this->setDisplayField('id');
+        $this->setDisplayField('descripcion');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

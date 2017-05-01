@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <?php
-                        echo $this->Form->control('reserva_id', ['options' => $reservas, 'label'=>'Nro. de Reserva']);
+                        echo $this->Form->control('reserva_id', ['options' => $reservas, 'label'=>'Nro. de Reserva', 'disabled'=>true]);
                         //echo $this->Form->control('user_id', ['options' => $users]);
                         ?>
                     </div>
