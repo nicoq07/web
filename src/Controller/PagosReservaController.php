@@ -121,4 +121,21 @@ class PagosReservaController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function efectivo(){
+        $pagosReserva = $this->PagosReserva->newEntity();
+        if ($this->request->is('post')) {
+            $pagosReserva = $this->PagosReserva->patchEntity($pagosReserva, $this->request->getData());
+            if ($this->PagosReserva->save($pagosReserva)) {
+                $this->Flash->success(__('The pagos reserva has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The pagos reserva could not be saved. Please, try again.'));
+        }
+        $reservas = $this->PagosReserva->Reservas->find('list', ['limit' => 200]);
+        $users = $this->PagosReserva->Users->find('list', ['limit' => 200]);
+        $this->set(compact('pagosReserva', 'reservas', 'users'));
+        $this->set('_serialize', ['pagosReserva']);
+    }
 }
