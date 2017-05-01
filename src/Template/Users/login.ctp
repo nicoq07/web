@@ -15,7 +15,7 @@
 <!-- 							<input class="form validate-required" type="text" placeholder="Usuario" name="usuario"> 
 							<input class="form validate-required validate-email" type="text" placeholder="<?= h('Contraseña')?>" name="contrasena">-->
                         </div>
-                        <a href="#"><?php h('No estás registrado?')?></a>
+                        <?= $this->Html->link('No estás registrado?',['action' => 'add'])?>
                         <br>
                         <br>
                           <?= $this->Form->button(__('Acceder'),['class' => 'send-form'])?>
