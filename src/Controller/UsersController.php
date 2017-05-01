@@ -17,7 +17,7 @@ class UsersController extends AppController
 	public function beforeFilter(\Cake\Event\Event $event)
 	{
 		parent::beforeFilter($event);
-		$this->Auth->allow(['add']);
+		$this->Auth->allow(['add', 'contacto']);
 	}
 	
 	public function isAuthorized($user)

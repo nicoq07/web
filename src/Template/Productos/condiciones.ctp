@@ -7,7 +7,7 @@
 				<h4 class="tx_gris">
 					1- El cliente es el responsable de medir el espacio disponible para colocar los juegos, se necesita 1 metro adicional a la medida del juego para que entre cómodamente. Fun Club no entregará un inflable que toque con paredes, plantas, canteros, techo, lámparas y cualquier otro elemento que dañe el juego o la seguridad del mismo. En caso de no haber medido y que el juego no entre, el locatario abonará el 100% del alquiler de todos modos.
 					<br>
-					2- Fun Club se limita a entregar solamente a las localidades que se encuentran listadas en nuestro formulario de carga de direcciones. (Ver lista. //Esto sería un pop up.)
+					2- Fun Club se limita a entregar solamente a las localidades que se encuentran listadas en nuestro formulario de carga de direcciones.
 					<br>
 					3- La banda horaria tanto de entrega como de retiro es de 2 a 4hs. Por ejemplo: si la fiesta comienza a las 16hs, el horario de entrega será entre las 10 y las 15hs. Durante esa banda horaria el cliente deberá estar presente o dejar a alguien responsable en el lugar de entrega para recibir al reparto. El reparto comienza a entregar a partir de las 9hs y retira hasta las 22 hs. Luego de este horario no se realizan entregas y retiros.
 					<br>
