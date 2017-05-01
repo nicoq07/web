@@ -10,6 +10,12 @@ use App\Controller\AppController;
  */
 class ProductosController extends AppController
 {
+	
+	public function beforeFilter(\Cake\Event\Event $event)
+	{
+		parent::beforeFilter($event);
+		$this->Auth->allow(['index' , 'home']);
+	}
 
     /**
      * Index method
