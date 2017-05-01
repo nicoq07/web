@@ -1,34 +1,39 @@
-<?php
-/**
-  * @var \App\View\AppView $this
-  */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Calificaciones Productos'), ['controller' => 'CalificacionesProductos', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Calificaciones Producto'), ['controller' => 'CalificacionesProductos', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Domicilios'), ['controller' => 'Domicilios', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Domicilio'), ['controller' => 'Domicilios', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Multas User'), ['controller' => 'MultasUser', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Multas User'), ['controller' => 'MultasUser', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Pagos Reserva'), ['controller' => 'PagosReserva', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Pagos Reserva'), ['controller' => 'PagosReserva', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Reserva'), ['controller' => 'Reservas', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Telefonos'), ['controller' => 'Telefonos', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Telefono'), ['controller' => 'Telefonos', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="users view large-9 medium-8 columns content">
-    <h3><?= h($user->id) ?></h3>
-    <table class="vertical-table">
+<div class="col-lg-3 sidebar menu-usuario">
+    <div class="mini-submenu">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </div>
+    <div class="list-group">
+        <span href="#" class="list-group-item active">
+            Mis datos
+            <span class="pull-right" id="slide-submenu">
+                <i class="fa fa-times"></i>
+            </span>
+        </span>
+        <a href="#" class="list-group-item">
+            <i class="fa fa-comment-o"></i> <?php echo h('Teléfonos')?>
+        </a>
+        <a href="#" class="list-group-item">
+            <i class="fa fa-search"></i> <?php echo h('Direcciones')?>
+        </a>
+        <a href="#" class="list-group-item">
+            <i class="fa fa-user"></i> <?php echo h('Multas')?>
+        </a>
+        <a href="#" class="list-group-item">
+            <i class="fa fa-folder-open-o"></i> <?php echo h('Reservas')?> 
+        </a>
+        <a href="#" class="list-group-item">
+            <i class="fa fa-bar-chart-o"></i> <?php echo h('Pagos')?> 
+        </a>
+        <a href="#" class="list-group-item">
+            <i class="fa fa-envelope"></i> <?php echo h('ETC')?>
+        </a>
+	</div>
+</div>
+
+<div class="col-lg-9 menu-usuario" >
+    <table class ="table table-striped table-hover"  cellpadding="0" cellspacing="0">
         <tr>
             <th scope="row"><?= __('Dni') ?></th>
             <td><?= h($user->dni) ?></td>
@@ -46,27 +51,11 @@
             <td><?= h($user->email) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Password') ?></th>
-            <td><?= h($user->password) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Role') ?></th>
-            <td><?= $user->has('role') ? $this->Html->link($user->role->id, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($user->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
+            <th scope="row"><?= __('Fecha alta') ?></th>
             <td><?= h($user->created) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($user->modified) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('active' , ['label' => 'Activo' ]) ?></th>
+            <th scope="row"><?= __('active') ?></th>
             <td><?= $user->active ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
