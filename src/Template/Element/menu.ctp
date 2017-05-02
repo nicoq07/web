@@ -91,7 +91,7 @@
 				                    		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= h('Envíos') ?><b class="caret"></b></a>
 				                    		 <ul class="dropdown-menu">
 					                    		 <li>
-					                    		 	<?= $this->Html->link('Contactos',['controller' => 'users', 'action' => 'contacto'])?>
+					                    		 	<?= $this->Html->link('Ver todos',['controller' => 'envios', 'action' => 'index'])?>
 					                    		 </li>
 				                    		 </ul>
 				                    	</li>
@@ -108,7 +108,8 @@
 					                    		 
 				                    		 </ul>
 				                    	</li>
-				                    	<?php elseif (!empty($current_user) && $current_user['rol_id'] == CLIENTE ) :?>
+				                    	<?php endif; ?>
+				                    	<?php if (!empty($current_user) ) :?>
 				                    	<li>
 					                    	<?= $this->Html->link('Perfil',['controller' => 'users', 'action' => 'view' , $current_user['id'] ])?>
 					                    </li>
