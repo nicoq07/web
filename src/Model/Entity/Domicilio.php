@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Domicilio Entity
  *
  * @property int $id
- * @property int $persona_id
+ * @property int $user_id
  * @property string $piso
  * @property string $numero
  * @property string $direccion
@@ -16,7 +16,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $modified
  * @property bool $active
  *
- * @property \App\Model\Entity\Persona $persona
+ * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\Localidade $localidade
  * @property \App\Model\Entity\Envio[] $envios
  */

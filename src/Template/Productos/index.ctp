@@ -9,16 +9,21 @@
                     <h1>&nbsp;</h1>
                 </div>
             </div>
+     
+      <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) :?>              
             
-            <div class="row">                
-                <div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
+            <div class="row">  
+                <div class="col-lg-2 col-lg-offset-10">
+                	<?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3">
+            
+                        <?php endif;?>    
+            
+            
+                <div class="col-lg-5">
                     <?php echo $this->Form->control('categoria_id', ['options' => $categorias, 'empty' => 'Selecione una categoría', 'label'=>'Filtrar por:']); ?>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-5">
                     <?php 
                     echo $this->Form->label('Ordenar por:');
                     echo $this->Form->select('precio', [

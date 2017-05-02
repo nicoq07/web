@@ -17,7 +17,31 @@ class FotosProductosControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.fotos_productos',
-        'app.productos'
+        'app.productos',
+        'app.rango_edades',
+        'app.categorias',
+        'app.calificaciones_productos',
+        'app.users',
+        'app.roles',
+        'app.domicilios',
+        'app.personas',
+        'app.localidades',
+        'app.provincias',
+        'app.paises',
+        'app.envios',
+        'app.remitos',
+        'app.facturas',
+        'app.reservas',
+        'app.estados_reservas',
+        'app.pagos_reserva',
+        'app.medios_pagos',
+        'app.reservas_productos',
+        'app.factura_productos',
+        'app.recibos',
+        'app.multas_user',
+        'app.pagos_multas',
+        'app.telefonos',
+        'app.tipo_telefonos'
     ];
 
     /**

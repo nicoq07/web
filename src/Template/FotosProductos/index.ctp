@@ -18,10 +18,10 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('producto_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('file') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('active' , ['label' => 'Activo' ]) ?></th>
+                <th scope="col"><?= $this->Paginator->sort('active') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('referencia') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -29,11 +29,11 @@
             <?php foreach ($fotosProductos as $fotosProducto): ?>
             <tr>
                 <td><?= $this->Number->format($fotosProducto->id) ?></td>
-                <td><?= $fotosProducto->has('producto') ? $this->Html->link($fotosProducto->producto->id, ['controller' => 'Productos', 'action' => 'view', $fotosProducto->producto->id]) : '' ?></td>
-                <td><?= h($fotosProducto->file) ?></td>
+                <td><?= $fotosProducto->has('producto') ? $this->Html->link($fotosProducto->producto->descripcion, ['controller' => 'Productos', 'action' => 'view', $fotosProducto->producto->id]) : '' ?></td>
                 <td><?= h($fotosProducto->created) ?></td>
                 <td><?= h($fotosProducto->modified) ?></td>
                 <td><?= h($fotosProducto->active) ?></td>
+                <td><?= h($fotosProducto->referencia) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $fotosProducto->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $fotosProducto->id]) ?>

@@ -23,8 +23,8 @@
         <legend><?= __('Edit Fotos Producto') ?></legend>
         <?php
             echo $this->Form->control('producto_id', ['options' => $productos]);
-            echo $this->Form->control('file');
-            echo $this->Form->control('active' , ['label' => 'Activo' ]);
+            echo $this->Form->control('active');
+            echo $this->Form->control('referencia');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

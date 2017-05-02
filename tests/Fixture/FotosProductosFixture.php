@@ -19,10 +19,10 @@ class FotosProductosFixture extends TestFixture
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'producto_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'file' => ['type' => 'string', 'length' => 80, 'null' => false, 'default' => null, 'collate' => 'latin1_spanish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'active' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null],
+        'referencia' => ['type' => 'string', 'length' => 150, 'null' => false, 'default' => null, 'collate' => 'latin1_spanish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_indexes' => [
             'fk_fotos_prod_idx' => ['type' => 'index', 'columns' => ['producto_id'], 'length' => []],
         ],
@@ -46,10 +46,10 @@ class FotosProductosFixture extends TestFixture
         [
             'id' => 1,
             'producto_id' => 1,
-            'file' => 'Lorem ipsum dolor sit amet',
-            'created' => '2017-04-24 14:16:40',
-            'modified' => '2017-04-24 14:16:40',
-            'active' => 1
+            'created' => '2017-05-02 15:33:29',
+            'modified' => '2017-05-02 15:33:29',
+            'active' => 1,
+            'referencia' => 'Lorem ipsum dolor sit amet'
         ],
     ];
 }

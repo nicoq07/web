@@ -10,6 +10,24 @@ use App\Controller\AppController;
  */
 class DomiciliosController extends AppController
 {
+	public function isAuthorized($user)
+	{
+		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
+		{
+			if(in_array($this->request->action, ['add']))
+			{
+				return true;
+			}
+		}
+		elseif (isset($user['rol_id']) && $user['rol_id'] == EMPLEADO) {
+			
+			return true;
+		}
+		
+		return parent::isAuthorized($user);
+		
+		return true;
+	}
 
     /**
      * Index method
@@ -19,7 +37,7 @@ class DomiciliosController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Personas', 'Localidades']
+            'contain' => ['Users', 'Localidades']
         ];
         $domicilios = $this->paginate($this->Domicilios);
 
@@ -37,7 +55,7 @@ class DomiciliosController extends AppController
     public function view($id = null)
     {
         $domicilio = $this->Domicilios->get($id, [
-            'contain' => ['Personas', 'Localidades', 'Envios']
+            'contain' => ['Users', 'Localidades', 'Envios']
         ]);
 
         $this->set('domicilio', $domicilio);
@@ -61,9 +79,9 @@ class DomiciliosController extends AppController
             }
             $this->Flash->error(__('The domicilio could not be saved. Please, try again.'));
         }
-        $personas = $this->Domicilios->Personas->find('list', ['limit' => 200]);
+        $users = $this->Domicilios->Users->find('list', ['limit' => 200]);
         $localidades = $this->Domicilios->Localidades->find('list', ['limit' => 200]);
-        $this->set(compact('domicilio', 'personas', 'localidades'));
+        $this->set(compact('domicilio', 'users', 'localidades'));
         $this->set('_serialize', ['domicilio']);
     }
 
@@ -88,9 +106,9 @@ class DomiciliosController extends AppController
             }
             $this->Flash->error(__('The domicilio could not be saved. Please, try again.'));
         }
-        $personas = $this->Domicilios->Personas->find('list', ['limit' => 200]);
+        $users = $this->Domicilios->Users->find('list', ['limit' => 200]);
         $localidades = $this->Domicilios->Localidades->find('list', ['limit' => 200]);
-        $this->set(compact('domicilio', 'personas', 'localidades'));
+        $this->set(compact('domicilio', 'users', 'localidades'));
         $this->set('_serialize', ['domicilio']);
     }
 

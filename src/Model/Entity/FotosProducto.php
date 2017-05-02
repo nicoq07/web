@@ -8,10 +8,10 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $producto_id
- * @property string $file
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  * @property bool $active
+ * @property string $referencia
  *
  * @property \App\Model\Entity\Producto $producto
  */

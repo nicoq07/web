@@ -59,13 +59,13 @@ class FotosProductosTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('file', 'create')
-            ->notEmpty('file');
-
-        $validator
             ->boolean('active')
             ->requirePresence('active', 'create')
             ->notEmpty('active');
+
+        $validator
+            ->requirePresence('referencia', 'create')
+            ->notEmpty('referencia');
 
         return $validator;
     }

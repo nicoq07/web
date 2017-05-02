@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Domicilios Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Personas
+ * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsTo $Localidades
  * @property \Cake\ORM\Association\HasMany $Envios
  *
@@ -42,8 +42,8 @@ class DomiciliosTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Personas', [
-            'foreignKey' => 'persona_id',
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Localidades', [
@@ -96,7 +96,7 @@ class DomiciliosTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['persona_id'], 'Personas'));
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['localidad_id'], 'Localidades'));
 
         return $rules;

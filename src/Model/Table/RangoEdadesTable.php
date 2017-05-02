@@ -33,7 +33,7 @@ class RangoEdadesTable extends Table
         parent::initialize($config);
 
         $this->setTable('rango_edades');
-        $this->setDisplayField('id');
+        $this->setDisplayField('rango');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

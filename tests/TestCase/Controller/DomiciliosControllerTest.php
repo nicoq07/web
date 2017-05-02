@@ -17,9 +17,31 @@ class DomiciliosControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.domicilios',
+        'app.users',
+        'app.roles',
+        'app.calificaciones_productos',
+        'app.productos',
+        'app.rango_edades',
+        'app.categorias',
+        'app.factura_productos',
+        'app.facturas',
+        'app.reservas',
+        'app.estados_reservas',
+        'app.envios',
+        'app.remitos',
+        'app.pagos_reserva',
+        'app.medios_pagos',
+        'app.reservas_productos',
+        'app.recibos',
+        'app.fotos_productos',
+        'app.multas_user',
+        'app.pagos_multas',
+        'app.telefonos',
         'app.personas',
+        'app.tipo_telefonos',
         'app.localidades',
-        'app.envios'
+        'app.provincias',
+        'app.paises'
     ];
 
     /**

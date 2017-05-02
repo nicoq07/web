@@ -19,11 +19,11 @@
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Producto') ?></th>
-            <td><?= $fotosProducto->has('producto') ? $this->Html->link($fotosProducto->producto->id, ['controller' => 'Productos', 'action' => 'view', $fotosProducto->producto->id]) : '' ?></td>
+            <td><?= $fotosProducto->has('producto') ? $this->Html->link($fotosProducto->producto->descripcion, ['controller' => 'Productos', 'action' => 'view', $fotosProducto->producto->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('File') ?></th>
-            <td><?= h($fotosProducto->file) ?></td>
+            <th scope="row"><?= __('Referencia') ?></th>
+            <td><?= h($fotosProducto->referencia) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
@@ -38,7 +38,7 @@
             <td><?= h($fotosProducto->modified) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('active' , ['label' => 'Activo' ]) ?></th>
+            <th scope="row"><?= __('Active') ?></th>
             <td><?= $fotosProducto->active ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>

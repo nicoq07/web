@@ -7,6 +7,8 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New Domicilio'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Localidades'), ['controller' => 'Localidades', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Localidade'), ['controller' => 'Localidades', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Envios'), ['controller' => 'Envios', 'action' => 'index']) ?></li>
@@ -34,7 +36,7 @@
             <?php foreach ($domicilios as $domicilio): ?>
             <tr>
                 <td><?= $this->Number->format($domicilio->id) ?></td>
-                <td><?= $this->Number->format($domicilio->user_id) ?></td>
+                <td><?= $domicilio->has('user') ? $this->Html->link($domicilio->user->id, ['controller' => 'Users', 'action' => 'view', $domicilio->user->id]) : '' ?></td>
                 <td><?= h($domicilio->piso) ?></td>
                 <td><?= h($domicilio->numero) ?></td>
                 <td><?= h($domicilio->direccion) ?></td>

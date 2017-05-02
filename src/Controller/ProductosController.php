@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Productos Controller
@@ -55,26 +56,48 @@ class ProductosController extends AppController
      * Add method
      *
      * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
-     */
+     */	
     public function add()
-    {
+    {	
+    	$uploadFile = WWW_ROOT  . 'imagenes' . DS;
+    	
+    	//$connection = ConnectionManager::get('default');
+    
+//     	debug($this->request->getData());
+    	
+  		if ($this->request->is('post')) 
+  		{
+		  if(!empty($this->request->getData()['foto']['name']))
+		    	{
+		    		if(!move_uploaded_file($this->request->getData()['foto']['tmp_name'],$uploadFile . $this->request->getData()['foto']['name']))
+		    		{
+		    			$this->Flash->error("Tenemos un problema para cargar el archivo");
+		    		}
+			exit();
+		    }
+  		}
+    	
+    	
+    	
         $producto = $this->Productos->newEntity();
         if ($this->request->is('post')) {
+        	
             $producto = $this->Productos->patchEntity($producto, $this->request->getData());
             if ($this->Productos->save($producto)) {
-                $this->Flash->success(__('The producto has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+            		$this->Flash->success(__('The producto has been saved.'));
+            		return $this->redirect(['action' => 'index']);
+            	}
+            	$this->Flash->error(__('The producto could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The producto could not be saved. Please, try again.'));
-        }
+            
+        
         $rangoEdades = $this->Productos->RangoEdades->find('list', ['limit' => 200]);
         $categorias = $this->Productos->Categorias->find('list', ['limit' => 200]);
-        $reservas = $this->Productos->Reservas->find('list', ['limit' => 200]);
-        $this->set(compact('producto', 'rangoEdades', 'categorias', 'reservas'));
+//         $reservas = $this->Productos->Reservas->find('list', ['limit' => 200]);
+        $this->set(compact('producto', 'rangoEdades', 'categorias'));
         $this->set('_serialize', ['producto']);
     }
-
+    
     /**
      * Edit method
      *
@@ -102,7 +125,7 @@ class ProductosController extends AppController
         $this->set(compact('producto', 'rangoEdades', 'categorias', 'reservas'));
         $this->set('_serialize', ['producto']);
     }
-
+	
     /**
      * Delete method
      *

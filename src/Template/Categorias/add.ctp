@@ -6,6 +6,7 @@
                 <legend>Nueva categoría</legend>
                 <?php
                     echo $this->Form->control('descripcion');
+                    echo $this->Form->control('active' , ['label' => 'Activo' ]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Crear')) ?>

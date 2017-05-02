@@ -1,7 +1,7 @@
 <section class="duplicatable-content bkg">
     <div class="row">   
         <div class="col-lg-8 col-lg-offset-2">
-            <?= $this->Form->create($producto) ?>
+            <?= $this->Form->create($producto, 	['type' => 'file']) ?>
             <fieldset>
                 <legend>Nuevo producto</legend>
                 <?php
@@ -12,7 +12,8 @@
                     echo $this->Form->control('dimensiones');
                     echo $this->Form->control('precio');
                     echo $this->Form->control('cantidad');
-                    echo $this->Form->control('fotos', ['type'=>'file']);
+                    echo $this->Form->control('foto',['label'=>'', 'type' => 'file','enctype' => 'multipart/form-data']);
+                    echo $this->Form->control('active' , ['label' => 'Activo' ]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Crear')) ?>
