@@ -7,10 +7,8 @@
     <br>
     <h3 class="centrar">Reservas</h3>
     <div class="row">
-        <div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
-        </div>
-    </div>
-    <div class="row">
+    	
+    
         <div class="col-lg-3">
             <?php echo $this->Form->control('filtro', ['label'=>'Filtrar por fecha:']);?>
         </div>
@@ -28,8 +26,11 @@
         <div class="col-lg-3">
             <?php echo $this->Form->control('user', ['label'=>'Filtrar por cliente:']);?>
         </div>
-        <div class="col-lg-3" style="vertical-align: bottom;">
+        <div class="col-lg-2">
             <button class="btn btn-default">Buscar</button>
+        </div>
+        <div class="col-lg-1">
+       		<?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
         </div>
     </div>
     
