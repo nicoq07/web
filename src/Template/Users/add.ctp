@@ -1,3 +1,6 @@
+<?php
+use PhpParser\Parser\Php5;
+?>
 
 <section class="duplicatable-content bkg">
 	<div class="row">	
@@ -11,11 +14,24 @@
 		            echo $this->Form->control('dni');
 		            echo $this->Form->control('email');
 		            echo $this->Form->control('password');
- 		            echo $this->Form->control('rol_id', ['options' => $roles, 'empty' => true]);
- 		            echo $this->Form->control('active',['label' => 'Activo']);
+		            if (!empty($current_user))
+		            {	
+	 		            echo $this->Form->control('rol_id', ['options' => $roles, 'empty' => true]);
+			            echo $this->Form->control('active',['label' => 'Activo']);
+		            }
 		        ?>
 		    </fieldset>
-		    <?= $this->Form->button(__('Crear')) ?>
+		     <?php 
+		     if (!empty($current_user))
+		     {
+		     	$title = "Registrar";
+		     }
+		     else 
+		     {
+		     	$title = "Registrarme";
+		     }
+		     ?>
+		    <?= $this->Form->button($title) ?>
 		    <?= $this->Form->end() ?>
 		   </div>
 	  </div>

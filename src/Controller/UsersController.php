@@ -24,7 +24,7 @@ class UsersController extends AppController
 	{
 		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
 		{
-			if(in_array($this->request->action, ['index','view','logout','login']))
+			if(in_array($this->request->action, ['index','view','logout','login','home']))
 			{
 				return true;
 			}
@@ -79,15 +79,33 @@ class UsersController extends AppController
      */
     public function add()
     {
+    	
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+        	$user = $this->Users->patchEntity($user, $this->request->getData());
+        	
+        	if (!$this->Auth->user())
+        	{	
+        		$user->rol_id = CLIENTE;
+        		$user->active = true;
+        	}
+            if ($this->Users->save($user)) 
+            {
+            	$this->Flash->success("Usuario creado");
+            	
+            	if (!$this->Auth->user())
+            	{
+            		$user = $this->Auth->identify();
+            		if($user)
+            		{
+            			$this->Auth->setUser($user);
+            			return $this->redirect($this->Auth->redirectUrl());
+            		}
+            		
+            	}
+            	return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('Error al crear el usuario, por favor reintente!'));
         }
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
         $this->set(compact('user', 'roles'));
@@ -182,6 +200,11 @@ class UsersController extends AppController
     public function admin()
     {
         
+    }
+    
+    public function home()
+    {
+    	
     }
     
 }
