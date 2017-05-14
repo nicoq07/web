@@ -16,7 +16,8 @@
     		'lightbox.min',
     		'line-icons.min',
     		'theme.css',
-    	    'style']) ?>
+    	    'style',
+            'fileinput.min']) ?>
     
     <?= $this->Html->script([
     		'https://www.youtube.com/iframe_api',
@@ -34,8 +35,13 @@
     		'lightbox.min',
     		'jquery.countdown.min',
 			'modernizr-2.6.2-respond-1.1.0.min.js',		  			
-    		'scripts'
+    		'scripts',
+            'fileinput.min'
     		]) ?>
+
+    <script type="text/javascript">
+        $('#foto').fileinput();
+    </script>
     	
     	<?= $this->fetch('meta') ?>
        <?= $this->fetch('script') ?> 

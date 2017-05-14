@@ -1,3 +1,18 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<script>
+$(document).on('ready', function() {    
+    $('#foto').fileinput({        
+        showUpload: false,
+        autoReplace: true,
+        maxFileCount: 4,
+        validateInitialCount: true,
+        overwriteInitial: false,
+        mainClass: "input-group-lg"
+    });
+});
+</script>
+
 <section class="duplicatable-content bkg">
     <div class="row">   
         <div class="col-lg-8 col-lg-offset-2">
@@ -12,7 +27,7 @@
                     echo $this->Form->control('dimensiones');
                     echo $this->Form->control('precio');
                     echo $this->Form->control('cantidad');
-                    echo $this->Form->control('foto',['label'=>'', 'type' => 'file','enctype' => 'multipart/form-data']);
+                    echo $this->Form->input('foto',['label'=>'Fotos', 'type' => 'file', 'id' => 'foto', 'name' => 'foto', 'class' => 'file', 'data-show-upload' => false, 'data-show-caption' => true, 'multiple class' =>'file-loading']);
                     echo $this->Form->control('active' , ['label' => 'Activo' ]);
                 ?>
             </fieldset>

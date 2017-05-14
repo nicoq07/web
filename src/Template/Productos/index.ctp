@@ -10,15 +10,69 @@
                 </div>
             </div>
      
-      <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) :?>              
+        <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) :?>              
+            
+            <div class="row">  
+                <div class="col-lg-2 col-lg-offset-10">
+                    <?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
+                </div>
+            
+        <?php endif;?>            
+            
+                <div class="col-lg-5">
+                    <?php echo $this->Form->control('categoria_id', ['options' => $categorias, 'empty' => 'Selecione una categoría', 'label'=>'Filtrar por:']); ?>
+                </div>
+                <div class="col-lg-5">
+                    <?php 
+                    echo $this->Form->label('Ordenar por:');
+                    echo $this->Form->select('precio', [
+                        '0'=>'Selecione precio',
+                        '1'=>'Mayor precio',
+                        '2'=>'Menor precio',
+                    ]); ?>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <?php foreach ($productos as $producto): ?>
+                <div class="col-md-4 col-sm-6">
+                    <div class="blog-snippet-1">
+                        <img id="Image1" src="webroot/img/chicos/cubo/1.jpg" class="border">
+                        <h4 class="tx_celeste marg"><?= h($producto->descripcion) ?></h4>
+                        <p><strong>Medida: </strong><?= h($producto->dimensiones) ?></p>
+                        <p><strong>Precio: $</strong><?= $this->Number->format($producto->precio) ?></p>
+                        <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <?= $this->Html->link('Modificar', ['action' => 'edit', $producto->id], ['class' => 'btn btn-primary']) ?>
+                        <?= $this->Form->postLink('Baja', ['action' => 'delete', $producto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $producto->id, 'class' => 'btn btn-primary']) ?>
+                    </div>
+                </div>              
+                <?php endforeach; ?>
+            </div>  
+        </div>
+    </section>
+</div>
+
+
+<!--<div class="main-container bkg">
+    <section class="duplicatable-content bkg">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <h1 class="azul">INFLABLES - Chicos y Medianos</h1>
+                    </div>
+                    <h1>&nbsp;</h1>
+                </div>
+            </div>
+     
+        <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) :?>              
             
             <div class="row">  
                 <div class="col-lg-2 col-lg-offset-10">
                 	<?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
                 </div>
             
-                        <?php endif;?>    
-            
+        <?php endif;?>            
             
                 <div class="col-lg-5">
                     <?php echo $this->Form->control('categoria_id', ['options' => $categorias, 'empty' => 'Selecione una categoría', 'label'=>'Filtrar por:']); ?>
@@ -170,7 +224,7 @@
             </div>  
         </div>
     </section>
-</div>
+</div>-->
 
 <!--<div class="productos index large-9 medium-8 columns content">
     <h3><?= __('Productos') ?></h3>

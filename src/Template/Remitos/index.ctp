@@ -22,8 +22,6 @@
                 <tr>
                     <td><?= $this->Number->format($remito->id) ?></td>
                     <td><?= $remito->has('factura') ? $this->Html->link($remito->factura->id, ['controller' => 'Facturas', 'action' => 'view', $remito->factura->id]) : '' ?></td>
-                    <td><?= h($remito->created) ?></td>
-                    <td><?= h($remito->modified) ?></td>
                     <td><?= h($remito->active) ?></td>
                     <td class="actions">
                         <?= $this->Html->link('Modificar', ['action' => 'edit', $remito->id], ['class' => 'btn btn-default']) ?>
