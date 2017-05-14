@@ -1,13 +1,17 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
 <script>
 $(document).on('ready', function() {    
-    $('#foto').fileinput({        
-        showUpload: false,
-        autoReplace: true,
+    $('#foto').fileinput({          
+        allowedFileExtensions: ["jpg", "png"],
         maxFileCount: 4,
-        validateInitialCount: true,
-        overwriteInitial: false,
+        dropZoneTitle: 'Arrastre y suelte sus archivos aquí...',
+        removeTitle: 'Eliminar archivos seleccionados',
+        msgSelected: '{n} archivos seleccionados',
+        browseLabel: "Agregar",
+        browseIcon: "<i class=\"glyphicon glyphicon-plus\"></i>",
+        removeLabel: "Eliminar",
+        uploadUrl: '/file-upload-batch/',
+        showUpload: false,
+        layoutTemplates: {actionUpload: ''},
         mainClass: "input-group-lg"
     });
 });
@@ -27,7 +31,7 @@ $(document).on('ready', function() {
                     echo $this->Form->control('dimensiones');
                     echo $this->Form->control('precio');
                     echo $this->Form->control('cantidad');
-                    echo $this->Form->input('foto',['label'=>'Fotos', 'type' => 'file', 'id' => 'foto', 'name' => 'foto', 'class' => 'file', 'data-show-upload' => false, 'data-show-caption' => true, 'multiple class' =>'file-loading']);
+                    echo $this->Form->input('foto',['label'=>'Fotos', 'type' => 'file', 'id' => 'foto', 'name' => 'foto', 'class' => 'btn btn-default', 'data-show-upload' => false, 'data-show-caption' => true, 'multiple class' =>'file-loading', 'accept'=>'image/jpeg, image/png']);
                     echo $this->Form->control('active' , ['label' => 'Activo' ]);
                 ?>
             </fieldset>

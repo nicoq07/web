@@ -1,7 +1,3 @@
-<link rel = "stylesheet" href = "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link href="css/theme.css" rel="stylesheet" type="text/css" media="all"/>
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
-
 <span class="background-image-holder parallax-background"></span>
 
 <style type="text/css">
@@ -74,11 +70,11 @@ input[type="radio"]:checked ~ label {
             </div>
         </div>
         <div class="col-lg-6">
-            <h1 style="color: black">Cubo / opcional con pelotas</h1>
-            <h4 style="color: black"><strong>Categoría: </strong>Inflables Chicos</h4><br>
+            <h1 style="color: black"><?= h($producto->descripcion)?></h1>
+            <h4 style="color: black"><strong>Categoría: </strong><?= h($producto->categoria->descripcion)?></h4><br>
             <h4 style="color: black"><strong>Stock: </strong>3</h4><br>
-            <h4 style="color: black"><strong>Información: </strong>Detalle del producto</h4><br>
-            <h4 style="color: black"><strong>Medidas: </strong>ancho 2 - largo 2,50 - alto 2,30</h4><br>
+            <h4 style="color: black"><strong>Información: </strong><?= h($producto->informacion)?></h4><br>
+            <h4 style="color: black"><strong>Medidas: </strong><?= h($producto->dimensiones)?></h4><br>
             <button class="btn btn-default right">Reservar <i class="icon-cart"></i></button>
         </div>
     </div>
@@ -88,8 +84,8 @@ input[type="radio"]:checked ~ label {
             <h1 style="color: black">Disponibilidad:</h1><br>
             <h4 style="color: black"><strong>Referencias: </strong></h4>
             <h4 style="color: green">Disponible</h4>
-            <h4 style="color: yellow">   Existen reservas</h4>   
-            <h4 style="color: red">   No Disponible</h4><br>
+            <h4 style="color: yellow">Existen reservas</h4>   
+            <h4 style="color: red">No Disponible</h4><br>
             <br>
 
             <table class="table table-bordered">
