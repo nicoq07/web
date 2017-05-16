@@ -63,10 +63,12 @@ class ProductosController extends AppController
     	
     	//$connection = ConnectionManager::get('default');
     
-//     	debug($this->request->getData());
+     	
     	
   		if ($this->request->is('post')) 
   		{
+         debug($this->request->getData());
+   
 		  if(!empty($this->request->getData()['foto']['name']))
 		    	{
 		    		if(!move_uploaded_file($this->request->getData()['foto']['tmp_name'],$uploadFile . $this->request->getData()['foto']['name']))

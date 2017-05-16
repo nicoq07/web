@@ -22,7 +22,7 @@
                 <?php foreach ($provincias as $provincia): ?>
                 <tr>
                     <td><?= $this->Number->format($provincia->id) ?></td>
-                    <td><?= $provincia->has('paise') ? $this->Html->link($provincia->paise->id, ['controller' => 'Paises', 'action' => 'view', $provincia->paise->id]) : '' ?></td>
+                    <td><?= $provincia->has('paise') ? $this->Html->link($provincia->paise->descripcion, ['controller' => 'Paises', 'action' => 'view', $provincia->paise->id]) : '' ?></td>
                     <td><?= h($provincia->descripcion) ?></td>
                     <td><?= h($provincia->active) ?></td>
                     <td class="actions">
