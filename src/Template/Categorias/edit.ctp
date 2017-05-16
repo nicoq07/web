@@ -1,4 +1,22 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="row">   
+        <div class="col-lg-8 col-lg-offset-2">
+            <?= $this->Form->create($categoria) ?>
+            <fieldset>
+                <legend>Modificar categoría</legend>
+                <?php
+                    echo $this->Form->control('descripcion');
+                    echo $this->Form->control('active' , ['label' => 'Activo' ]);
+                ?>
+            </fieldset>
+            <?= $this->Form->button('Modificar') ?>
+            <?= $this->Form->end() ?>
+           </div>
+      </div>
+</section>
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -28,4 +46,4 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+</div>-->

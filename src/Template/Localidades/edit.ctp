@@ -1,4 +1,24 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="row">   
+        <div class="col-lg-8 col-lg-offset-2">
+            <?= $this->Form->create($localidade) ?>
+            <fieldset>
+                <legend>Modificar localidad</legend>
+                <?php
+                    echo $this->Form->control('provincia_id', ['options' => $provincias]);
+                    echo $this->Form->control('duracion_viaje');
+                    echo $this->Form->control('precio');
+                    echo $this->Form->control('descripcion');
+                ?>
+            </fieldset>
+            <?= $this->Form->button('Modificar') ?>
+            <?= $this->Form->end() ?>
+           </div>
+      </div>
+</section>
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -31,4 +51,4 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+</div>-->

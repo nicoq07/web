@@ -1,4 +1,23 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="row">   
+        <div class="col-lg-8 col-lg-offset-2">
+            <?= $this->Form->create($envio) ?>
+            <fieldset>
+                <legend>Modificar envío</legend>
+                <?php
+                    echo $this->Form->control('remito_id', ['options' => $remitos]);
+                    echo $this->Form->control('reserva_id', ['options' => $reservas]);
+                    echo $this->Form->control('domicilio_id', ['options' => $domicilios]);
+                ?>
+            </fieldset>
+            <?= $this->Form->button('Modificar') ?>
+            <?= $this->Form->end() ?>
+           </div>
+      </div>
+</section>
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -34,4 +53,4 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+</div>-->

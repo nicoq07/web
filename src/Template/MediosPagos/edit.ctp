@@ -1,4 +1,22 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="row">   
+        <div class="col-lg-8 col-lg-offset-2">
+            <?= $this->Form->create($mediosPago) ?>
+            <fieldset>
+                <legend>Modificar medio de pago</legend>
+                <?php
+                    echo $this->Form->control('descripcion');
+                ?>
+            </fieldset>
+            <?= $this->Form->button('Modificar') ?>
+            <?= $this->Form->end() ?>
+           </div>
+      </div>
+</section>
+
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -26,4 +44,4 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+</div>-->

@@ -33,7 +33,7 @@ class PaisesTable extends Table
         parent::initialize($config);
 
         $this->setTable('paises');
-        $this->setDisplayField('id');
+        $this->setDisplayField('descripcion');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

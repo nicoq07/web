@@ -33,7 +33,7 @@ class EstadosReservasTable extends Table
         parent::initialize($config);
 
         $this->setTable('estados_reservas');
-        $this->setDisplayField('id');
+        $this->setDisplayField('descripcion');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

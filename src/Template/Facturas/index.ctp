@@ -24,8 +24,6 @@
                     <td><?= $this->Number->format($factura->id) ?></td>
                     <td><?= $factura->has('reserva') ? $this->Html->link($factura->reserva->id, ['controller' => 'Reservas', 'action' => 'view', $factura->reserva->id]) : '' ?></td>
                     <td><?= $this->Number->format($factura->monto) ?></td>
-                    <td><?= h($factura->created) ?></td>
-                    <td><?= h($factura->modified) ?></td>
                     <td><?= h($factura->pagado) ?></td>
                     <td class="actions">
                         <?= $this->Html->link('Modificar', ['action' => 'edit', $factura->id], ['class' => 'btn btn-default']) ?>
