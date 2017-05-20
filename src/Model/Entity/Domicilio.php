@@ -36,4 +36,9 @@ class Domicilio extends Entity
         '*' => true,
         'id' => false
     ];
+    
+    protected function _getPresentacion()
+    {
+    	return $this->_properties['direccion'] . ' ' . $this->_properties['numero'] . ' ' . $this->_properties['piso'] . '- ' . $this->_properties['localidad_id'];
+    }
 }
