@@ -82,15 +82,9 @@ function ocultarOtros(nombre, nombreOtros)
                 <div>
                     <br>
                     <legend>Lugar del evento</legend>
-                    <?php 
-                        echo $this->Form->label('domicilio', 'Domicilio');
-                        echo $this->Form->select('domicilio', [
-                        'Brandsen 805, CABA',
-                        'Ricardo Enrique Bochini 951, Avellaneda',
-                        'Pasaje Mozart y Corbatta S/N, Avellaneda',
-                        'Av. Pres. Figueroa Alcorta 7597, CABA',
-                        ]
-                    );
+
+                    <?php
+                        echo $this->Form->control('domicilio_id', ['options' => $domicilios]);
                     ?>
                     <?php echo $this->Form->input('otraDireccion', array('onclick'=>"ocultarOtros('otradireccion-1', 'cargarOtraDireccion')", 'label'=>false, 'type'=>'select', 'multiple'=>'checkbox', 'options'=>array(1=>'Otra dirección')));
                      ?>
