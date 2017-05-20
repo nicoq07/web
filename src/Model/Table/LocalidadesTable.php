@@ -35,7 +35,7 @@ class LocalidadesTable extends Table
         parent::initialize($config);
 
         $this->setTable('localidades');
-        $this->setDisplayField('descripcion');
+        $this->setDisplayField('presentacion');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

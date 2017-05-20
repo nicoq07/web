@@ -36,6 +36,6 @@ class Localidade extends Entity
     
     protected function _getPresentacion()
     {
-    	return $this->_properties['descripcion'] . ' ' . $this->_properties['precio'] ;
+    	return $this->_properties['descripcion'] . ' ' . $this->_properties['precio'] .' duracion:' . $this->_properties['duracion_viaje'];
     }
 }
