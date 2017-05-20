@@ -61,11 +61,12 @@ class ReservasController extends AppController
             }
             $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
         }
+
         $users = $this->Reservas->Users->find('list', ['limit' => 200]);
         $estadosReservas = $this->Reservas->EstadosReservas->find('list', ['limit' => 200]);
         $productos = $this->Reservas->Productos->find('list', ['limit' => 200]);
-        $domicilios = $this->Reservas->Users->Domicilios->find('list', ['limit' => 200]);
-        $localidades = $this->Reservas->Users->Domicilios->Localidades->find('list', ['limit' => 200]);
+        $domicilios = $this->Reservas->Users->Domicilios->find();        
+        $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
         $this->set(compact('reserva', 'users', 'estadosReservas', 'productos', 'domicilios','localidades'));
         $this->set('_serialize', ['reserva']);
     }

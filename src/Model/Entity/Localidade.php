@@ -33,9 +33,4 @@ class Localidade extends Entity
         '*' => true,
         'id' => false
     ];
-    
-    protected function _getPresentacion()
-    {
-    	return $this->_properties['descripcion'] . ' ' . $this->_properties['precio'] .' duracion:' . $this->_properties['duracion_viaje'];
-    }
 }

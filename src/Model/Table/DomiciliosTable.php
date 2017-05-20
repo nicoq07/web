@@ -37,7 +37,7 @@ class DomiciliosTable extends Table
         parent::initialize($config);
 
         $this->setTable('domicilios');
-        $this->setDisplayField('presentacion');
+        $this->setDisplayField(['presentacion']);
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
