@@ -122,30 +122,16 @@ class ReservasController extends AppController
         if($this->request->is('ajax')) {
             if ($this->request->query['desde'] == 'domicilio') {
                 $this->autoRender = false; // No renderiza mediate el fichero .ctp
-                $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
-                $domicilios = $this->Reservas->Users->Domicilios->find(); 
-                $id = $this->request->query['id']; //id traido desde la view por Ajax      
-                $idLocalidad; 
-                foreach ($domicilios as $domicilio) {                                
-                    if ($domicilio->id == $id) {
-                        foreach ($localidades as $localidad) {
-                            if ($localidad->id == $domicilio->localidad_id) {
-                                echo $localidad->precio;
-                            }
-                        }
-                    }
-                }
+                $idDomicilio = $this->request->query['id'];
+                $domicilio = $this->Reservas->Users->Domicilios->get($idDomicilio);
+                $localidad = $this->Reservas->Users->Domicilios->Localidades->get($domicilio->localidad_id);
+                echo $localidad->precio;
             }
             if ($this->request->query['desde'] == 'localidad') {
                 $this->autoRender = false; // No renderiza mediate el fichero .ctp
-                $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
-                $id = $this->request->query['id']; //id traido desde la view por Ajax      
-
-                foreach ($localidades as $localidad) {
-                    if ($localidad->id == $id) {
-                        echo $localidad->precio;
-                    }
-                }
+                $idLocalidad = $this->request->query['id']; //id traido desde la view por Ajax      
+                $localidad = $this->Reservas->Users->Domicilios->Localidades->get($idLocalidad);
+                echo $localidad->precio;
             }           
         }
     }
@@ -154,30 +140,16 @@ class ReservasController extends AppController
         if($this->request->is('ajax')) {
             if ($this->request->query['desde'] == 'domicilio') {
                 $this->autoRender = false; // No renderiza mediate el fichero .ctp
-                $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
-                $domicilios = $this->Reservas->Users->Domicilios->find(); 
-                $id = $this->request->query['id_direccion']; //id traido desde la view por Ajax      
-                $idLocalidad; 
-                foreach ($domicilios as $domicilio) {                                
-                    if ($domicilio->id == $id) {
-                        foreach ($localidades as $localidad) {
-                            if ($localidad->id == $domicilio->localidad_id) {
-                                echo $localidad->precio;
-                            }
-                        }
-                    }
-                }
+                $idDomicilio = $this->request->query['id_direccion'];
+                $domicilio = $this->Reservas->Users->Domicilios->get($idDomicilio);
+                $localidad = $this->Reservas->Users->Domicilios->Localidades->get($domicilio->localidad_id);
+                echo $localidad->precio;
             }
             if ($this->request->query['desde'] == 'localidad') {
                 $this->autoRender = false; // No renderiza mediate el fichero .ctp
-                $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
-                $id = $this->request->query['id_direccion']; //id traido desde la view por Ajax      
-
-                foreach ($localidades as $localidad) {
-                    if ($localidad->id == $id) {
-                        echo $localidad->precio;
-                    }
-                }
+                $idLocalidad = $this->request->query['id_direccion']; //id traido desde la view por Ajax      
+                $localidad = $this->Reservas->Users->Domicilios->Localidades->get($idLocalidad);
+                echo $localidad->precio;
             }           
         }
     } 

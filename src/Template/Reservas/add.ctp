@@ -74,6 +74,29 @@ function calcularTotal() {
     });
 }
 
+function verDiv(ver) {
+    if (ver== 'fecha') {
+        $("#"+'fechaEvento').show();
+        $("#"+'lugarEvento').hide();        
+        $("#"+'productosEvento').hide();
+        return;
+    }
+    if (ver== 'lugar') {
+        $("#"+'fechaEvento').hide();
+        $("#"+'lugarEvento').show();        
+        $("#"+'productosEvento').hide();
+        return;
+    }
+    if (ver== 'productos') {
+        $("#"+'fechaEvento').hide();
+        $("#"+'lugarEvento').hide();        
+        $("#"+'productosEvento').show();
+        return;
+    }
+}
+
+
+
 </script>
 
 
@@ -83,75 +106,78 @@ function calcularTotal() {
             <?= $this->Form->create($reserva) ?>            
             <fieldset>
                 <legend>Fecha del evento</legend>
-                <div class="col-lg-6">
-                <?php
-                    //echo $this->Form->control('user_id', ['options' => $users, 'label' => 'Usuario']);
-                    //echo $this->Form->control('estado_reserva_id', ['options' => $estadosReservas, 'label' => 'Estado']);
-                    echo $this->Form->label('fecha_inicio', 'Inicio del evento');
-                ?>
-                <br>
-                <?php
-                    $arrayHorarios = [
-                        '09:00'=> '09:00',
-                        '10:00'=> '10:00',
-                        '11:00'=> '11:00',
-                        '12:00'=> '12:00',
-                        '13:00'=> '13:00',
-                        '14:00'=> '14:00',
-                        '15:00'=> '15:00',
-                        '16:00'=> '16:00',
-                        '17:00'=> '17:00',
-                        '18:00'=> '18:00',
-                        '19:00'=> '19:00',
-                        '20:00'=> '20:00',
-                        '21:00'=> '21:00',
-                        '22:00'=> '22:00',
-                    ];
+                <div class="row" id="fechaEvento">
+                    <div class="col-lg-6">
+                    <?php
+                        //echo $this->Form->control('user_id', ['options' => $users, 'label' => 'Usuario']);
+                        //echo $this->Form->control('estado_reserva_id', ['options' => $estadosReservas, 'label' => 'Estado']);
+                        echo $this->Form->label('fecha_inicio', 'Inicio del evento');
+                    ?>
+                    <br>
+                    <?php
+                        $arrayHorarios = [
+                            '09:00'=> '09:00',
+                            '10:00'=> '10:00',
+                            '11:00'=> '11:00',
+                            '12:00'=> '12:00',
+                            '13:00'=> '13:00',
+                            '14:00'=> '14:00',
+                            '15:00'=> '15:00',
+                            '16:00'=> '16:00',
+                            '17:00'=> '17:00',
+                            '18:00'=> '18:00',
+                            '19:00'=> '19:00',
+                            '20:00'=> '20:00',
+                            '21:00'=> '21:00',
+                            '22:00'=> '22:00',
+                        ];
 
-                    echo $this->Form->label('fecha_inicio', 'Fecha');
-                    echo $this->Form->text('fecha_inicio', array('type' => 'date'));
-                    echo $this->Form->label('fecha_inicio', 'Horario');
-                    echo $this->Form->select('fecha_inicio', $arrayHorarios);
-                ?>
-                </div>
-                <div class="col-lg-6">
-                <?php echo $this->Form->label('fecha_fin', 'Fin del evento'); ?>
-                <br>
-                <?php
-                    echo $this->Form->label('fecha_fin', 'Fecha');
-                    echo $this->Form->text('fecha_fin', array('type' => 'date'));
-                    echo $this->Form->label('fecha_fin', 'Horario');
-                    echo $this->Form->select('fecha_fin', $arrayHorarios);
-                    //echo $this->Form->control('fecha_fin', ['empty' => true]);
-                    //echo $this->Form->control('active' , ['label' => 'Activo' ]);
-                    //echo $this->Form->control('productos._ids', ['options' => $productos]);
-                ?>
+                        echo $this->Form->label('fecha_inicio', 'Fecha');
+                        echo $this->Form->text('fecha_inicio', array('type' => 'date'));
+                        echo $this->Form->label('fecha_inicio', 'Horario');
+                        echo $this->Form->select('fecha_inicio', $arrayHorarios);
+                    ?>
+                    </div>
+                    <div class="col-lg-6">
+                    <?php echo $this->Form->label('fecha_fin', 'Fin del evento'); ?>
+                    <br>
+                    <?php
+                        echo $this->Form->label('fecha_fin', 'Fecha');
+                        echo $this->Form->text('fecha_fin', array('type' => 'date'));
+                        echo $this->Form->label('fecha_fin', 'Horario');
+                        echo $this->Form->select('fecha_fin', $arrayHorarios);
+                        //echo $this->Form->control('fecha_fin', ['empty' => true]);
+                        //echo $this->Form->control('active' , ['label' => 'Activo' ]);
+                        //echo $this->Form->control('productos._ids', ['options' => $productos]);
+                    ?>
+                    </div>
+
+                    <div class="pull-right"><br><?= $this->Form->button('Continuar', ['onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><br> </div>
                 </div>
             </fieldset>            
             <fieldset>
                 <div>
-                    <br>
                     <legend>Lugar del evento</legend>
-                    <?php
-                        $arrayDomicilios = array();
-                        foreach ($domicilios as $domicilio) {
-                            $localidad;
-                            foreach ($localidades as $localidade) {
-                                if ($localidade->id == $domicilio->localidad_id) {
-                                    $arrayDomicilios[$domicilio->id] = $domicilio->presentacion." ".$localidade->descripcion;
+                    <div class="row" id="lugarEvento" style="display: none">
+                        <?php
+                            $arrayDomicilios = array();
+                            foreach ($domicilios as $domicilio) {
+                                $localidad;
+                                foreach ($localidades as $localidade) {
+                                    if ($localidade->id == $domicilio->localidad_id) {
+                                        $arrayDomicilios[$domicilio->id] = $domicilio->presentacion." ".$localidade->descripcion;
+                                    }
                                 }
                             }
-                        }
 
-                        echo $this->Form->control('domicilio', ['options' => $arrayDomicilios, 'onchange'=>'mostrarPrecioEnvioDomicilio(event);', 'empty' => 'Seleccione dirección...']);
-                    ?>
-                    <?php
-                        //echo $this->Form->control('domicilio_id', ['options' => $domicilios]);
-                    ?>
-                    <?php echo $this->Form->input('otraDireccion', array('onclick'=>"ocultarOtraDireccion()", 'label'=>false, 'type'=>'select', 'multiple'=>'checkbox', 'options'=>array(1=>'Otra dirección')));
-                     ?>
-                </div>
-                <div id="cargarOtraDireccion" style="display: none">
+                            echo $this->Form->control('domicilio', ['options' => $arrayDomicilios, 'onchange'=>'mostrarPrecioEnvioDomicilio(event);', 'empty' => 'Seleccione dirección...']);
+                        ?>
+                        <?php
+                            //echo $this->Form->control('domicilio_id', ['options' => $domicilios]);
+                        ?>
+                        <?php echo $this->Form->input('otraDireccion', array('onclick'=>"ocultarOtraDireccion()", 'label'=>false, 'type'=>'select', 'multiple'=>'checkbox', 'options'=>array(1=>'Otra dirección')));
+                         ?>                     
+                     <div id="cargarOtraDireccion" style="display: none">
                     <div class="col-lg-5">
                         <?php echo $this->Form->control('direccion', ['label' => 'Calle']); ?>
                     </div>
@@ -172,50 +198,55 @@ function calcularTotal() {
                         ?>
                     </div>
                 </div>
+                <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('fecha')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['onclick'=>"verDiv('productos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
+                </div>
+                </div>             
             </fieldset>
             <fieldset>
                 <div>
                     <legend>Productos seleccionados</legend>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Cantidad</th>
-                                <th>Descripción</th>
-                                <th>Precio p/hora</th>
-                                <th>Cantidad de horas</th>
-                                <th>Precio Total</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>168</td>
-                                <td>2</td>
-                                <td>Inflable - Cubo</td>
-                                <td>$100</td>
-                                <td>5</td>
-                                <td>$1000</td>
-                                <td><button class="btn btn-default"> X </button></td>
-                            </tr>
-                            <tr>
-                                <td>238</td>
-                                <td>1</td>
-                                <td>Juegos - Metegol</td>
-                                <td>$150</td>
-                                <td>5</td>
-                                <td>$750</td>
-                                <td><button class="btn btn-default"> X </button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <label class='pull-rigth'><strong>Costo de envío:</strong><div id='envio'></div></label>
-                    <br>                    
-                    <label><strong>Total a pagar:</strong><div id='total'></div></label>
+                    <div class="row" id="productosEvento" style="display: none">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Cantidad</th>
+                                    <th>Descripción</th>
+                                    <th>Precio p/hora</th>
+                                    <th>Cantidad de horas</th>
+                                    <th>Precio Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>168</td>
+                                    <td>2</td>
+                                    <td>Inflable - Cubo</td>
+                                    <td>$100</td>
+                                    <td>5</td>
+                                    <td>$1000</td>
+                                    <td><button class="btn btn-default"> X </button></td>
+                                </tr>
+                                <tr>
+                                    <td>238</td>
+                                    <td>1</td>
+                                    <td>Juegos - Metegol</td>
+                                    <td>$150</td>
+                                    <td>5</td>
+                                    <td>$750</td>
+                                    <td><button class="btn btn-default"> X </button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <label class='pull-rigth'><strong>Costo de envío:</strong><div id='envio'></div></label>
+                        <br>                    
+                        <label><strong>Total a pagar:</strong><div id='total'></div></label><br>
+                        <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Reservar') ?> </div>                        
+                    </div>
                 </div>           
             </fieldset>            
-            <br>
-            <?= $this->Form->button('Reservar') ?>
+            <br>            
             <?= $this->Form->end() ?>
         </div>
     </div>
