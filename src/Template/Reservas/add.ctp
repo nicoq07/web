@@ -13,14 +13,25 @@ function ocultarOtraDireccion()
     }
 }
 
-function mostrarPrecioEnvio(event) {
+function mostrarPrecioEnvioDomicilio(event) {
     var id = event.target.value;
     //alert(id);
-    $("#total").html("$"+id);
+    $.get('/web/reservas/actualizarCostoEnvio?id='+id+'&desde=domicilio', function(d) {
+        //alert(d);
+        $("#total").html("$"+d);
+    });
+}
+
+function mostrarPrecioEnvioLocalidad(event) {
+    var id = event.target.value;
+    //alert(id);
+    $.get('/web/reservas/actualizarCostoEnvio?id='+id+'&desde=localidad', function(d) {
+        //alert(d);
+        $("#total").html("$"+d);
+    });
 }
 
 </script>
-
 
 
 <section class="duplicatable-content bkg">
@@ -89,7 +100,7 @@ function mostrarPrecioEnvio(event) {
                             }
                         }
 
-                        echo $this->Form->control('domicilio', ['options' => $arrayDomicilios, 'onchange'=>'mostrarPrecioEnvio(event);', 'empty' => 'Seleccione dirección...']);
+                        echo $this->Form->control('domicilio', ['options' => $arrayDomicilios, 'onchange'=>'mostrarPrecioEnvioDomicilio(event);', 'empty' => 'Seleccione dirección...']);
                     ?>
                     <?php
                         //echo $this->Form->control('domicilio_id', ['options' => $domicilios]);
@@ -114,7 +125,7 @@ function mostrarPrecioEnvio(event) {
                                 $arrayLocalidades[$localidade->id] = $localidade->descripcion;
                             }
 
-                            echo $this->Form->control('localidad_id', ['options' => $arrayLocalidades]);
+                            echo $this->Form->control('localidad_id', ['options' => $arrayLocalidades, 'onchange'=>'mostrarPrecioEnvioLocalidad(event);', 'empty' => 'Seleccione una localidad...']);
                         ?>
                     </div>
                 </div>

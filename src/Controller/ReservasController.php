@@ -50,7 +50,7 @@ class ReservasController extends AppController
      * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
-    {
+    {      
         $reserva = $this->Reservas->newEntity();
         if ($this->request->is('post')) {
             $reserva = $this->Reservas->patchEntity($reserva, $this->request->getData());
@@ -61,7 +61,6 @@ class ReservasController extends AppController
             }
             $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
         }
-
         $users = $this->Reservas->Users->find('list', ['limit' => 200]);
         $estadosReservas = $this->Reservas->EstadosReservas->find('list', ['limit' => 200]);
         $productos = $this->Reservas->Productos->find('list', ['limit' => 200]);
@@ -115,7 +114,39 @@ class ReservasController extends AppController
         } else {
             $this->Flash->error(__('The reserva could not be deleted. Please, try again.'));
         }
-
         return $this->redirect(['action' => 'index']);
     }
+
+    public function actualizarCostoEnvio()
+    {
+        if($this->request->is('ajax')) {
+            if ($this->request->query['desde'] == 'domicilio') {
+                $this->autoRender = false; // No renderiza mediate el fichero .ctp
+                $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
+                $domicilios = $this->Reservas->Users->Domicilios->find(); 
+                $id = $this->request->query['id']; //id traido desde la view por Ajax      
+                $idLocalidad; 
+                foreach ($domicilios as $domicilio) {                                
+                    if ($domicilio->id == $id) {
+                        foreach ($localidades as $localidad) {
+                            if ($localidad->id == $domicilio->localidad_id) {
+                                echo $localidad->precio;
+                            }
+                        }
+                    }
+                }
+            }
+            if ($this->request->query['desde'] == 'localidad') {
+                $this->autoRender = false; // No renderiza mediate el fichero .ctp
+                $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
+                $id = $this->request->query['id']; //id traido desde la view por Ajax      
+
+                foreach ($localidades as $localidad) {
+                    if ($localidad->id == $id) {
+                        echo $localidad->precio;
+                    }
+                }
+    }           
+        }
+    } 
 }
