@@ -168,13 +168,13 @@ class ProductosController extends AppController
     		$connection= ConnectionManager::get("default");
     		foreach ($data as $img)
     		{
-    			$referencia = $uploadFile .  "IdProd: ".$idProd. "-"  .$img['name'];
+    			$referencia = $uploadFile .  "IdProd-".$idProd. "-"  .$img['name'];
     			
     			if(!move_uploaded_file($img['tmp_name'],$referencia))
     			{
     				$this->Flash->error("Tenemos un problema para cargar las imagenes");
     			}
-    			$referencia = "webroot". DS . 'imagenes' . DS .  "IdProd: ".$idProd. "-"  .$img['name'];
+    			$referencia = "webroot". DS . 'imagenes' . DS .  "IdProd-".$idProd. "-"  .$img['name'];
     			$connection->insert('fotos_productos', [
     					'producto_id' => $idProd,
     					'referencia' => $referencia,
