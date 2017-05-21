@@ -42,7 +42,13 @@
                     	<?php foreach ($fotos as $foto){?>
 	                    	<?php if ($producto->id === $foto->producto_id):?>
 		                    	<?php if (file_exists(ROOT . DS .$foto->referencia)): ?>
-		                    		 <img id="Image1" src="<?php echo $foto->referencia; ?>" class="border">
+		                    		<a href="<?php echo $this->Url->build([
+										    "controller" => "Productos",
+										    "action" => "view",
+		                    				$producto->id
+										]) ?>" >
+		                    		 	<img id="Image1" src="<?php echo $foto->referencia; ?>" class="border">
+		                    		 </a>
 		                    	 <?php endif;
 		                    	 break;
 		                    	 endif;?>
