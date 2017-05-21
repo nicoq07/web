@@ -1,4 +1,5 @@
 <script type="text/javascript">
+
 function ocultarOtraDireccion()
 { 
     var estado = document.getElementById('otradireccion-1').checked;
@@ -17,25 +18,9 @@ function ocultarOtraDireccion()
     }
 }
 
-function mostrarPrecioEnvioDomicilio(event) {
-    var id = event.target.value;
+function mostrarPrecioEnvio(id, idTipo) {
     //alert(id);
-    $.get('/web/reservas/actualizarCostoEnvio?id='+id+'&desde=domicilio', function(d) {
-        //alert(d);
-        if (d) {
-            $("#envio").html("$"+d);
-        }
-        else {
-            $("#envio").html("");
-        }                
-    });
-    calcularTotal();
-}
-
-function mostrarPrecioEnvioLocalidad(event) {
-    var id = event.target.value;
-    //alert(id);
-    $.get('/web/reservas/actualizarCostoEnvio?id='+id+'&desde=localidad', function(d) {
+    $.get('/web/reservas/actualizarEnvio?id='+id+'&desde='+idTipo, function(d) {
         //alert(d);
         if (d) {
             $("#envio").html("$"+d);
@@ -44,7 +29,42 @@ function mostrarPrecioEnvioLocalidad(event) {
             $("#envio").html("");
         }          
     });
+    verDiv('productos');
     calcularTotal();
+}
+
+function continuarFecha() {
+    var inicioEvento = $("#fecha_inicio").val() + " " + $("#hora_inicio").val();
+    var finEvento = $("#fecha_fin").val() + " " + $("#hora_fin").val();
+    $.get('/web/reservas/calcularHoras?inicio='+inicioEvento+'&fin='+finEvento, function(d) {
+        alert(d);
+        /*if (d) {
+            $("#envio").html("$"+d);
+        }
+        else {
+            $("#envio").html("");
+        }*/
+    });
+    verDiv('lugar');
+}
+
+function continuarDomicilio() {
+    var estado = document.getElementById('otradireccion-1').checked;
+    //alert(estado);
+    var total, id, idTipo;
+    if (estado) {
+        id = $("#localidad").val();
+        idTipo = 'localidad';        
+    }
+    else {
+        id = $("#domicilio").val();
+        idTipo = 'domicilio';
+    }
+    if (!id) {
+        alert('Debe cargar un domicilio para continuar.');
+        return;
+    }
+    mostrarPrecioEnvio(id, idTipo);
 }
 
 function calcularTotal() {
@@ -99,7 +119,10 @@ function verDiv(ver) {
 
 </script>
 
-
+<?php 
+    use Cake\Network\Session\DatabaseSession;
+    $session = $this->request->session(); 
+?>
 <section class="duplicatable-content bkg">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
@@ -111,7 +134,7 @@ function verDiv(ver) {
                     <?php
                         //echo $this->Form->control('user_id', ['options' => $users, 'label' => 'Usuario']);
                         //echo $this->Form->control('estado_reserva_id', ['options' => $estadosReservas, 'label' => 'Estado']);
-                        echo $this->Form->label('fecha_inicio', 'Inicio del evento');
+                        echo $this->Form->label('Inicio del evento');
                     ?>
                     <br>
                     <?php
@@ -132,27 +155,27 @@ function verDiv(ver) {
                             '22:00'=> '22:00',
                         ];
 
-                        echo $this->Form->label('fecha_inicio', 'Fecha');
-                        echo $this->Form->text('fecha_inicio', array('type' => 'date'));
-                        echo $this->Form->label('fecha_inicio', 'Horario');
-                        echo $this->Form->select('fecha_inicio', $arrayHorarios);
+                        echo $this->Form->label('Fecha');
+                        echo $this->Form->text('fecha_inicio', array('id'=>'fecha_inicio', 'type' => 'date'));
+                        echo $this->Form->label('Horario');
+                        echo $this->Form->select('hora_inicio', $arrayHorarios, ['id' => 'hora_inicio']);
                     ?>
                     </div>
                     <div class="col-lg-6">
-                    <?php echo $this->Form->label('fecha_fin', 'Fin del evento'); ?>
+                    <?php echo $this->Form->label('Fin del evento'); ?>
                     <br>
                     <?php
-                        echo $this->Form->label('fecha_fin', 'Fecha');
-                        echo $this->Form->text('fecha_fin', array('type' => 'date'));
-                        echo $this->Form->label('fecha_fin', 'Horario');
-                        echo $this->Form->select('fecha_fin', $arrayHorarios);
+                        echo $this->Form->label('Fecha');
+                        echo $this->Form->text('fecha_fin', array('id'=>'fecha_fin', 'type' => 'date'));
+                        echo $this->Form->label('Horario');
+                        echo $this->Form->select('hora_fin', $arrayHorarios, ['id' => 'hora_fin']);
                         //echo $this->Form->control('fecha_fin', ['empty' => true]);
                         //echo $this->Form->control('active' , ['label' => 'Activo' ]);
                         //echo $this->Form->control('productos._ids', ['options' => $productos]);
                     ?>
                     </div>
 
-                    <div class="pull-right"><br><?= $this->Form->button('Continuar', ['onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><br> </div>
+                    <div class="pull-right"><br><?= $this->Form->button('Continuar', ['onclick'=>"continuarFecha()", 'class' => 'btn btn-default', 'type'=>'button']) ?><br> </div>
                 </div>
             </fieldset>            
             <fieldset>
@@ -170,7 +193,7 @@ function verDiv(ver) {
                                 }
                             }
 
-                            echo $this->Form->control('domicilio', ['options' => $arrayDomicilios, 'onchange'=>'mostrarPrecioEnvioDomicilio(event);', 'empty' => 'Seleccione dirección...']);
+                            echo $this->Form->control('domicilio', ['options' => $arrayDomicilios, 'empty' => 'Seleccione dirección...']);
                         ?>
                         <?php
                             //echo $this->Form->control('domicilio_id', ['options' => $domicilios]);
@@ -194,11 +217,11 @@ function verDiv(ver) {
                                 $arrayLocalidades[$localidade->id] = $localidade->descripcion;
                             }
 
-                            echo $this->Form->control('localidad', ['options' => $arrayLocalidades, 'onchange'=>'mostrarPrecioEnvioLocalidad(event);', 'empty' => 'Seleccione una localidad...']);
+                            echo $this->Form->control('localidad', ['options' => $arrayLocalidades, 'empty' => 'Seleccione una localidad...']);
                         ?>
                     </div>
                 </div>
-                <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('fecha')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['onclick'=>"verDiv('productos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
+                <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('fecha')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['onclick'=>"continuarDomicilio()", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
                 </div>
                 </div>             
             </fieldset>
@@ -220,27 +243,34 @@ function verDiv(ver) {
                             </thead>
                             <tbody>
                                 <?php foreach ($productos as $producto): ?>
-                                <tr>
-                                <?php
-                                $session = $this->request->session();
-                                $allProducts = $session->read('cart');
-                                if (null!=$allProducts) {
-                                    foreach ($allProducts as $productId => $count) {
-                                        if ($producto->id == $productId){
-                                            $cantidad = $count;
-                                        }
-                                    }
-                                }
-                                ?>
-                                        <td><?= h($producto->id) ?></td>
-                                        <td><?php echo($cantidad); ?></td>
+                                    <tr>
+                                        <td><?= $producto->id ?></td>
+                                        <td><?= $producto->cantidad ?></td>
                                         <td><?= $producto->descripcion ?></td>
                                         <td><?= $producto->precio ?></td>
-                                        <td>5</td>
-                                        <td><?=($producto->precio)*5 ?></td>
-                                        <td><button class=btn btn-default'> X </button></td>
+                                        <td><?= $this->request->session()->read('horas'); ?></td>
+                                        <td><?= $this->request->session()->read('horas') * $producto->precio ?></td>
+                                        <td><button class="btn btn-default"> X </button></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                <!--<tr>
+                                    <td>168</td>
+                                    <td>2</td>
+                                    <td>Inflable - Cubo</td>
+                                    <td>$100</td>
+                                    <td>5</td>
+                                    <td>$1000</td>
+                                    <td><button class="btn btn-default"> X </button></td>
                                 </tr>
-                                <?php endforeach; ?> 
+                                <tr>
+                                    <td>238</td>
+                                    <td>1</td>
+                                    <td>Juegos - Metegol</td>
+                                    <td>$150</td>
+                                    <td>5</td>
+                                    <td>$750</td>
+                                    <td><button class="btn btn-default"> X </button></td>
+                                </tr>-->
                             </tbody>
                         </table>
                         <label class='pull-rigth'><strong>Costo de envío:</strong><div id='envio'></div></label>
