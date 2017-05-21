@@ -133,7 +133,7 @@ class ReservasController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function actualizarCostoEnvio()
+    public function actualizarEnvio()
     {
         if($this->request->is('ajax')) {
             if ($this->request->query['desde'] == 'domicilio') {
@@ -167,6 +167,21 @@ class ReservasController extends AppController
                 $localidad = $this->Reservas->Users->Domicilios->Localidades->get($idLocalidad);
                 echo $localidad->precio;
             }           
+        }
+    }
+
+    public function calcularHoras(){
+        if($this->request->is('ajax')) {
+            $this->autoRender = false; // No renderiza mediate el fichero .ctp
+            $strStart = $this->request->query['inicio'];
+            $strEnd = $this->request->query['fin'];
+            $dteStart = new Date($strStart); 
+            $dteEnd   = new Date($strEnd);
+            $dteDiff = $dteStart->diff($dteEnd);
+            $horas = $dteDiff->format("%h");
+            $session = $this->request->session();
+            $session->write('horas', $horas); 
+            echo $horas;
         }
     } 
 }
