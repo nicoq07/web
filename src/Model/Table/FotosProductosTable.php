@@ -35,7 +35,7 @@ class FotosProductosTable extends Table
         parent::initialize($config);
 
         $this->setTable('fotos_productos');
-        $this->setDisplayField('id');
+        $this->setDisplayField('referencia');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

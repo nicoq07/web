@@ -31,7 +31,7 @@ $(document).on('ready', function() {
                     echo $this->Form->control('dimensiones');
                     echo $this->Form->control('precio');
                     echo $this->Form->control('cantidad');
-                    echo $this->Form->input('foto',['label'=>'Fotos', 'type' => 'file', 'class' => 'btn btn-default', 'data-show-upload' => false, 'data-show-caption' => true, 'multiple class' =>'file-loading', 'accept'=>'image/jpeg, image/png']);
+                    echo $this->Form->input('foto[]',['label'=>'Fotos', 'type' => 'file', 'class' => 'btn btn-default', 'data-show-upload' => false, 'data-show-caption' => true, 'multiple class' =>'file-loading', 'accept'=>'image/jpeg, image/png']);
                     echo $this->Form->control('active' , ['label' => 'Activo' ]);
                 ?>
             </fieldset>

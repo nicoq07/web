@@ -24,23 +24,37 @@
                 </div>
                 <div class="col-lg-5">
                     <?php 
-                    echo $this->Form->label('Ordenar por:');
-                    echo $this->Form->select('precio', [
-                        '0'=>'Selecione precio',
-                        '1'=>'Mayor precio',
-                        '2'=>'Menor precio',
-                    ]); ?>
+//                     echo $this->Form->label('Ordenar por:');
+//                     echo $this->Form->select('precio', [
+//                         '0'=>'Selecione precio',
+//                         '1'=>'Mayor precio',
+//                         '2'=>'Menor precio',
+//                     ]); ?>
+                    <?= $this->Paginator->sort('precio', '<b>Ordenar por precio</b>',
+ 						array('escape' => false)) ?>
                 </div>
             </div>
             <br>
             <div class="row">
                 <?php foreach ($productos as $producto): ?>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-lg-4 col-lg-6">
                     <div class="blog-snippet-1">
-                        <img id="Image1" src="webroot/img/chicos/cubo/1.jpg" class="border">
+                    	<?php foreach ($fotos as $foto){?>
+	                    	<?php if ($producto->id === $foto->producto_id):?>
+		                    	<?php if (file_exists(ROOT . DS .$foto->referencia)): ?>
+		                    		 <img id="Image1" src="<?php echo $foto->referencia; ?>" class="border">
+		                    	 <?php endif;
+		                    	 break;
+		                    	 endif;?>
+                    	<?php  }?>
+                    	
+                       
                         <h4 class="tx_celeste marg"><?= h($producto->descripcion) ?></h4>
                         <p><strong>Medida: </strong><?= h($producto->dimensiones) ?></p>
-                        <p><strong>Precio: $</strong><?= $this->Number->format($producto->precio) ?></p>
+                        <p><strong>Precio: </strong><?= $this->Number->format($producto->precio,[
+                                        'before' => '$',
+                                        'locale' => 'es_Ar'
+                                        ]) ?></p>
                         <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
                         <?= $this->Html->link('Modificar', ['action' => 'edit', $producto->id], ['class' => 'btn btn-primary']) ?>
                         <?= $this->Form->postLink('Baja', ['action' => 'delete', $producto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $producto->id, 'class' => 'btn btn-primary']) ?>

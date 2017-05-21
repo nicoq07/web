@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * Productos Controller
@@ -30,8 +31,9 @@ class ProductosController extends AppController
         ];
         $productos = $this->paginate($this->Productos);
         $categorias = $this->Productos->Categorias->find('list', ['limit' => 200]);
-
-        $this->set(compact('productos', 'categorias'));
+        $fotoProductos = $this->Productos->FotosProductos->find();
+        $fotos = $fotoProductos->toArray();
+		$this->set(compact('productos', 'categorias', 'fotos'));
         $this->set('_serialize', ['productos']);
     }
 
@@ -59,37 +61,17 @@ class ProductosController extends AppController
      */	
     public function add()
     {	
-    	$uploadFile = WWW_ROOT  . 'imagenes' . DS;
-    	
-    	//$connection = ConnectionManager::get('default');
-    
-     	
-    	
-  		if ($this->request->is('post')) 
-  		{
-         debug($this->request->getData());
-   
-		  if(!empty($this->request->getData()['foto']['name']))
-		    	{
-		    		if(!move_uploaded_file($this->request->getData()['foto']['tmp_name'],$uploadFile . $this->request->getData()['foto']['name']))
-		    		{
-		    			$this->Flash->error("Tenemos un problema para cargar el archivo");
-		    		}
-			exit();
-		    }
-  		}
-    	
-    	
-    	
         $producto = $this->Productos->newEntity();
         if ($this->request->is('post')) {
         	
             $producto = $this->Productos->patchEntity($producto, $this->request->getData());
-            if ($this->Productos->save($producto)) {
-            		$this->Flash->success(__('The producto has been saved.'));
+            if ($lastId = $this->Productos->save($producto))
+            {
+            		$this->guardarImg($this->request->getData()['foto'], $lastId->id);
+            		$this->Flash->success(__('Producto guardado.'));
             		return $this->redirect(['action' => 'index']);
             	}
-            	$this->Flash->error(__('The producto could not be saved. Please, try again.'));
+            	$this->Flash->error(__('Error al cargar el producto, reintente por favor!.'));
             }
             
         
@@ -156,5 +138,31 @@ class ProductosController extends AppController
     public function condiciones()
     {
     	
-    }    
+    }   
+    
+    private function guardarImg($data, $idProd)
+    {
+    	$uploadFile = WWW_ROOT  . 'imagenes' . DS;
+    	if(!empty($data))
+    	{
+    		$connection= ConnectionManager::get("default");
+    		foreach ($data as $img)
+    		{
+    			$referencia = $uploadFile .  "IdProd: ".$idProd. "-"  .$img['name'];
+    			
+    			if(!move_uploaded_file($img['tmp_name'],$referencia))
+    			{
+    				$this->Flash->error("Tenemos un problema para cargar las imagenes");
+    			}
+    			$referencia = "webroot". DS . 'imagenes' . DS .  "IdProd: ".$idProd. "-"  .$img['name'];
+    			$connection->insert('fotos_productos', [
+    					'producto_id' => $idProd,
+    					'referencia' => $referencia,
+    					'modified' => new \DateTime('now'),
+    					'created' => new \DateTime('now')], ['created' => 'datetime' , 'modified' => 'datetime']);
+    		}
+    		
+    	}
+    }
+    
 }
