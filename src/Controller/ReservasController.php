@@ -69,6 +69,9 @@ class ReservasController extends AppController
         $domicilios = $this->Reservas->Users->Domicilios->find();        
         $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
 
+        $session = $this->request->session();
+        $allProducts = $session->read('cart');
+
         $productos = array();
         $session = $this->request->session();
         $allProducts = $session->read('cart');
