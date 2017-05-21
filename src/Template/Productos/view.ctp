@@ -41,21 +41,20 @@ input[type="radio"]:checked ~ label {
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
 
-                    <div class="item active">
-                        <img src="../../webroot/img/chicos/3a/1.jpg">                   
+                    <div class="carousel-inner" role="listbox">
+                    <?php $bool = true;?>
+                    <?php foreach ($producto->fotos_productos as $foto):?>
+					<?php if (file_exists(ROOT . DS .$foto->referencia)):
+					if ($bool){ $bool = false;?>
+                   		<div class="item active ">
+                   	<?php } else { ?>
+                   		<div class="item">
+                   <?php }?>
+                        <img src="../../<?php echo $foto->referencia ?>">                   
                     </div>
-
-                    <div class="item">
-                        <img src="../../webroot/img/chicos/casti2/1.jpg">
-                    </div>
-                
-                    <div class="item">
-                        <img src="../../webroot/img/chicos/casti3/1.jpg">
-                    </div>
-
-                    <div class="item">
-                        <img src="../../webroot/img/chicos/castitobogan/1.jpg">
-                    </div>            
+					<?php endif; endforeach;?>
+                      
+                </div>          
                 </div>
 
                 <!-- Left and right controls -->
@@ -666,5 +665,5 @@ input[type="radio"]:checked ~ label {
             <?php endforeach; ?>
         </table>
         <?php endif; ?>
-    </div>
-</div>-->
+    </div>-->
+</div>
