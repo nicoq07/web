@@ -74,7 +74,8 @@ input[type="radio"]:checked ~ label {
             <h4 style="color: black"><strong>Stock: </strong>3</h4><br>
             <h4 style="color: black"><strong>Información: </strong><?= h($producto->informacion)?></h4><br>
             <h4 style="color: black"><strong>Medidas: </strong><?= h($producto->dimensiones)?></h4><br>
-            <button class="btn btn-default right">Reservar <i class="icon-cart"></i></button>
+            <!--button class="btn btn-default right">Reservar <i class="icon-cart"></i></button-->
+            <?= $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
     <div class="row">

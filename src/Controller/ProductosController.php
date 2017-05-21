@@ -140,7 +140,7 @@ class ProductosController extends AppController
     	
     }   
 
-       public function agregarCarro($id = null)
+    public function agregarCarro($id = null)
     {
         $this->autoRender = false;
 
@@ -156,7 +156,7 @@ class ProductosController extends AppController
             $allProducts[$id] = 1;
         }
         $session->write('cart', $allProducts);         
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer());
 
     }
     
