@@ -55,7 +55,7 @@
                                         'before' => '$',
                                         'locale' => 'es_Ar'
                                         ]) ?></p>
-                        <button class="btn btn-primary">Reservar <i class="icon-cart"></i></button>
+                        <?= $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-primary']) ?>
                         <?= $this->Html->link('Modificar', ['action' => 'edit', $producto->id], ['class' => 'btn btn-primary']) ?>
                         <?= $this->Form->postLink('Baja', ['action' => 'delete', $producto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $producto->id, 'class' => 'btn btn-primary']) ?>
                     </div>

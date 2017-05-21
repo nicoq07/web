@@ -219,24 +219,28 @@ function verDiv(ver) {
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php foreach ($productos as $producto): ?>
                                 <tr>
-                                    <td>168</td>
-                                    <td>2</td>
-                                    <td>Inflable - Cubo</td>
-                                    <td>$100</td>
-                                    <td>5</td>
-                                    <td>$1000</td>
-                                    <td><button class="btn btn-default"> X </button></td>
+                                <?php
+                                $session = $this->request->session();
+                                $allProducts = $session->read('cart');
+                                if (null!=$allProducts) {
+                                    foreach ($allProducts as $productId => $count) {
+                                        if ($producto->id == $productId){
+                                            $cantidad = $count;
+                                        }
+                                    }
+                                }
+                                ?>
+                                        <td><?= h($producto->id) ?></td>
+                                        <td><?php echo($cantidad); ?></td>
+                                        <td><?= $producto->descripcion ?></td>
+                                        <td><?= $producto->precio ?></td>
+                                        <td>5</td>
+                                        <td><?=($producto->precio)*5 ?></td>
+                                        <td><button class=btn btn-default'> X </button></td>
                                 </tr>
-                                <tr>
-                                    <td>238</td>
-                                    <td>1</td>
-                                    <td>Juegos - Metegol</td>
-                                    <td>$150</td>
-                                    <td>5</td>
-                                    <td>$750</td>
-                                    <td><button class="btn btn-default"> X </button></td>
-                                </tr>
+                                <?php endforeach; ?> 
                             </tbody>
                         </table>
                         <label class='pull-rigth'><strong>Costo de envío:</strong><div id='envio'></div></label>

@@ -139,6 +139,26 @@ class ProductosController extends AppController
     {
     	
     }   
+
+       public function agregarCarro($id = null)
+    {
+        $this->autoRender = false;
+
+        $session = $this->request->session();
+        $allProducts = $session->read('cart');
+        if (null!=$allProducts) {
+            if (array_key_exists($id, $allProducts)) {
+                $allProducts[$id]++;
+            } else {
+                $allProducts[$id] = 1;
+            }
+        } else {
+            $allProducts[$id] = 1;
+        }
+        $session->write('cart', $allProducts);         
+        return $this->redirect(['action' => 'index']);
+
+    }
     
     private function guardarImg($data, $idProd)
     {

@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+use Cake\Network\Session\DatabaseSession;
 
 /**
  * Reservas Controller
@@ -63,9 +65,20 @@ class ReservasController extends AppController
         }
         $users = $this->Reservas->Users->find('list', ['limit' => 200]);
         $estadosReservas = $this->Reservas->EstadosReservas->find('list', ['limit' => 200]);
-        $productos = $this->Reservas->Productos->find('list', ['limit' => 200]);
+        //$productos = $this->Reservas->Productos->find('list', ['limit' => 200]);
         $domicilios = $this->Reservas->Users->Domicilios->find();        
         $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
+
+        $productos = array();
+        $session = $this->request->session();
+        $allProducts = $session->read('cart');
+        if (null!=$allProducts) {
+            foreach ($allProducts as $id => $count) {
+                $producto = $this->Reservas->Productos->get($id);
+                $productos[]=$producto;
+            }
+        }
+
         $this->set(compact('reserva', 'users', 'estadosReservas', 'productos', 'domicilios','localidades'));
         $this->set('_serialize', ['reserva']);
     }
