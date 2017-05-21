@@ -146,7 +146,39 @@ class ReservasController extends AppController
                         echo $localidad->precio;
                     }
                 }
-    }           
+            }           
+        }
+    }
+
+    public function calcularTotal(){
+        if($this->request->is('ajax')) {
+            if ($this->request->query['desde'] == 'domicilio') {
+                $this->autoRender = false; // No renderiza mediate el fichero .ctp
+                $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
+                $domicilios = $this->Reservas->Users->Domicilios->find(); 
+                $id = $this->request->query['id_direccion']; //id traido desde la view por Ajax      
+                $idLocalidad; 
+                foreach ($domicilios as $domicilio) {                                
+                    if ($domicilio->id == $id) {
+                        foreach ($localidades as $localidad) {
+                            if ($localidad->id == $domicilio->localidad_id) {
+                                echo $localidad->precio;
+                            }
+                        }
+                    }
+                }
+            }
+            if ($this->request->query['desde'] == 'localidad') {
+                $this->autoRender = false; // No renderiza mediate el fichero .ctp
+                $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
+                $id = $this->request->query['id_direccion']; //id traido desde la view por Ajax      
+
+                foreach ($localidades as $localidad) {
+                    if ($localidad->id == $id) {
+                        echo $localidad->precio;
+                    }
+                }
+            }           
         }
     } 
 }

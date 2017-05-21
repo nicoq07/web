@@ -3,13 +3,17 @@ function ocultarOtraDireccion()
 { 
     var estado = document.getElementById('otradireccion-1').checked;
     //alert(document.getElementById(nombre).checked);
+    $("#envio").html("");
+    $("#total").html("");
+    $("#localidad").val("");
+    $("#domicilio").val("");
     if (estado) {
         $("#"+'cargarOtraDireccion').show();
         document.getElementById('domicilio').disabled = true;
     }
     else{
         $("#"+'cargarOtraDireccion').hide();
-        document.getElementById('domicilio').disabled = false; 
+        document.getElementById('domicilio').disabled = false;
     }
 }
 
@@ -18,8 +22,14 @@ function mostrarPrecioEnvioDomicilio(event) {
     //alert(id);
     $.get('/web/reservas/actualizarCostoEnvio?id='+id+'&desde=domicilio', function(d) {
         //alert(d);
-        $("#total").html("$"+d);
+        if (d) {
+            $("#envio").html("$"+d);
+        }
+        else {
+            $("#envio").html("");
+        }                
     });
+    calcularTotal();
 }
 
 function mostrarPrecioEnvioLocalidad(event) {
@@ -27,7 +37,40 @@ function mostrarPrecioEnvioLocalidad(event) {
     //alert(id);
     $.get('/web/reservas/actualizarCostoEnvio?id='+id+'&desde=localidad', function(d) {
         //alert(d);
-        $("#total").html("$"+d);
+        if (d) {
+            $("#envio").html("$"+d);
+        }
+        else {
+            $("#envio").html("");
+        }          
+    });
+    calcularTotal();
+}
+
+function calcularTotal() {
+    var estado = document.getElementById('otradireccion-1').checked;
+    //alert(estado);
+    var total, id_direccion, desde;
+    if (estado) {
+        //alert($("#localidad").val());
+        id_direccion = $("#localidad").val();
+        desde = 'localidad';        
+    }
+    else {
+        id_direccion = $("#domicilio").val();
+        desde = 'domicilio';
+    }
+    //alert(id_direccion);
+    $.get('/web/reservas/calcularTotal?id_direccion='+id_direccion+'&desde='+desde, function(total) {
+        //alert(total);
+        if (total) {
+            total = parseInt(total);
+            total = total+1750;
+            $("#total").html("$"+total);
+        }
+        else {
+            $("#total").html("");
+        }
     });
 }
 
@@ -125,7 +168,7 @@ function mostrarPrecioEnvioLocalidad(event) {
                                 $arrayLocalidades[$localidade->id] = $localidade->descripcion;
                             }
 
-                            echo $this->Form->control('localidad_id', ['options' => $arrayLocalidades, 'onchange'=>'mostrarPrecioEnvioLocalidad(event);', 'empty' => 'Seleccione una localidad...']);
+                            echo $this->Form->control('localidad', ['options' => $arrayLocalidades, 'onchange'=>'mostrarPrecioEnvioLocalidad(event);', 'empty' => 'Seleccione una localidad...']);
                         ?>
                     </div>
                 </div>
@@ -166,9 +209,9 @@ function mostrarPrecioEnvioLocalidad(event) {
                             </tr>
                         </tbody>
                     </table>
-                    <label class='pull-rigth'><strong>Costo de envío:</strong><div id='total'></div></label>
+                    <label class='pull-rigth'><strong>Costo de envío:</strong><div id='envio'></div></label>
                     <br>                    
-                    <label><strong>Total a pagar:</strong><br>$1870</label>
+                    <label><strong>Total a pagar:</strong><div id='total'></div></label>
                 </div>           
             </fieldset>            
             <br>
