@@ -19,25 +19,26 @@ function ocultarOtraDireccion()
 }
 
 function mostrarPrecioEnvio(id, idTipo) {
-    //alert(id);
+    verDiv('productos');
     $.get('/web/reservas/actualizarEnvio?id='+id+'&desde='+idTipo, function(d) {
         //alert(d);
         if (d) {
             $("#envio").html("$"+d);
+            $("#precioEnvio").val(d);
         }
         else {
             $("#envio").html("");
+            $("#precioEnvio").val("");
         }          
     });
-    verDiv('productos');
-    calcularTotal();
+    //calcularTotal();
 }
 
 function continuarFecha() {
     var inicioEvento = $("#fecha_inicio").val() + " " + $("#hora_inicio").val();
     var finEvento = $("#fecha_fin").val() + " " + $("#hora_fin").val();
     $.get('/web/reservas/calcularHoras?inicio='+inicioEvento+'&fin='+finEvento, function(d) {
-        alert(d);
+        //alert(d);
         /*if (d) {
             $("#envio").html("$"+d);
         }
@@ -67,31 +68,24 @@ function continuarDomicilio() {
     mostrarPrecioEnvio(id, idTipo);
 }
 
-function calcularTotal() {
-    var estado = document.getElementById('otradireccion-1').checked;
-    //alert(estado);
-    var total, id_direccion, desde;
-    if (estado) {
-        //alert($("#localidad").val());
-        id_direccion = $("#localidad").val();
-        desde = 'localidad';        
+function calcularTotal(total) {    
+    verDiv('totales');
+    var eventoI = $("#fecha_inicio").val() + " " + $("#hora_inicio").val();
+    var eventoF = $("#fecha_fin").val() + " " + $("#hora_fin").val();
+    var domicilio = $("#domicilio option:selected").val();
+    if (!domicilio) {
+        domicilio = $("#direccion").val() + " " + $("#numero").val() + " " + $("#piso").val() + " " + $("#localidad option:selected").html();
     }
     else {
-        id_direccion = $("#domicilio").val();
-        desde = 'domicilio';
-    }
-    //alert(id_direccion);
-    $.get('/web/reservas/calcularTotal?id_direccion='+id_direccion+'&desde='+desde, function(total) {
-        //alert(total);
-        if (total) {
-            total = parseInt(total);
-            total = total+1750;
-            $("#total").html("$"+total);
-        }
-        else {
-            $("#total").html("");
-        }
-    });
+        domicilio = $("#domicilio option:selected").html();
+    }    
+    total = parseInt(total);
+    var envio = parseInt($("#precioEnvio").val());
+    var totalReserva = total + envio;
+    $("#total").html("$"+totalReserva);
+    $("#eventoInicio").html(eventoI);
+    $("#eventoFin").html(eventoF);
+    $("#eventoDireccion").html(domicilio);
 }
 
 function verDiv(ver) {
@@ -99,18 +93,28 @@ function verDiv(ver) {
         $("#"+'fechaEvento').show();
         $("#"+'lugarEvento').hide();        
         $("#"+'productosEvento').hide();
+        $("#"+'totales').hide();
         return;
     }
     if (ver== 'lugar') {
         $("#"+'fechaEvento').hide();
         $("#"+'lugarEvento').show();        
         $("#"+'productosEvento').hide();
+        $("#"+'totales').hide();
         return;
     }
     if (ver== 'productos') {
         $("#"+'fechaEvento').hide();
         $("#"+'lugarEvento').hide();        
         $("#"+'productosEvento').show();
+        $("#"+'totales').hide();
+        return;
+    }
+    if (ver== 'totales') {
+        $("#"+'fechaEvento').hide();
+        $("#"+'lugarEvento').hide();        
+        $("#"+'productosEvento').hide();
+        $("#"+'totales').show();
         return;
     }
 }
@@ -122,7 +126,9 @@ function verDiv(ver) {
 <?php 
     use Cake\Network\Session\DatabaseSession;
     $session = $this->request->session();
+    $totalReserva = 0;
 ?>
+
 <section class="duplicatable-content bkg">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
@@ -229,6 +235,7 @@ function verDiv(ver) {
                 <div>
                     <legend>Productos seleccionados</legend>
                     <div class="row" id="productosEvento" style="display: none">
+                        <input type="hidden" id="precioEnvio"> 
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -249,7 +256,10 @@ function verDiv(ver) {
                                         <td><?= $producto->descripcion ?></td>
                                         <td><?= $producto->precio ?></td>
                                         <td><?= $session->read('horas'); ?></td>
-                                        <td><?= $session->read('horas') * $producto->precio ?></td>
+                                        <td><?php 
+                                            $totalProducto = $session->read('horas') * $producto->precio;
+                                            $totalReserva= $totalReserva + $totalProducto;
+                                            echo $totalProducto; ?></td>
                                         <td><button class="btn btn-default"> X </button></td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -273,10 +283,47 @@ function verDiv(ver) {
                                 </tr>-->
                             </tbody>
                         </table>
-                        <label class='pull-rigth'><strong>Costo de envío:</strong><div id='envio'></div></label>
-                        <br>                    
-                        <label><strong>Total a pagar:</strong><div id='total'></div></label><br>
-                        <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Reservar') ?> </div>                        
+                        <div class="pull-right"><?= $this->Form->button('Volver', ['id' => 'volver', 'onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['id' => 'continuar', 'onclick'=>"calcularTotal($totalReserva);", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
+                        </div>
+                    </div>
+                    <div>
+                        <legend>Detalle Reserva</legend>
+                        <div class="row" id="totales" style="display: none">
+                            <label><strong>Inicio del evento: </strong><div id="eventoInicio"></div></label><br>
+                            <label><strong>Finalización del evento: </strong><div id="eventoFin"></div></label><br>
+                            <label><strong>Dirección: </strong><div id="eventoDireccion"></div></label><br>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Cantidad</th>
+                                        <th>Descripción</th>
+                                        <th>Precio p/hora</th>
+                                        <th>Cantidad de horas</th>
+                                        <th>Precio Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($productos as $producto): ?>
+                                        <tr>
+                                            <td><?= $producto->id ?></td>
+                                            <td><?= $producto->cantidad ?></td>
+                                            <td><?= $producto->descripcion ?></td>
+                                            <td><?= $producto->precio ?></td>
+                                            <td><?= $session->read('horas'); ?></td>
+                                            <td><?php 
+                                                $totalProducto = $session->read('horas') * $producto->precio;
+                                                $totalReserva= $totalReserva + $totalProducto;
+                                                echo $totalProducto; ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <label class='pull-rigth'><strong>Costo de envío:</strong><div id='envio'></div></label>
+                            <br>                    
+                            <label><strong>Total a pagar:</strong><div id="total"></div></label><br>
+                            <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('productos')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Reservar') ?> </div>                        
+                        </div>
                     </div>
                 </div>           
             </fieldset>            
@@ -285,7 +332,6 @@ function verDiv(ver) {
         </div>
     </div>
 </section>
-<?php $session->delete('horas'); ?>
 
 <!--<?php
 /**

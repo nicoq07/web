@@ -154,24 +154,6 @@ class ReservasController extends AppController
         }
     }
 
-    public function calcularTotal(){
-        if($this->request->is('ajax')) {
-            if ($this->request->query['desde'] == 'domicilio') {
-                $this->autoRender = false; // No renderiza mediate el fichero .ctp
-                $idDomicilio = $this->request->query['id_direccion'];
-                $domicilio = $this->Reservas->Users->Domicilios->get($idDomicilio);
-                $localidad = $this->Reservas->Users->Domicilios->Localidades->get($domicilio->localidad_id);
-                echo $localidad->precio;
-            }
-            if ($this->request->query['desde'] == 'localidad') {
-                $this->autoRender = false; // No renderiza mediate el fichero .ctp
-                $idLocalidad = $this->request->query['id_direccion']; //id traido desde la view por Ajax      
-                $localidad = $this->Reservas->Users->Domicilios->Localidades->get($idLocalidad);
-                echo $localidad->precio;
-            }           
-        }
-    }
-
     public function calcularHoras(){        
         $session = $this->request->session();
         if($this->request->is('ajax')) {
