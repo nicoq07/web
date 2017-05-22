@@ -121,7 +121,7 @@ function verDiv(ver) {
 
 <?php 
     use Cake\Network\Session\DatabaseSession;
-    $session = $this->request->session(); 
+    $session = $this->request->session();
 ?>
 <section class="duplicatable-content bkg">
     <div class="row">
@@ -248,8 +248,8 @@ function verDiv(ver) {
                                         <td><?= $producto->cantidad ?></td>
                                         <td><?= $producto->descripcion ?></td>
                                         <td><?= $producto->precio ?></td>
-                                        <td><?= $this->request->session()->read('horas'); ?></td>
-                                        <td><?= $this->request->session()->read('horas') * $producto->precio ?></td>
+                                        <td><?= $session->read('horas'); ?></td>
+                                        <td><?= $session->read('horas') * $producto->precio ?></td>
                                         <td><button class="btn btn-default"> X </button></td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -285,6 +285,7 @@ function verDiv(ver) {
         </div>
     </div>
 </section>
+<?php $session->delete('horas'); ?>
 
 <!--<?php
 /**

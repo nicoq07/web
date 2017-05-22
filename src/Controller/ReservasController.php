@@ -3,7 +3,9 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
-use Cake\Network\Session\DatabaseSession;
+use Cake\Network\Session;
+use Cake\I18n\Time;
+use Cake\I18n\Date;
 
 /**
  * Reservas Controller
@@ -81,7 +83,7 @@ class ReservasController extends AppController
                 $productos[]=$producto;
             }
         }
-
+        
         $this->set(compact('reserva', 'users', 'estadosReservas', 'productos', 'domicilios','localidades'));
         $this->set('_serialize', ['reserva']);
     }
@@ -170,7 +172,8 @@ class ReservasController extends AppController
         }
     }
 
-    public function calcularHoras(){
+    public function calcularHoras(){        
+        $session = $this->request->session();
         if($this->request->is('ajax')) {
             $this->autoRender = false; // No renderiza mediate el fichero .ctp
             $strStart = $this->request->query['inicio'];
@@ -179,9 +182,9 @@ class ReservasController extends AppController
             $dteEnd   = new Date($strEnd);
             $dteDiff = $dteStart->diff($dteEnd);
             $horas = $dteDiff->format("%h");
-            $session = $this->request->session();
-            $session->write('horas', $horas); 
             echo $horas;
+            $session->write('horas', $horas); 
+            //echo var_dump($session->read('horas'));
         }
     } 
 }
