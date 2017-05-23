@@ -39,12 +39,7 @@ function continuarFecha() {
     var finEvento = $("#fecha_fin").val() + " " + $("#hora_fin").val();
     $.get('/web/reservas/calcularHoras?inicio='+inicioEvento+'&fin='+finEvento, function(d) {
         //alert(d);
-        /*if (d) {
-            $("#envio").html("$"+d);
-        }
-        else {
-            $("#envio").html("");
-        }*/
+        $("#diferenciaHoras").val(d);
     });
     verDiv('lugar');
 }
@@ -119,7 +114,15 @@ function verDiv(ver) {
     }
 }
 
-
+function actualizarTabla(botones, donde) {
+    //alert(botones+" "+donde);
+    var diferenciaHoras= $("#diferenciaHoras").val();
+    //alert(diferenciaHoras);
+    $.get('/web/reservas/actualizarTabla?horas='+diferenciaHoras+'&botones='+botones, function(d) {
+        //alert(d);
+        $("#"+donde).html(d);
+    });
+}
 
 </script>
 
@@ -227,7 +230,7 @@ function verDiv(ver) {
                         ?>
                     </div>
                 </div>
-                <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('fecha')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['onclick'=>"continuarDomicilio()", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
+                <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('fecha')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['onclick'=>"continuarDomicilio(); actualizarTabla(true, 'tablaProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
                 </div>
                 </div>             
             </fieldset>
@@ -235,8 +238,10 @@ function verDiv(ver) {
                 <div>
                     <legend>Productos seleccionados</legend>
                     <div class="row" id="productosEvento" style="display: none">
-                        <input type="hidden" id="precioEnvio"> 
-                        <table class="table table-striped">
+                        <input type="hidden" id="precioEnvio">
+                        <input type="hidden" id="diferenciaHoras">
+                        <div id="tablaProductos"></div> <!--Acá se va a cargar dinámicamente la tabla-->
+                        <!--<table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>Código</th>
@@ -263,36 +268,19 @@ function verDiv(ver) {
                                         <td><button class="btn btn-default"> X </button></td>
                                     </tr>
                                 <?php endforeach; ?>
-                                <!--<tr>
-                                    <td>168</td>
-                                    <td>2</td>
-                                    <td>Inflable - Cubo</td>
-                                    <td>$100</td>
-                                    <td>5</td>
-                                    <td>$1000</td>
-                                    <td><button class="btn btn-default"> X </button></td>
-                                </tr>
-                                <tr>
-                                    <td>238</td>
-                                    <td>1</td>
-                                    <td>Juegos - Metegol</td>
-                                    <td>$150</td>
-                                    <td>5</td>
-                                    <td>$750</td>
-                                    <td><button class="btn btn-default"> X </button></td>
-                                </tr>-->
                             </tbody>
-                        </table>
-                        <div class="pull-right"><?= $this->Form->button('Volver', ['id' => 'volver', 'onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['id' => 'continuar', 'onclick'=>"calcularTotal($totalReserva);", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
+                        </table>-->
+                        <div class="pull-right"><?= $this->Form->button('Volver', ['id' => 'volver', 'onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['id' => 'continuar', 'onclick'=>"calcularTotal($totalReserva); actualizarTabla(false, 'tablaDetalleProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
                         </div>
                     </div>
                     <div>
                         <legend>Detalle Reserva</legend>
                         <div class="row" id="totales" style="display: none">
-                            <label><strong>Inicio del evento: </strong><div id="eventoInicio"></div></label><br>
-                            <label><strong>Finalización del evento: </strong><div id="eventoFin"></div></label><br>
-                            <label><strong>Dirección: </strong><div id="eventoDireccion"></div></label><br>
-                            <table class="table table-striped">
+                            <h4><strong>Inicio del evento: </strong></h4><h6 id="eventoInicio" class="tx_gris"></h6><br>
+                            <h4><strong>Finalización del evento: </strong></h4><h6 id="eventoFin" class="tx_gris"></h6><br>
+                            <h4><strong>Dirección: </strong></h4><h6 id="eventoDireccion" class="tx_gris"></h6><br>
+                            <div id="tablaDetalleProductos"></div> <!--Acá se va a cargar dinámicamente la tabla-->
+                            <!--<table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>Código</th>
@@ -318,11 +306,15 @@ function verDiv(ver) {
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
-                            </table>
-                            <label class='pull-rigth'><strong>Costo de envío:</strong><div id='envio'></div></label>
-                            <br>                    
-                            <label><strong>Total a pagar:</strong><div id="total"></div></label><br>
-                            <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('productos')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Reservar') ?> </div>                        
+                            </table>-->
+                            <h4><strong>Costo de envío:</strong></h4><h6 id='envio' class="tx_gris"></h6><br>
+                            <div class="row">
+                                <div class="col-lg-2 col-lg-offset-5 well rojo centrar standard-radius">
+                                    <h4 class="text-white"><strong>Total a pagar:</strong></h4>
+                                    <h4 id="total" class="text-white"></h4>
+                                </div>
+                            </div>
+                            <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('productos')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Reservar') ?> </div>
                         </div>
                     </div>
                 </div>           

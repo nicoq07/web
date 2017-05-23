@@ -168,5 +168,61 @@ class ReservasController extends AppController
             $session->write('horas', $horas); 
             //echo var_dump($session->read('horas'));
         }
-    } 
+    }
+
+    public function actualizarTabla(){
+        $horas = $this->request->query['horas'];
+        $botones = $this->request->query['botones'];
+
+        $session = $this->request->session();
+        $allProducts = $session->read('cart');
+
+        $productos = array();
+        $session = $this->request->session();
+        $allProducts = $session->read('cart');
+        if (null!=$allProducts) {
+            foreach ($allProducts as $id => $count) {
+                $producto = $this->Reservas->Productos->get($id);
+                $productos[]=$producto;
+            }
+        }
+
+        $totalReserva = 0;
+        $tabla = "";
+
+        $tabla = "<table class='table table-striped'>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Cantidad</th>
+                    <th>Descripción</th>
+                    <th>Precio p/hora</th>
+                    <th>Cantidad de horas</th>
+                    <th>Precio Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>";
+                foreach ($productos as $producto){
+                    $tabla = $tabla."<tr>
+                        <td>".$producto->id."</td>
+                        <td>".$producto->cantidad."</td>
+                        <td>".$producto->descripcion."</td>
+                        <td>".$producto->precio."</td>
+                        <td>".$horas."</td>
+                        <td>";
+                        $totalProducto = $horas * $producto->precio;
+                        $totalReserva = $totalReserva + $totalProducto;
+                    $tabla = $tabla.$totalProducto."</td>
+                        <td>";
+                    if ($botones == 'true') {
+                        $tabla = $tabla."<button class='btn btn-default'> X </button>";
+                    }
+                    $tabla = $tabla."</td>
+                    </tr>";
+                }
+            $tabla = $tabla."</tbody>
+        </table>";
+        echo $tabla;
+    }
 }
