@@ -178,15 +178,17 @@ class ReservasController extends AppController
         $allProducts = $session->read('cart');
 
         $productos = array();
+        $cantidad = array();
         $session = $this->request->session();
         $allProducts = $session->read('cart');
         if (null!=$allProducts) {
             foreach ($allProducts as $id => $count) {
                 $producto = $this->Reservas->Productos->get($id);
                 $productos[]=$producto;
+                $cantidad[]=$count;
             }
         }
-
+        $contador = 0;
         $totalReserva = 0;
         $tabla = "";
 
@@ -206,12 +208,12 @@ class ReservasController extends AppController
                 foreach ($productos as $producto){
                     $tabla = $tabla."<tr>
                         <td>".$producto->id."</td>
-                        <td>".$producto->cantidad."</td>
+                        <td>".$cantidad[$contador]."</td>
                         <td>".$producto->descripcion."</td>
                         <td>".$producto->precio."</td>
                         <td>".$horas."</td>
                         <td>";
-                        $totalProducto = $horas * $producto->precio;
+                        $totalProducto = $horas * $producto->precio * $cantidad[$contador];
                         $totalReserva = $totalReserva + $totalProducto;
                     $tabla = $tabla.$totalProducto."</td>
                         <td>";
@@ -220,6 +222,7 @@ class ReservasController extends AppController
                     }
                     $tabla = $tabla."</td>
                     </tr>";
+                    $contador = $contador+1;
                 }
             $tabla = $tabla."</tbody>
         </table>";
