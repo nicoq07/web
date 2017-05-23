@@ -57,13 +57,27 @@ class ReservasController extends AppController
     {      
         $reserva = $this->Reservas->newEntity();
         if ($this->request->is('post')) {
+
+           /*
+            
+            $fechaIni =  $this->request->getData()['fecha_inicio'];
+            $fechaFin =  $this->request->getData()['fecha_fin'];
+            $horaIni =  $this->request->getData()['hora_inicio'];
+            $horaFin =  $this->request->getData()['hora_fin'];
+
+             debug(new \DateTime($fechaIni." ".$horaIni));
+            exit();
+            $reserva->fecha = new \DateTime();
+
             $reserva = $this->Reservas->patchEntity($reserva, $this->request->getData());
+            debug($reserva);
             if ($this->Reservas->save($reserva)) {
                 $this->Flash->success(__('The reserva has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
+            $this->Flash->error(__('The reserva could not be saved. Please, try again.'));*/
+            return $this->redirect(['controller' => 'PagosReserva', 'action' => 'add']);
         }
         $users = $this->Reservas->Users->find('list', ['limit' => 200]);
         $estadosReservas = $this->Reservas->EstadosReservas->find('list', ['limit' => 200]);

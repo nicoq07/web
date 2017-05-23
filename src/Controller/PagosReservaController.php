@@ -55,8 +55,9 @@ class PagosReservaController extends AppController
      *
      * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($idReserva=null)
     {
+        
         $pagosReserva = $this->PagosReserva->newEntity();
         if ($this->request->is('post')) {
             $pagosReserva = $this->PagosReserva->patchEntity($pagosReserva, $this->request->getData());
@@ -67,7 +68,13 @@ class PagosReservaController extends AppController
             }
             $this->Flash->error(__('The pagos reserva could not be saved. Please, try again.'));
         }
-        $reservas = $this->PagosReserva->Reservas->find('list', ['limit' => 200]);
+        if (!empty($idReserva)) {           
+           $reservas = $this->PagosReserva->Reservas->get($idReserva);
+        }
+        else{
+            $this->Flash->error(__('The pagos reserva could not be saved. Please, try again.'));
+        }
+        
         $users = $this->PagosReserva->Users->find('list', ['limit' => 200]);
         $mediosPagos = $this->PagosReserva->MediosPagos->find('list', ['limit' => 200]);
         $this->set(compact('pagosReserva', 'reservas', 'users', 'mediosPagos'));

@@ -188,8 +188,6 @@ function actualizarTabla(botones, donde) {
 
                     <div class="pull-right"><br><?= $this->Form->button('Continuar', ['onclick'=>"continuarFecha()", 'class' => 'btn btn-default', 'type'=>'button']) ?><br> </div>
                 </div>
-            </fieldset>            
-            <fieldset>
                 <div>
                     <legend>Lugar del evento</legend>
                     <div class="row" id="lugarEvento" style="display: none">
@@ -235,14 +233,19 @@ function actualizarTabla(botones, donde) {
                 <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('fecha')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['onclick'=>"continuarDomicilio(); actualizarTabla(true, 'tablaProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
                 </div>
                 </div>             
-            </fieldset>
-            <fieldset>
                 <div>
                     <legend>Productos seleccionados</legend>
                     <div class="row" id="productosEvento" style="display: none">
-                        <input type="hidden" id="precioEnvio">
-                        <input type="hidden" id="diferenciaHoras">
-                        <input type="hidden" id="calculoTotal">
+                        <input type="hidden" id="precioEnvio" name="precioEnvio">
+                        <input type="hidden" id="diferenciaHoras" name="diferenciaHoras">
+                        <input type="hidden" id="calculoTotal" name="calculoTotal">
+                        <?php echo $this->Form->input( 
+                           'user_id', 
+                           array ( 
+                              'type'=>'hidden', 
+                              'value'=> $session->read('Auth.User.id') 
+                           ) 
+                        ); ?>
                         <div id="tablaProductos"></div> <!--Acá se va a cargar dinámicamente la tabla-->
                         <!--<table class="table table-striped">
                             <thead>
@@ -310,11 +313,11 @@ function actualizarTabla(botones, donde) {
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>-->
-                            <h4><strong>Costo de envío:</strong></h4><h6 id='envio' class="tx_gris"></h6><br>
+                            <h4><strong>Costo de envío:</strong></h4><h6 id='envio' name='envio' class="tx_gris"></h6><br>
                             <div class="row">
                                 <div class="col-lg-2 col-lg-offset-5 well rojo centrar standard-radius">
                                     <h4 class="text-white"><strong>Total a pagar:</strong></h4>
-                                    <h4 id="total" class="text-white"></h4>
+                                    <h4 id="total" name="total" class="text-white"></h4>
                                 </div>
                             </div>
                             <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('productos')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Reservar') ?> </div>
