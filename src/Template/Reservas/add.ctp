@@ -63,7 +63,7 @@ function continuarDomicilio() {
     mostrarPrecioEnvio(id, idTipo);
 }
 
-function calcularTotal(total) {    
+function continuarProductos() {    
     verDiv('totales');
     var eventoI = $("#fecha_inicio").val() + " " + $("#hora_inicio").val();
     var eventoF = $("#fecha_fin").val() + " " + $("#hora_fin").val();
@@ -74,7 +74,7 @@ function calcularTotal(total) {
     else {
         domicilio = $("#domicilio option:selected").html();
     }    
-    total = parseInt(total);
+    total = parseInt($("#calculoTotal").val());
     var envio = parseInt($("#precioEnvio").val());
     var totalReserva = total + envio;
     $("#total").html("$"+totalReserva);
@@ -120,7 +120,9 @@ function actualizarTabla(botones, donde) {
     //alert(diferenciaHoras);
     $.get('/web/reservas/actualizarTabla?horas='+diferenciaHoras+'&botones='+botones, function(d) {
         //alert(d);
-        $("#"+donde).html(d);
+        var texto = d.split('|');
+        $("#"+donde).html(texto[0]);
+        $("#calculoTotal").val(texto[1]);
     });
 }
 
@@ -240,6 +242,7 @@ function actualizarTabla(botones, donde) {
                     <div class="row" id="productosEvento" style="display: none">
                         <input type="hidden" id="precioEnvio">
                         <input type="hidden" id="diferenciaHoras">
+                        <input type="hidden" id="calculoTotal">
                         <div id="tablaProductos"></div> <!--Acá se va a cargar dinámicamente la tabla-->
                         <!--<table class="table table-striped">
                             <thead>
@@ -270,7 +273,7 @@ function actualizarTabla(botones, donde) {
                                 <?php endforeach; ?>
                             </tbody>
                         </table>-->
-                        <div class="pull-right"><?= $this->Form->button('Volver', ['id' => 'volver', 'onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['id' => 'continuar', 'onclick'=>"calcularTotal($totalReserva); actualizarTabla(false, 'tablaDetalleProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
+                        <div class="pull-right"><?= $this->Form->button('Volver', ['id' => 'volver', 'onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['id' => 'continuar', 'onclick'=>"continuarProductos(); actualizarTabla(false, 'tablaDetalleProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
                         </div>
                     </div>
                     <div>

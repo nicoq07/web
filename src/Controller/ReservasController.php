@@ -226,6 +226,6 @@ class ReservasController extends AppController
                 }
             $tabla = $tabla."</tbody>
         </table>";
-        echo $tabla;
+        echo $tabla."|".$totalReserva;
     }
 }
