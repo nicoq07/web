@@ -194,6 +194,7 @@ span.text-white a {
   -moz-transform: translate3d(0px, 0, 0);
   transform: translate3d(0px, 0, 0);
   overflow: hidden;
+  margin: 1px;
 }
 .main-container.reveal-nav {
   -webkit-transform: translate3d(-300px, 0, 0);
