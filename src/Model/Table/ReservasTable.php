@@ -90,6 +90,10 @@ class ReservasTable extends Table
             ->allowEmpty('fecha_fin');
 
         $validator
+        ->decimal('total')
+        ->allowEmpty('total');
+
+        $validator
             ->boolean('active')
             ->requirePresence('active', 'create')
             ->notEmpty('active');

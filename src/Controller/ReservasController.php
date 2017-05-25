@@ -74,7 +74,8 @@ class ReservasController extends AppController
             $fechaIni =  $this->request->getData()['fecha_inicio'];
             $fechaFin =  $this->request->getData()['fecha_fin'];
             $horaIni =  $this->request->getData()['hora_inicio'];
-            $horaFin =  $this->request->getData()['hora_fin'];            
+            $horaFin =  $this->request->getData()['hora_fin'];
+            $totalReserva =  $this->request->getData()['totalReserva'];        
             $fechaIni = new \DateTime($fechaIni." ".$horaIni);
             $fechaIni = date_format($fechaIni, 'Y/m/d H:i:s');
             $fechaFin = new \DateTime($fechaFin." ".$horaFin);
@@ -84,19 +85,21 @@ class ReservasController extends AppController
             $miReserva['fecha_fin'] = $fechaFin;
             $miReserva['fecha_inicio'] = $fechaIni;
             $miReserva['estado_reserva_id'] = 1;
+            $miReserva['total'] = $totalReserva;            
             $miReserva['user_id'] = $this->viewVars['current_user']['id'];
-            $miReserva['active'] = 1;
+            $miReserva['active'] = 1; 
 
-            $reserva = $this->Reservas->patchEntity($reserva, $miReserva);
+            $reserva = $this->Reservas->patchEntity($reserva, $miReserva); 
 
             if ($lastId = $this->Reservas->save($reserva)) {
                 $this->guardarProductos($session->read('cart'), $lastId->id);
-                $this->Flash->success(__('The reserva has been saved.'));
+                $this->Flash->success(__('Reserva creada.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'PagosReserva', 'action' => 'add', $lastId->id]);
             }
-            $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
-            //return $this->redirect(['controller' => 'PagosReserva', 'action' => 'add']);
+            $this->Flash->error(__('Error al cargar la reserva, reintente por favor.'));
+            return $this->redirect(['action' => 'add']);
+            
         }
         
         $users = $this->Reservas->Users->find('list', ['limit' => 200]);
@@ -115,12 +118,12 @@ class ReservasController extends AppController
             foreach ($data as $id => $cant)
             {                
                 $connection->insert('reservas_productos', [
-                        'reserva_id' => $idReserva,
-                        'producto_id' => $id,
-                        'cantidad' => $cant,
-                        'modified' => new \DateTime('now'),
-                        'created' => new \DateTime('now')], 
-                        ['created' => 'datetime' , 'modified' => 'datetime']);
+                'reserva_id' => $idReserva,
+                'producto_id' => $id,
+                'cantidad' => $cant,
+                'modified' => new \DateTime('now'),
+                'created' => new \DateTime('now')], 
+                ['created' => 'datetime' , 'modified' => 'datetime']);
             }      
         }
     }
@@ -175,19 +178,11 @@ class ReservasController extends AppController
     public function actualizarEnvio()
     {
         if($this->request->is('ajax')) {
-            if ($this->request->query['desde'] == 'domicilio') {
-                $this->autoRender = false; // No renderiza mediate el fichero .ctp
-                $idDomicilio = $this->request->query['id'];
-                $domicilio = $this->Reservas->Users->Domicilios->get($idDomicilio);
-                $localidad = $this->Reservas->Users->Domicilios->Localidades->get($domicilio->localidad_id);
-                echo $localidad->precio;
-            }
-            if ($this->request->query['desde'] == 'localidad') {
-                $this->autoRender = false; // No renderiza mediate el fichero .ctp
-                $idLocalidad = $this->request->query['id']; //id traido desde la view por Ajax      
-                $localidad = $this->Reservas->Users->Domicilios->Localidades->get($idLocalidad);
-                echo $localidad->precio;
-            }           
+            $this->autoRender = false; // No renderiza mediate el fichero .ctp
+            $idDomicilio = $this->request->query['id'];
+            $domicilio = $this->Reservas->Users->Domicilios->get($idDomicilio);
+            $localidad = $this->Reservas->Users->Domicilios->Localidades->get($domicilio->localidad_id);
+            echo $localidad->precio;
         }
     }
 

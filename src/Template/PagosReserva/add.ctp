@@ -7,14 +7,17 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <?php
-                        echo $this->Form->control('reserva_id', ['options' => $reservas, 'label'=>'Nro. de Reserva', 'disabled'=>true]);
+                        echo $this->Form->input('reserva_id', ['type'=>'text', 'disabled'=>true, 'value'=>$reservas->id]);
                         //echo $this->Form->control('user_id', ['options' => $users]);
                         ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <?php echo $this->Form->control('Porcentaje a pagar', ['options' => array('%50', '%75', '%100'), 'empty' => 'Seleccione % a pagar']); ?>
+                        <?php echo $this->Form->control('Porcentaje a pagar', ['options' => array(
+                        '0'=>'%50 - $'.$reservas->total*.5,
+                        '1'=>'%75 - $'.$reservas->total*.75,
+                        '2'=>'%100 - $'.$reservas->total), 'empty' => 'Seleccione % a pagar']); ?>
                     </div>
                     <div class="col-lg-4">
                         <?php echo $this->Form->control('medio_pago_id', ['options' => $mediosPagos, 'empty' => 'Elija un medio de pago']); ?>

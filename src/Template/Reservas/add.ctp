@@ -1,27 +1,8 @@
 <script type="text/javascript">
 
-function ocultarOtraDireccion()
-{ 
-    var estado = document.getElementById('otradireccion-1').checked;
-    //alert(document.getElementById(nombre).checked);
-    $("#envio").html("");
-    $("#total").html("");
-    $("#localidad").val("");
-    $("#domicilio").val("");
-    if (estado) {
-        $("#"+'cargarOtraDireccion').show();
-        document.getElementById('domicilio').disabled = true;
-    }
-    else{
-        $("#"+'cargarOtraDireccion').hide();
-        document.getElementById('domicilio').disabled = false;
-    }
-}
-
-function mostrarPrecioEnvio(id, idTipo) {
+function mostrarPrecioEnvio(id) {
     verDiv('productos');
-    $.get('/web/reservas/actualizarEnvio?id='+id+'&desde='+idTipo, function(d) {
-        //alert(d);
+    $.get('/web/reservas/actualizarEnvio?id='+id, function(d) {
         if (d) {
             $("#envio").html("$"+d);
             $("#precioEnvio").val(d);
@@ -31,36 +12,21 @@ function mostrarPrecioEnvio(id, idTipo) {
             $("#precioEnvio").val("");
         }          
     });
-    //calcularTotal();
 }
 
 function continuarFecha() {
     var inicioEvento = $("#fecha_inicio").val() + " " + $("#hora_inicio").val();
     var finEvento = $("#fecha_fin").val() + " " + $("#hora_fin").val();
     $.get('/web/reservas/calcularHoras?inicio='+inicioEvento+'&fin='+finEvento, function(d) {
-        //alert(d);
         $("#diferenciaHoras").val(d);
     });
     verDiv('lugar');
 }
 
 function continuarDomicilio() {
-    var estado = document.getElementById('otradireccion-1').checked;
-    //alert(estado);
-    var total, id, idTipo;
-    if (estado) {
-        id = $("#localidad").val();
-        idTipo = 'localidad';        
-    }
-    else {
-        id = $("#domicilio").val();
-        idTipo = 'domicilio';
-    }
-    if (!id) {
-        alert('Debe cargar un domicilio para continuar.');
-        return;
-    }
-    mostrarPrecioEnvio(id, idTipo);
+    var id;
+    id = $("#domicilio").val();
+    mostrarPrecioEnvio(id);
 }
 
 function continuarProductos() {    
@@ -78,6 +44,7 @@ function continuarProductos() {
     var envio = parseInt($("#precioEnvio").val());
     var totalReserva = total + envio;
     $("#total").html("$"+totalReserva);
+    $("#totalReserva").val(totalReserva);
     $("#eventoInicio").html(eventoI);
     $("#eventoFin").html(eventoF);
     $("#eventoDireccion").html(domicilio);
@@ -115,11 +82,8 @@ function verDiv(ver) {
 }
 
 function actualizarTabla(botones, donde) {
-    //alert(botones+" "+donde);
     var diferenciaHoras= $("#diferenciaHoras").val();
-    //alert(diferenciaHoras);
     $.get('/web/reservas/actualizarTabla?horas='+diferenciaHoras+'&botones='+botones, function(d) {
-        //alert(d);
         var texto = d.split('|');
         $("#"+donde).html(texto[0]);
         $("#calculoTotal").val(texto[1]);
@@ -127,13 +91,9 @@ function actualizarTabla(botones, donde) {
 }
 
 function bajaCarro(idCarrito) {
-    //alert(idCarrito);
     $.get('/web/reservas/bajaCarro?idCarrito='+idCarrito, function(d) {
-        //alert(d);
         actualizarTabla(true,'tablaProductos');
     });
-    //verDiv('lugar');
-    //actualizarTabla(true,'tablaProductos');
 }
 
 </script>
@@ -153,8 +113,6 @@ function bajaCarro(idCarrito) {
                 <div class="row" id="fechaEvento">
                     <div class="col-lg-6">
                     <?php
-                        //echo $this->Form->control('user_id', ['options' => $users, 'label' => 'Usuario']);
-                        //echo $this->Form->control('estado_reserva_id', ['options' => $estadosReservas, 'label' => 'Estado']);
                         echo $this->Form->label('Inicio del evento');
                     ?>
                     <br>
@@ -190,9 +148,6 @@ function bajaCarro(idCarrito) {
                         echo $this->Form->text('fecha_fin', array('id'=>'fecha_fin', 'type' => 'date'));
                         echo $this->Form->label('Horario');
                         echo $this->Form->select('hora_fin', $arrayHorarios, ['id' => 'hora_fin']);
-                        //echo $this->Form->control('fecha_fin', ['empty' => true]);
-                        //echo $this->Form->control('active' , ['label' => 'Activo' ]);
-                        //echo $this->Form->control('productos._ids', ['options' => $productos]);
                     ?>
                     </div>
 
@@ -214,41 +169,19 @@ function bajaCarro(idCarrito) {
 
                             echo $this->Form->control('domicilio', ['options' => $arrayDomicilios, 'empty' => 'Seleccione dirección...']);
                         ?>
-                        <?php
-                            //echo $this->Form->control('domicilio_id', ['options' => $domicilios]);
-                        ?>
-                        <?php echo $this->Form->input('otraDireccion', array('onclick'=>"ocultarOtraDireccion()", 'label'=>false, 'type'=>'select', 'multiple'=>'checkbox', 'options'=>array(1=>'Otra dirección')));
-                         ?>                     
-                     <div id="cargarOtraDireccion" style="display: none">
-                    <div class="col-lg-5">
-                        <?php echo $this->Form->control('direccion', ['label' => 'Calle']); ?>
-                    </div>
-                    <div class="col-lg-2">
-                        <?php echo $this->Form->control('numero', ['label' => 'Número']); ?>
-                    </div>
-                    <div class="col-lg-2">
-                        <?php echo $this->Form->control('piso', ['label' => 'Piso']); ?>
-                    </div>
-                    <div class="col-lg-3">
-                        <?php
-                            $arrayLocalidades = array();
-                            foreach ($localidades as $localidade) {
-                                $arrayLocalidades[$localidade->id] = $localidade->descripcion;
-                            }
 
-                            echo $this->Form->control('localidad', ['options' => $arrayLocalidades, 'empty' => 'Seleccione una localidad...']);
-                        ?>
+                        <?= $this->Html->link('Cargar Dirección', ['controller'=>'domicilios', 'action' => 'add'], ['class' => 'btn btn-default']) ?>
+                        <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('fecha')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['onclick'=>"continuarDomicilio(); actualizarTabla(true, 'tablaProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>
                     </div>
-                </div>
-                <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('fecha')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['onclick'=>"continuarDomicilio(); actualizarTabla(true, 'tablaProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
-                </div>
-                </div>             
+                    <br>    
+                </div>               
+                             
                 <div>
                     <legend>Productos seleccionados</legend>
                     <div class="row" id="productosEvento" style="display: none">
                         <input type="hidden" id="precioEnvio" name="precioEnvio">
                         <input type="hidden" id="diferenciaHoras" name="diferenciaHoras">
-                        <input type="hidden" id="calculoTotal" name="calculoTotal">
+                        <input type="hidden" id="calculoTotal" name="calculoTotal">                        
                         <?php echo $this->Form->input( 
                            'user_id', 
                            array ( 
@@ -257,72 +190,19 @@ function bajaCarro(idCarrito) {
                            ) 
                         ); ?>
                         <div id="tablaProductos"></div> <!--Acá se va a cargar dinámicamente la tabla-->
-                        <!--<table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Cantidad</th>
-                                    <th>Descripción</th>
-                                    <th>Precio p/hora</th>
-                                    <th>Cantidad de horas</th>
-                                    <th>Precio Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($productos as $producto): ?>
-                                    <tr>
-                                        <td><?= $producto->id ?></td>
-                                        <td><?= $producto->cantidad ?></td>
-                                        <td><?= $producto->descripcion ?></td>
-                                        <td><?= $producto->precio ?></td>
-                                        <td><?= $session->read('horas'); ?></td>
-                                        <td><?php 
-                                            $totalProducto = $session->read('horas') * $producto->precio;
-                                            $totalReserva= $totalReserva + $totalProducto;
-                                            echo $totalProducto; ?></td>
-                                        <td><button class="btn btn-default"> X </button></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>-->
+
                         <div class="pull-right"><?= $this->Form->button('Volver', ['id' => 'volver', 'onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['id' => 'continuar', 'onclick'=>"continuarProductos(); actualizarTabla(false, 'tablaDetalleProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
                         </div>
                     </div>
                     <div>
                         <legend>Detalle Reserva</legend>
                         <div class="row" id="totales" style="display: none">
+                            <input type="hidden" id="totalReserva" name="totalReserva">
                             <h4><strong>Inicio del evento: </strong></h4><h6 id="eventoInicio" class="tx_gris"></h6><br>
                             <h4><strong>Finalización del evento: </strong></h4><h6 id="eventoFin" class="tx_gris"></h6><br>
                             <h4><strong>Dirección: </strong></h4><h6 id="eventoDireccion" class="tx_gris"></h6><br>
                             <div id="tablaDetalleProductos"></div> <!--Acá se va a cargar dinámicamente la tabla-->
-                            <!--<table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Código</th>
-                                        <th>Cantidad</th>
-                                        <th>Descripción</th>
-                                        <th>Precio p/hora</th>
-                                        <th>Cantidad de horas</th>
-                                        <th>Precio Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($productos as $producto): ?>
-                                        <tr>
-                                            <td><?= $producto->id ?></td>
-                                            <td><?= $producto->cantidad ?></td>
-                                            <td><?= $producto->descripcion ?></td>
-                                            <td><?= $producto->precio ?></td>
-                                            <td><?= $session->read('horas'); ?></td>
-                                            <td><?php 
-                                                $totalProducto = $session->read('horas') * $producto->precio;
-                                                $totalReserva= $totalReserva + $totalProducto;
-                                                echo $totalProducto; ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>-->
+
                             <h4><strong>Costo de envío:</strong></h4><h6 id='envio' name='envio' class="tx_gris"></h6><br>
                             <div class="row">
                                 <div class="col-lg-2 col-lg-offset-5 well rojo centrar standard-radius">
