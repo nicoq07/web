@@ -9,6 +9,7 @@ use Cake\I18n\Time;
 	</div>
 	<div class="col-lg-6">
 		<div class = "well">
+		<h3><?= h("Mis direcciones") ?></h3>
 		    <table class ="table table-striped table-hover"  cellpadding="0" cellspacing="0">
 		        <thead>
 		            <tr>

@@ -5,7 +5,8 @@
 	</div>
 	<div class="col-lg-7">
 		<div class="well">
-			    <table class ="table table-striped table-hover"  cellpadding="0" cellspacing="0">
+			<h3><?= h("Mis reservas") ?></h3>
+			    <table class ="table table-striped table-hover"  >
 			        <thead>
 			            <tr>
 			                <th scope="col"><?= $this->Paginator->sort('id', ['label' => 'Código']) ?></th>
