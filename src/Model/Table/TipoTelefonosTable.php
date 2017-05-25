@@ -35,7 +35,7 @@ class TipoTelefonosTable extends Table
         parent::initialize($config);
 
         $this->setTable('tipo_telefonos');
-        $this->setDisplayField('id');
+        $this->setDisplayField('descripcion');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
