@@ -6,6 +6,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Network\Session;
 use Cake\I18n\Time;
 use Cake\I18n\Date;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * Reservas Controller
@@ -55,54 +56,73 @@ class ReservasController extends AppController
      */
     public function add()
     {      
+        $session = $this->request->session();
+        $allProducts = $session->read('cart');
+
         $productos = array();
         $session = $this->request->session();
         $allProducts = $session->read('cart');
         if (null!=$allProducts) {
             foreach ($allProducts as $id => $count) {
                 $producto = $this->Reservas->Productos->get($id);
-                $productos[]=$producto;
+                $productos[]=$producto;                
             }
         }
 
         $reserva = $this->Reservas->newEntity();
         if ($this->request->is('post')) {
-            debug($productos);
-            exit();
-           /*
-            
             $fechaIni =  $this->request->getData()['fecha_inicio'];
             $fechaFin =  $this->request->getData()['fecha_fin'];
             $horaIni =  $this->request->getData()['hora_inicio'];
-            $horaFin =  $this->request->getData()['hora_fin'];
+            $horaFin =  $this->request->getData()['hora_fin'];            
+            $fechaIni = new \DateTime($fechaIni." ".$horaIni);
+            $fechaIni = date_format($fechaIni, 'Y/m/d H:i:s');
+            $fechaFin = new \DateTime($fechaFin." ".$horaFin);
+            $fechaFin = date_format($fechaFin, 'Y/m/d H:i:s');
+            
+            $miReserva = array();
+            $miReserva['fecha_fin'] = $fechaFin;
+            $miReserva['fecha_inicio'] = $fechaIni;
+            $miReserva['estado_reserva_id'] = 1;
+            $miReserva['user_id'] = $this->viewVars['current_user']['id'];
+            $miReserva['active'] = 1;
 
-             debug(new \DateTime($fechaIni." ".$horaIni));
-            exit();
-            $reserva->fecha = new \DateTime();
+            $reserva = $this->Reservas->patchEntity($reserva, $miReserva);
 
-            $reserva = $this->Reservas->patchEntity($reserva, $this->request->getData());
-            debug($reserva);
-            if ($this->Reservas->save($reserva)) {
+            if ($lastId = $this->Reservas->save($reserva)) {
+                $this->guardarProductos($session->read('cart'), $lastId->id);
                 $this->Flash->success(__('The reserva has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The reserva could not be saved. Please, try again.'));*/
-            return $this->redirect(['controller' => 'PagosReserva', 'action' => 'add']);
+            $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
+            //return $this->redirect(['controller' => 'PagosReserva', 'action' => 'add']);
         }
+        
         $users = $this->Reservas->Users->find('list', ['limit' => 200]);
         $estadosReservas = $this->Reservas->EstadosReservas->find('list', ['limit' => 200]);
-        //$productos = $this->Reservas->Productos->find('list', ['limit' => 200]);
         $domicilios = $this->Reservas->Users->Domicilios->find();        
         $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
-
-        $session = $this->request->session();
-        $allProducts = $session->read('cart');
-
-        
-        
         $this->set(compact('reserva', 'users', 'estadosReservas', 'productos', 'domicilios','localidades'));
         $this->set('_serialize', ['reserva']);
+    }
+
+    private function guardarProductos($data, $idReserva)
+    {
+        if(!empty($data))
+        {
+            $connection= ConnectionManager::get("default");
+            foreach ($data as $id => $cant)
+            {                
+                $connection->insert('reservas_productos', [
+                        'reserva_id' => $idReserva,
+                        'producto_id' => $id,
+                        'cantidad' => $cant,
+                        'modified' => new \DateTime('now'),
+                        'created' => new \DateTime('now')], 
+                        ['created' => 'datetime' , 'modified' => 'datetime']);
+            }      
+        }
     }
 
     /**
