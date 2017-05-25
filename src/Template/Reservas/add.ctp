@@ -126,6 +126,16 @@ function actualizarTabla(botones, donde) {
     });
 }
 
+function bajaCarro(idCarrito) {
+    //alert(idCarrito);
+    $.get('/web/reservas/bajaCarro?idCarrito='+idCarrito, function(d) {
+        //alert(d);
+        actualizarTabla(true,'tablaProductos');
+    });
+    //verDiv('lugar');
+    //actualizarTabla(true,'tablaProductos');
+}
+
 </script>
 
 <?php 

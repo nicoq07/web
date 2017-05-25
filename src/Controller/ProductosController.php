@@ -156,6 +156,7 @@ class ProductosController extends AppController
             $allProducts[$id] = 1;
         }
         $session->write('cart', $allProducts);         
+        $this->Flash->success(__('Producto agregado al carrito.'));
         return $this->redirect($this->referer());
 
     }

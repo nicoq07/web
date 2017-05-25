@@ -55,9 +55,20 @@ class ReservasController extends AppController
      */
     public function add()
     {      
+        $productos = array();
+        $session = $this->request->session();
+        $allProducts = $session->read('cart');
+        if (null!=$allProducts) {
+            foreach ($allProducts as $id => $count) {
+                $producto = $this->Reservas->Productos->get($id);
+                $productos[]=$producto;
+            }
+        }
+
         $reserva = $this->Reservas->newEntity();
         if ($this->request->is('post')) {
-
+            debug($productos);
+            exit();
            /*
             
             $fechaIni =  $this->request->getData()['fecha_inicio'];
@@ -88,15 +99,7 @@ class ReservasController extends AppController
         $session = $this->request->session();
         $allProducts = $session->read('cart');
 
-        $productos = array();
-        $session = $this->request->session();
-        $allProducts = $session->read('cart');
-        if (null!=$allProducts) {
-            foreach ($allProducts as $id => $count) {
-                $producto = $this->Reservas->Productos->get($id);
-                $productos[]=$producto;
-            }
-        }
+        
         
         $this->set(compact('reserva', 'users', 'estadosReservas', 'productos', 'domicilios','localidades'));
         $this->set('_serialize', ['reserva']);
@@ -232,7 +235,7 @@ class ReservasController extends AppController
                     $tabla = $tabla.$totalProducto."</td>
                         <td>";
                     if ($botones == 'true') {
-                        $tabla = $tabla."<button class='btn btn-default'> X </button>";
+                        $tabla = $tabla."<input type='button' value='X' class='btn btn-default' onclick='bajaCarro(".$producto->id.")'/>";
                     }
                     $tabla = $tabla."</td>
                     </tr>";
@@ -241,5 +244,24 @@ class ReservasController extends AppController
             $tabla = $tabla."</tbody>
         </table>";
         echo $tabla."|".$totalReserva;
+    }
+
+    public function bajaCarro(){
+        //echo "algo";
+        $session = $this->request->session();
+        $allProducts = $session->read('cart');
+
+        if($this->request->is('ajax')) {
+            $idCarrito = $this->request->query['idCarrito'];
+            echo $idCarrito;
+            echo $this->productos;
+            if (null!=$allProducts) {
+                if (array_key_exists($idCarrito, $allProducts)) {
+                    unset($allProducts["$idCarrito"]);
+                    $session->write('cart', $allProducts);  
+                }
+            }
+        }
+
     }
 }
