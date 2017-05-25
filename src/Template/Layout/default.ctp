@@ -8,8 +8,7 @@
     </title>
     
     <?= $this->Html->meta('icon') ?>
-    <?= $this->Html->css(['https://fonts.googleapis.com/css?family=Roboto+Condensed|Varela+Round|Permanent+Marker',
-    		'http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600,700%7CRaleway:700',
+    <?= $this->Html->css([
     		'bootstrap.min',
     		'elegant-icons.min',
     		'flexslider.min',
@@ -20,7 +19,7 @@
             'fileinput.min']) ?>
     
     <?= $this->Html->script([
-    		'https://www.youtube.com/iframe_api',
+    		
     		'jquery.min',
     		'jquery.plugin.min',
     		'bootstrap.min',
@@ -59,7 +58,7 @@
 			</div>
     	</div>  
  	<?= $this->element('menu') ?>
- 	<div class= "main-container" >
+ 	<div class= "main-container bkg" >
  		<?= $this->Flash->render() ?>
 		<?= $this->fetch('content') ?>
  	</div>

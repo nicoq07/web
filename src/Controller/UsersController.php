@@ -183,7 +183,7 @@ class UsersController extends AppController
     	return $this->redirect($this->Auth->logout());
     }
 
-    use MailerAwareTrait;
+//     use MailerAwareTrait;
     public function contacto()
     {
     	
@@ -206,5 +206,77 @@ class UsersController extends AppController
     {
     	
     }
+    
+    public function perfil()
+    {
+    	$user = $this->Auth->user();
+    	if($user)
+    	{
+    		$user = $this->Users->get($user['id']);
+    		    	}
+    	$this->set('user', $user);
+    	$this->set('_serialize', ['user']);
+    }
+    
+    public function direcciones()
+    {
+    	$user = $this->Auth->user();
+    	if($user)
+    	{
+    		$user = $this->Users->get($user['id'], [
+    				'contain' => ['Domicilios']
+    		]);
+    	}
+    	
+    	$localidades = $this->Users->Domicilios->Localidades->find('list')->toArray();
+    	$this->set(compact('user','localidades'));
+    	$this->set('_serialize', ['user']);
+    }
+    
+    public function reservas()
+    {
+    	$user = $this->Auth->user();
+    	if($user)
+    	{
+    		$user = $this->Users->get($user['id'], [
+    				'contain' => ['Reservas']
+    		]);
+    	}
+    	
+    	$productos = $this->Users->Reservas->Productos->find('list')->toArray();
+    	$estados = $this->Users->Reservas->EstadosReservas->find('list')->toArray();
+    	$this->set(compact('user','productos','estados'));
+    	$this->set('_serialize', ['user']);
+    }
+    
+    public function pagos()
+    {
+    	$user = $this->Auth->user();
+    	if($user)
+    	{
+    		$user = $this->Users->get($user['id'], [
+    				'contain' => ['PagosReserva']
+    		]);
+    	}
+    	$localidades = $this->Users->Domicilios->Localidades->find('list')->toArray();
+    	$this->set(compact('user','localidades'));
+    	$this->set('_serialize', ['user']);
+    }
+    
+    public function telefonos()
+    {
+    	$user = $this->Auth->user();
+    	if($user)
+    	{
+    		$user = $this->Users->get($user['id'], [
+    				'contain' => ['Telefonos']
+    		]);
+    	}
+    	$tipo = $this->Users->Telefonos->TipoTelefonos->find('list')->toArray();
+    	$this->set(compact('user','tipo'));
+    	$this->set('_serialize', ['user']);
+    }
+    
+    
     
 }

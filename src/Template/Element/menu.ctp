@@ -111,7 +111,7 @@
 				                    	<?php endif; ?>
 				                    	<?php if (!empty($current_user) ) :?>
 				                    	<li>
-					                    	<?= $this->Html->link('Perfil',['controller' => 'users', 'action' => 'view' , $current_user['id'] ])?>
+					                    	<?= $this->Html->link('Perfil',['controller' => 'users', 'action' => 'perfil'])?>
 					                    </li>
 					                     <li>
 					                    	<?= $this->Html->link('Agregar domicilio',['controller' => 'domicilios', 'action' => 'add'])?>

@@ -1,69 +1,35 @@
-<div class="col-lg-3 sidebar menu-usuario">
-    <div class="mini-submenu">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </div>
-    <div class="list-group">
-        <span href="#" class="list-group-item active">
-            Mis datos
-            <span class="pull-right" id="slide-submenu">
-                <i class="fa fa-times"></i>
-            </span>
-        </span>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-comment-o"></i> <?php echo h('Teléfonos')?>
-        </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-search"></i> <?php echo h('Direcciones')?>
-        </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-user"></i> <?php echo h('Multas')?>
-        </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-folder-open-o"></i> <?php echo h('Reservas')?> 
-        </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-bar-chart-o"></i> <?php echo h('Pagos')?> 
-        </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-envelope"></i> <?php echo h('ETC')?>
-        </a>
-	</div>
-</div>
-
-<div class="col-lg-9 menu-usuario" >
-    <table class ="table table-striped table-hover"  cellpadding="0" cellspacing="0">
-        <tr>
-            <th scope="row"><?= __('Dni') ?></th>
-            <td><?= h($user->dni) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Nombre') ?></th>
-            <td><?= h($user->nombre) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Apellido') ?></th>
-            <td><?= h($user->apellido) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Email') ?></th>
-            <td><?= h($user->email) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Fecha alta') ?></th>
-            <td><?= h($user->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('active') ?></th>
-            <td><?= $user->active ? __('Yes') : __('No'); ?></td>
-        </tr>
-    </table>
-    <div class="related">
+<!-- <div class="col-lg-9 menu-usuario" > -->
+	<!--     <table class ="table table-striped table-hover"  cellpadding="0" cellspacing="0"> -->
+	<!--         <tr> -->
+	            <th scope="row"><?= __('Dni') ?></th>
+	            <td><?= h($user->dni) ?></td>
+	<!--         </tr> -->
+	<!--         <tr> -->
+	            <th scope="row"><?= __('Nombre') ?></th>
+	            <td><?= h($user->nombre) ?></td>
+	<!--         </tr> -->
+	<!--         <tr> -->
+	            <th scope="row"><?= __('Apellido') ?></th>
+	            <td><?= h($user->apellido) ?></td>
+	<!--         </tr> -->
+	<!--         <tr> -->
+	            <th scope="row"><?= __('Email') ?></th>
+	            <td><?= h($user->email) ?></td>
+	<!--         </tr> -->
+	<!--         <tr> -->
+	            <th scope="row"><?= __('Fecha alta') ?></th>
+	            <td><?= h($user->created) ?></td>
+	<!--         </tr> -->
+	<!--         <tr> -->
+	            <th scope="row"><?= __('active') ?></th>
+	            <td><?= $user->active ? __('Yes') : __('No'); ?></td>
+	<!--         </tr> -->
+	<!--     </table> -->
+<!--     <div class="related"> -->
         <h4><?= __('Related Calificaciones Productos') ?></h4>
         <?php if (!empty($user->calificaciones_productos)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
+<!--         <table cellpadding="0" cellspacing="0"> -->
+<!--             <tr> -->
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('User Id') ?></th>
                 <th scope="col"><?= __('Producto Id') ?></th>
@@ -72,9 +38,9 @@
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
+<!--             </tr> -->
             <?php foreach ($user->calificaciones_productos as $calificacionesProductos): ?>
-            <tr>
+<!--             <tr> -->
                 <td><?= h($calificacionesProductos->id) ?></td>
                 <td><?= h($calificacionesProductos->user_id) ?></td>
                 <td><?= h($calificacionesProductos->producto_id) ?></td>
@@ -82,21 +48,21 @@
                 <td><?= h($calificacionesProductos->created) ?></td>
                 <td><?= h($calificacionesProductos->modified) ?></td>
                 <td><?= h($calificacionesProductos->active) ?></td>
-                <td class="actions">
+<!--                 <td class="actions"> -->
                     <?= $this->Html->link(__('View'), ['controller' => 'CalificacionesProductos', 'action' => 'view', $calificacionesProductos->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'CalificacionesProductos', 'action' => 'edit', $calificacionesProductos->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'CalificacionesProductos', 'action' => 'delete', $calificacionesProductos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $calificacionesProductos->id)]) ?>
-                </td>
-            </tr>
+<!--                 </td> -->
+<!--             </tr> -->
             <?php endforeach; ?>
-        </table>
+<!--         </table> -->
         <?php endif; ?>
-    </div>
-    <div class="related">
+<!--     </div> -->
+<!--     <div class="related"> -->
         <h4><?= __('Related Domicilios') ?></h4>
         <?php if (!empty($user->domicilios)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
+<!--         <table cellpadding="0" cellspacing="0"> -->
+<!--             <tr> -->
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('User Id') ?></th>
                 <th scope="col"><?= __('Piso') ?></th>
@@ -107,9 +73,9 @@
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
+<!--             </tr> -->
             <?php foreach ($user->domicilios as $domicilios): ?>
-            <tr>
+<!--             <tr> -->
                 <td><?= h($domicilios->id) ?></td>
                 <td><?= h($domicilios->user_id) ?></td>
                 <td><?= h($domicilios->piso) ?></td>
@@ -119,21 +85,21 @@
                 <td><?= h($domicilios->created) ?></td>
                 <td><?= h($domicilios->modified) ?></td>
                 <td><?= h($domicilios->active) ?></td>
-                <td class="actions">
+<!--                 <td class="actions"> -->
                     <?= $this->Html->link(__('View'), ['controller' => 'Domicilios', 'action' => 'view', $domicilios->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Domicilios', 'action' => 'edit', $domicilios->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'Domicilios', 'action' => 'delete', $domicilios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $domicilios->id)]) ?>
-                </td>
-            </tr>
+<!--                 </td> -->
+<!--             </tr> -->
             <?php endforeach; ?>
-        </table>
+<!--         </table> -->
         <?php endif; ?>
-    </div>
-    <div class="related">
+<!--     </div> -->
+<!--     <div class="related"> -->
         <h4><?= __('Related Multas User') ?></h4>
         <?php if (!empty($user->multas_user)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
+<!--         <table cellpadding="0" cellspacing="0"> -->
+<!--             <tr> -->
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('User Id') ?></th>
                 <th scope="col"><?= __('Descripcion') ?></th>
@@ -142,9 +108,9 @@
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
+<!--             </tr> -->
             <?php foreach ($user->multas_user as $multasUser): ?>
-            <tr>
+<!--             <tr> -->
                 <td><?= h($multasUser->id) ?></td>
                 <td><?= h($multasUser->user_id) ?></td>
                 <td><?= h($multasUser->descripcion) ?></td>
@@ -152,21 +118,21 @@
                 <td><?= h($multasUser->created) ?></td>
                 <td><?= h($multasUser->modified) ?></td>
                 <td><?= h($multasUser->active) ?></td>
-                <td class="actions">
+<!--                 <td class="actions"> -->
                     <?= $this->Html->link(__('View'), ['controller' => 'MultasUser', 'action' => 'view', $multasUser->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'MultasUser', 'action' => 'edit', $multasUser->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'MultasUser', 'action' => 'delete', $multasUser->id], ['confirm' => __('Are you sure you want to delete # {0}?', $multasUser->id)]) ?>
-                </td>
-            </tr>
+<!--                 </td> -->
+<!--             </tr> -->
             <?php endforeach; ?>
-        </table>
+<!--         </table> -->
         <?php endif; ?>
-    </div>
-    <div class="related">
+<!--     </div> -->
+<!--     <div class="related"> -->
         <h4><?= __('Related Pagos Reserva') ?></h4>
         <?php if (!empty($user->pagos_reserva)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
+<!--         <table cellpadding="0" cellspacing="0"> -->
+<!--             <tr> -->
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Reserva Id') ?></th>
                 <th scope="col"><?= __('User Id') ?></th>
@@ -175,9 +141,9 @@
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col"><?= __('Pagado') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
+<!--             </tr> -->
             <?php foreach ($user->pagos_reserva as $pagosReserva): ?>
-            <tr>
+<!--             <tr> -->
                 <td><?= h($pagosReserva->id) ?></td>
                 <td><?= h($pagosReserva->reserva_id) ?></td>
                 <td><?= h($pagosReserva->user_id) ?></td>
@@ -185,21 +151,21 @@
                 <td><?= h($pagosReserva->created) ?></td>
                 <td><?= h($pagosReserva->modified) ?></td>
                 <td><?= h($pagosReserva->pagado) ?></td>
-                <td class="actions">
+<!--                 <td class="actions"> -->
                     <?= $this->Html->link(__('View'), ['controller' => 'PagosReserva', 'action' => 'view', $pagosReserva->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'PagosReserva', 'action' => 'edit', $pagosReserva->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'PagosReserva', 'action' => 'delete', $pagosReserva->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pagosReserva->id)]) ?>
-                </td>
-            </tr>
+<!--                 </td> -->
+<!--             </tr> -->
             <?php endforeach; ?>
-        </table>
+<!--         </table> -->
         <?php endif; ?>
-    </div>
-    <div class="related">
+<!--     </div> -->
+<!--     <div class="related"> -->
         <h4><?= __('Related Reservas') ?></h4>
         <?php if (!empty($user->reservas)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
+<!--         <table cellpadding="0" cellspacing="0"> -->
+<!--             <tr> -->
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('User Id') ?></th>
                 <th scope="col"><?= __('Estado Reserva Id') ?></th>
@@ -209,9 +175,9 @@
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
+<!--             </tr> -->
             <?php foreach ($user->reservas as $reservas): ?>
-            <tr>
+<!--             <tr> -->
                 <td><?= h($reservas->id) ?></td>
                 <td><?= h($reservas->user_id) ?></td>
                 <td><?= h($reservas->estado_reserva_id) ?></td>
@@ -220,21 +186,21 @@
                 <td><?= h($reservas->created) ?></td>
                 <td><?= h($reservas->modified) ?></td>
                 <td><?= h($reservas->active) ?></td>
-                <td class="actions">
+<!--                 <td class="actions"> -->
                     <?= $this->Html->link(__('View'), ['controller' => 'Reservas', 'action' => 'view', $reservas->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Reservas', 'action' => 'edit', $reservas->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'Reservas', 'action' => 'delete', $reservas->id], ['confirm' => __('Are you sure you want to delete # {0}?', $reservas->id)]) ?>
-                </td>
-            </tr>
+<!--                 </td> -->
+<!--             </tr> -->
             <?php endforeach; ?>
-        </table>
+<!--         </table> -->
         <?php endif; ?>
-    </div>
-    <div class="related">
+<!--     </div> -->
+<!--     <div class="related"> -->
         <h4><?= __('Related Telefonos') ?></h4>
         <?php if (!empty($user->telefonos)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
+<!--         <table cellpadding="0" cellspacing="0"> -->
+<!--             <tr> -->
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('User Id') ?></th>
                 <th scope="col"><?= __('Tipo Telefono Id') ?></th>
@@ -243,9 +209,9 @@
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col"><?= __('active' , ['label' => 'Activo' ]) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
+<!--             </tr> -->
             <?php foreach ($user->telefonos as $telefonos): ?>
-            <tr>
+<!--             <tr> -->
                 <td><?= h($telefonos->id) ?></td>
                 <td><?= h($telefonos->user_id) ?></td>
                 <td><?= h($telefonos->tipo_telefono_id) ?></td>
@@ -253,14 +219,14 @@
                 <td><?= h($telefonos->created) ?></td>
                 <td><?= h($telefonos->modified) ?></td>
                 <td><?= h($telefonos->active) ?></td>
-                <td class="actions">
+<!--                 <td class="actions"> -->
                     <?= $this->Html->link(__('View'), ['controller' => 'Telefonos', 'action' => 'view', $telefonos->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Telefonos', 'action' => 'edit', $telefonos->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'Telefonos', 'action' => 'delete', $telefonos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $telefonos->id)]) ?>
-                </td>
-            </tr>
+<!--                 </td> -->
+<!--             </tr> -->
             <?php endforeach; ?>
-        </table>
+<!--         </table> -->
         <?php endif; ?>
-    </div>
-</div>
+<!--     </div> -->
+<!-- </div> -->
