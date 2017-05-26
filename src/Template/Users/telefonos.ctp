@@ -22,7 +22,7 @@
 		                <td><?= h($telefono->numero) ?></td>
 						<td><?= $telefono->active ? __('Si') : __('No'); ?></td>
 		                <td class="actions">
-		                    <?= $this->Html->link(__('Editar'), ['controller' =>'telefonos', 'action' => 'edit', $telefono->id]) ?>
+		                    <?= $this->Html->link(__('Editar'), ['controller' =>'telefonos', 'action' => 'editcliente', $telefono->id]) ?>
 		                    <?= $this->Form->postLink(__('Borrar'), ['controller' =>'telefonos','action' => 'delete', $telefono->id], ['confirm' => __('Seguro de borrar el domicilio?', $telefono->id)]) ?>
 		                </td>
 		            </tr>

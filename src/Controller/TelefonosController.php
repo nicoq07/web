@@ -93,6 +93,26 @@ class TelefonosController extends AppController
         $this->set(compact('telefono', 'personas', 'tipoTelefonos'));
         $this->set('_serialize', ['telefono']);
     }
+    
+    public function editcliente($id = null)
+    {
+    	$telefono = $this->Telefonos->get($id, [
+    			'contain' => []
+    	]);
+    	if ($this->request->is(['patch', 'post', 'put'])) {
+    		$telefono = $this->Telefonos->patchEntity($telefono, $this->request->getData());
+    		if ($this->Telefonos->save($telefono)) {
+    			$this->Flash->success(__('The telefono has been saved.'));
+    			
+    			return $this->redirect(['action' => 'index']);
+    		}
+    		$this->Flash->error(__('The telefono could not be saved. Please, try again.'));
+    	}
+    	
+    	$tipoTelefonos = $this->Telefonos->TipoTelefonos->find('list', ['limit' => 200]);
+    	$this->set(compact('telefono',  'tipoTelefonos'));
+    	$this->set('_serialize', ['telefono']);
+    }
 
     /**
      * Delete method

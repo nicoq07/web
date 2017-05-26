@@ -18,11 +18,11 @@
 			            </tr>
 			        </thead>
 			        <tbody>
-			            <?php foreach ($user->reservas as $reserva): ?>
+			            <?php foreach ($reservas as $reserva): ?>
 			            <tr>
 			                <td><?= h($reserva->id)  ?></td>
-			                <td><?= h($estados[$reserva->estado_reserva_id]) ?></td>
-				            <td title="Productos:&#10;<?php foreach ($productos as $pro) { echo "-". $pro . "&#10;"; }?>" align="center"><?= h(count($productos))?>	</td>
+			                <td><?= h($reserva->estados_reserva->descripcion) ?></td>
+				            <td title="Productos:&#10;<?php foreach ($reserva->productos as $pro) { echo "-". $pro->descripcion . "&#10;"; }?>" align="center"><?= h(count($reserva->productos))?>	</td>
 				            <td><?= h($reserva->fecha_inicio->format('d-m-Y H:i a'))  ?></td>
 				            <td><?= h($reserva->fecha_fin->format('d-m-Y H:i a'))  ?></td>
 			                <td class="actions">

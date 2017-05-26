@@ -238,15 +238,17 @@ class UsersController extends AppController
     	$user = $this->Auth->user();
     	if($user)
     	{
-    		$user = $this->Users->get($user['id'], [
-    				'contain' => ['Reservas']
-    		]);
+    		$reservas = $this->Users->Reservas->find()->where(['user_id'=>$user['id']])->contain(['Productos','EstadosReservas'])->all();
+    		
     	}
     	
-    	$productos = $this->Users->Reservas->Productos->find('list')->toArray();
-    	$estados = $this->Users->Reservas->EstadosReservas->find('list')->toArray();
-    	$this->set(compact('user','productos','estados'));
-    	$this->set('_serialize', ['user']);
+    	//$productos = $this->Users->Reservas->ReservasProductos->find();
+    	
+//     	debug($productos);
+//     	exit();
+    	//$estados = $this->Users->Reservas->EstadosReservas->find('list')->toArray();
+    	$this->set(compact('reservas'));
+    	//$this->set('_serialize', ['user']);
     }
     
     public function pagos()

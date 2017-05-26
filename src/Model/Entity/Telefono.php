@@ -7,14 +7,14 @@ use Cake\ORM\Entity;
  * Telefono Entity
  *
  * @property int $id
- * @property int $persona_id
+ * @property int $user_id
  * @property int $tipo_telefono_id
  * @property string $numero
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  * @property bool $active
  *
- * @property \App\Model\Entity\Persona $persona
+ * @property \App\Model\Entity\Users $user
  * @property \App\Model\Entity\TipoTelefono $tipo_telefono
  */
 class Telefono extends Entity
