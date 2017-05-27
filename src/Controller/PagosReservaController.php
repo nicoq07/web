@@ -55,9 +55,7 @@ class PagosReservaController extends AppController
      *
      * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add($datos=null)
-    {
-        
+    public function add($datos=null){        
         $pagosReserva = $this->PagosReserva->newEntity();
         if ($this->request->is('post')) {
             $pagosReserva = $this->PagosReserva->patchEntity($pagosReserva, $this->request->getData());

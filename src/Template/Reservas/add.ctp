@@ -2,10 +2,17 @@
 
 function mostrarPrecioEnvio(id) {
     verDiv('productos');
-    $.get('/web/reservas/actualizarEnvio?id='+id, function(d) {
+    $.get('/web/reservas/actualizarEnvio?id='+id, function(d) {        
         if (d) {
-            $("#envio").html("$"+d);
-            $("#precioEnvio").val(d);
+            var texto = d.split('|');
+            var cantidadEnvios = 0;
+            if (texto[1]%4 == 0) {
+                cantidadEnvios = texto[1]/4;
+            } else {
+                cantidadEnvios = Math.floor((texto[1]/4)+1)
+            }
+            $("#envio").html("$"+(texto[0]*cantidadEnvios));
+            $("#precioEnvio").val(texto[0]*cantidadEnvios);
         }
         else {
             $("#envio").html("");
@@ -17,7 +24,7 @@ function mostrarPrecioEnvio(id) {
 function continuarFecha() {
     var inicioEvento = $("#fecha_inicio").val() + " " + $("#hora_inicio").val();
     var finEvento = $("#fecha_fin").val() + " " + $("#hora_fin").val();
-    $.get('/web/reservas/calcularHoras?inicio='+inicioEvento+'&fin='+finEvento, function(d) {
+    $.get('/web/reservas/calcularHoras?fIni='+$("#fecha_inicio").val()+'&hIni='+$("#hora_inicio").val()+'&fFin='+$("#fecha_fin").val()+'&hFin='+$("#hora_fin").val(), function(d) {
         $("#diferenciaHoras").val(d);
     });
     verDiv('lugar');
@@ -31,19 +38,21 @@ function continuarDomicilio() {
 
 function continuarProductos() {    
     verDiv('totales');
-    var eventoI = $("#fecha_inicio").val() + " " + $("#hora_inicio").val();
-    var eventoF = $("#fecha_fin").val() + " " + $("#hora_fin").val();
-    var domicilio = $("#domicilio option:selected").val();
-    if (!domicilio) {
-        domicilio = $("#direccion").val() + " " + $("#numero").val() + " " + $("#piso").val() + " " + $("#localidad option:selected").html();
-    }
-    else {
-        domicilio = $("#domicilio option:selected").html();
-    }    
-    total = parseInt($("#calculoTotal").val());
+    var eventoI = $("#fecha_inicio").val() + " " + $("#hora_inicio").val() + ":00";
+    var eventoF = $("#fecha_fin").val() + " " + $("#hora_fin").val() + ":00";
+    var domicilio = $("#domicilio option:selected").html();
+    var total = parseInt($("#calculoTotal").val());
     var envio = parseInt($("#precioEnvio").val());
     var totalReserva = total + envio;
-    $("#total").html("$"+totalReserva);
+    if (totalReserva >= 2000) {        
+        totalReserva = totalReserva*.85;
+        $("#descuento").show();
+    }
+    else {
+        $("#descuento").hide();  
+    }
+    
+    $("#total").html("$"+parseFloat(totalReserva).toFixed(2));
     $("#totalReserva").val(totalReserva);
     $("#eventoInicio").html(eventoI);
     $("#eventoFin").html(eventoF);
@@ -91,7 +100,10 @@ function actualizarTabla(botones, donde) {
 }
 
 function bajaCarro(idCarrito) {
+    var idDomicilio = $("#domicilio").val();
+    mostrarPrecioEnvio(idDomicilio);
     $.get('/web/reservas/bajaCarro?idCarrito='+idCarrito, function(d) {
+        $("#totalProductos").val(d);
         actualizarTabla(true,'tablaProductos');
     });
 }
@@ -118,20 +130,20 @@ function bajaCarro(idCarrito) {
                     <br>
                     <?php
                         $arrayHorarios = [
-                            '09:00'=> '09:00',
-                            '10:00'=> '10:00',
-                            '11:00'=> '11:00',
-                            '12:00'=> '12:00',
-                            '13:00'=> '13:00',
-                            '14:00'=> '14:00',
-                            '15:00'=> '15:00',
-                            '16:00'=> '16:00',
-                            '17:00'=> '17:00',
-                            '18:00'=> '18:00',
-                            '19:00'=> '19:00',
-                            '20:00'=> '20:00',
-                            '21:00'=> '21:00',
-                            '22:00'=> '22:00',
+                            '9'=> '09:00',
+                            '10'=> '10:00',
+                            '11'=> '11:00',
+                            '12'=> '12:00',
+                            '13'=> '13:00',
+                            '14'=> '14:00',
+                            '15'=> '15:00',
+                            '16'=> '16:00',
+                            '17'=> '17:00',
+                            '18'=> '18:00',
+                            '19'=> '19:00',
+                            '20'=> '20:00',
+                            '21'=> '21:00',
+                            '22'=> '22:00',
                         ];
 
                         echo $this->Form->label('Fecha');
@@ -178,10 +190,8 @@ function bajaCarro(idCarrito) {
                              
                 <div>
                     <legend>Productos seleccionados</legend>
-                    <div class="row" id="productosEvento" style="display: none">
-                        <input type="hidden" id="precioEnvio" name="precioEnvio">
-                        <input type="hidden" id="diferenciaHoras" name="diferenciaHoras">
-                        <input type="hidden" id="calculoTotal" name="calculoTotal">                        
+                    <div class="row" id="productosEvento" style="display: none">                        
+                        <input type="hidden" id="diferenciaHoras" name="diferenciaHoras">                                                
                         <?php echo $this->Form->input( 
                            'user_id', 
                            array ( 
@@ -197,13 +207,18 @@ function bajaCarro(idCarrito) {
                     <div>
                         <legend>Detalle Reserva</legend>
                         <div class="row" id="totales" style="display: none">
+                            <input type="hidden" id="precioEnvio" name="precioEnvio">
                             <input type="hidden" id="totalReserva" name="totalReserva">
+                            <input type="hidden" id="totalProductos" name="totalProductos">
+                            <input type="hidden" id="calculoTotal" name="calculoTotal">
                             <h4><strong>Inicio del evento: </strong></h4><h6 id="eventoInicio" class="tx_gris"></h6><br>
                             <h4><strong>Finalización del evento: </strong></h4><h6 id="eventoFin" class="tx_gris"></h6><br>
                             <h4><strong>Dirección: </strong></h4><h6 id="eventoDireccion" class="tx_gris"></h6><br>
                             <div id="tablaDetalleProductos"></div> <!--Acá se va a cargar dinámicamente la tabla-->
 
-                            <h4><strong>Costo de envío:</strong></h4><h6 id='envio' name='envio' class="tx_gris"></h6><br>
+                            <p>*El costo de envío puede variar de acuerdo a la cantidad de productos solicitados.</p>
+                            <h4><strong>Costo de envío:</strong></h4><h6 id='envio' name='envio' class="tx_gris"></h6>
+                            <div id="descuento" style="display: none"><h4><strong>Descuento:</strong></h4><h6 class="tx_gris">%15</h6><br></div>
                             <div class="row">
                                 <div class="col-lg-2 col-lg-offset-5 well rojo centrar standard-radius">
                                     <h4 class="text-white"><strong>Total a pagar:</strong></h4>

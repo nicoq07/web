@@ -76,9 +76,9 @@ class ReservasController extends AppController
             $horaIni =  $this->request->getData()['hora_inicio'];
             $horaFin =  $this->request->getData()['hora_fin'];
             $totalReserva =  $this->request->getData()['totalReserva'];        
-            $fechaIni = new \DateTime($fechaIni." ".$horaIni);
+            $fechaIni = new \DateTime($fechaIni." ".$horaIni.":00:00");
             $fechaIni = date_format($fechaIni, 'Y/m/d H:i:s');
-            $fechaFin = new \DateTime($fechaFin." ".$horaFin);
+            $fechaFin = new \DateTime($fechaFin." ".$horaFin.":00:00");
             $fechaFin = date_format($fechaFin, 'Y/m/d H:i:s');
             
             $miReserva = array();
@@ -126,6 +126,7 @@ class ReservasController extends AppController
                 ['created' => 'datetime' , 'modified' => 'datetime']);
             }      
         }
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 
     /**
@@ -178,28 +179,41 @@ class ReservasController extends AppController
     public function actualizarEnvio()
     {
         if($this->request->is('ajax')) {
-            $this->autoRender = false; // No renderiza mediate el fichero .ctp
+            $session = $this->request->session();
+            $allProducts = $session->read('cart');
+            $cantidad = 0;
+            if (null!=$allProducts) {
+                foreach ($allProducts as $id => $count) {
+                    $cantidad = $cantidad+$count;
+                }
+            }
             $idDomicilio = $this->request->query['id'];
             $domicilio = $this->Reservas->Users->Domicilios->get($idDomicilio);
             $localidad = $this->Reservas->Users->Domicilios->Localidades->get($domicilio->localidad_id);
-            echo $localidad->precio;
+            echo $localidad->precio."|".$cantidad;
         }
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 
     public function calcularHoras(){        
         $session = $this->request->session();
-        if($this->request->is('ajax')) {
-            $this->autoRender = false; // No renderiza mediate el fichero .ctp
-            $strStart = $this->request->query['inicio'];
-            $strEnd = $this->request->query['fin'];
-            $dteStart = new Date($strStart); 
-            $dteEnd   = new Date($strEnd);
-            $dteDiff = $dteStart->diff($dteEnd);
-            $horas = $dteDiff->format("%h");
-            echo $horas;
-            $session->write('horas', $horas); 
-            //echo var_dump($session->read('horas'));
+        $fIni = $this->request->query['fIni'];
+        $hIni = $this->request->query['hIni'];
+        $fFin = $this->request->query['fFin'];
+        $hFin = $this->request->query['hFin'];
+        $fechaInicio = new Time($fIni." ".$hIni.":00:00"); 
+        $fechaFin = new Time($fFin." ".$hFin.":00:00");
+        $diferencia = $fechaInicio->diff($fechaFin);
+        $dias = $diferencia->format("%d");       
+        $totalHoras;
+        if($hFin < $hIni) {
+            $totalHoras = (23-$hIni)+($hFin-9)+($dias*14);
+        } else {
+            $horas = $diferencia->format("%h");                       
+            $totalHoras = $dias*14+$horas;            
         }
+        echo $totalHoras;
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 
     public function actualizarTabla(){
@@ -242,12 +256,12 @@ class ReservasController extends AppController
                         <td>".$producto->id."</td>
                         <td>".$cantidad[$contador]."</td>
                         <td>".$producto->descripcion."</td>
-                        <td>".$producto->precio."</td>
+                        <td>$".$producto->precio."</td>
                         <td>".$horas."</td>
                         <td>";
                         $totalProducto = $horas * $producto->precio * $cantidad[$contador];
                         $totalReserva = $totalReserva + $totalProducto;
-                    $tabla = $tabla.$totalProducto."</td>
+                    $tabla = $tabla."$".$totalProducto."</td>
                         <td>";
                     if ($botones == 'true') {
                         $tabla = $tabla."<input type='button' value='X' class='btn btn-default' onclick='bajaCarro(".$producto->id.")'/>";
@@ -259,6 +273,7 @@ class ReservasController extends AppController
             $tabla = $tabla."</tbody>
         </table>";
         echo $tabla."|".$totalReserva;
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 
     public function bajaCarro(){
@@ -268,15 +283,33 @@ class ReservasController extends AppController
 
         if($this->request->is('ajax')) {
             $idCarrito = $this->request->query['idCarrito'];
-            echo $idCarrito;
-            echo $this->productos;
+            //echo $idCarrito;
+            //echo $this->productos;
+            $cantidad = 0;
             if (null!=$allProducts) {
                 if (array_key_exists($idCarrito, $allProducts)) {
                     unset($allProducts["$idCarrito"]);
-                    $session->write('cart', $allProducts);  
+                    $session->write('cart', $allProducts);
+                    foreach ($allProducts as $id => $count) {
+                        $cantidad = $cantidad+$count;
+                    }
+                    echo $cantidad;
                 }
             }
         }
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
+    }
 
+    public function contarProductos(){
+        $session = $this->request->session();
+        $allProducts = $session->read('cart');
+        $cantidad = 0;
+        if (null!=$allProducts) {
+            foreach ($allProducts as $id => $count) {
+                $cantidad = $cantidad+$count;
+            }
+            echo $cantidad;
+        }
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 }
