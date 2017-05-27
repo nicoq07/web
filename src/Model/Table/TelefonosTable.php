@@ -41,8 +41,8 @@ class TelefonosTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Personas', [
-            'foreignKey' => 'persona_id',
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('TipoTelefonos', [
@@ -84,7 +84,7 @@ class TelefonosTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['persona_id'], 'Personas'));
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['tipo_telefono_id'], 'TipoTelefonos'));
 
         return $rules;

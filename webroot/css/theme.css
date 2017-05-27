@@ -2205,7 +2205,7 @@ blockquote {
   box-shadow: none;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   width: 100%;
-  padding: 16px;
+  padding: 10px;
 }
 .form-contact input::-moz-placeholder,
 .form-contact textarea::-moz-placeholder {

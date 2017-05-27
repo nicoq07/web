@@ -5,26 +5,22 @@
 				<h5>&nbsp;</h5>
 				<h3>Dudas y consultas</h3>
                 <p>&nbsp; </p>
-				<div class="form-wrapper clearfix">
+				<div class=" clearfix">
 					<form class="form-contact email-form">
 					  <div class="inputs-wrapper">
-							<input class="form-name validate-required" type="text" placeholder="Nombre" name="Nombre">
-							<input class="form-email validate-required validate-email" type="text" placeholder="Email" name="email">
-                            
-                            <input class="form-tel validate-required validate-tel" type="text" placeholder="Teléfono" name="tel">
-                             <input class="form-fecha validate-required validate-fecha" type="text" placeholder="Fecha del evento" name="fecha">
-                              <input class="form-localidad validate-required validate-localidad" type="text" placeholder="Localidad del evento" name="localidad">
-                            
-                            
-							<textarea class="form-message validate-required" name="Mensaje" placeholder="Mensaje :: envíanos todos los datos posibles de tu fiesta: edades de los chicos o si son adultos, cantidades, horarios de comienzo y fin de la fiesta y cualquier detalle que quieras contarnos así te enviamos la mejor propuesta!"></textarea>
-						</div>
-						<input type="submit" class="send-form" value="Enviar">
-						<div class="form-success">
-							<span class="text-white">Mensaje enviado - Gracias a la brevedad nos contactaremos con usted!</span>
-						</div>
-						<div class="form-error">
-							<span class="text-white">Error - Por favor complete nuevamente el formulario. Gracias!</span>
-						</div>
+					<?= $this->Form->create() ?>
+				    <fieldset>
+				        <?
+					        echo $this->Form->input('nombre', ['class' => 'form-nombre validate-required']); 
+					     //   echo $this->Form->control('fecha', ['class' => 'form-fecha validate-required validate-fecha']); 
+					        echo $this->Form->input('telefono', ['label' => 'Teléfono', 'class' => 'validate-required validate-tel']);
+					        echo $this->Form->input('email', ['label' => 'Correo','class' => 'validate-required validate-email']);
+					        echo $this->Form->input('localidad', ['class' => 'validate-required validate-localidad']);
+						 echo $this->Form->textarea('mensaje', ['placeholder' => 'Escribí acá tu mensaje. Expresá todas tus inquietudes, entre más información nos proporciones, mejor.', 'class' => 'form-message validate-required']);?>
+				    </fieldset>
+				    <?= $this->Form->button('Enviar') ?>
+				    <?= $this->Form->end() ?>
+				    </div>
 				  </form>
 			  </div>
 			</div>

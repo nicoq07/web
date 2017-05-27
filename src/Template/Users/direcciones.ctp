@@ -28,8 +28,8 @@ use Cake\I18n\Time;
 			            <td><?= h($localidades[$domicilio->localidad_id])?></td>
 						<td><?= $domicilio->active ? __('Si') : __('No'); ?></td>
 		                <td class="actions">
-		                    <?= $this->Html->link(__('Editar'), ['controller' =>'domicilios', 'action' => 'edit', $domicilio->id]) ?>
-		                    <?= $this->Form->postLink(__('Borrar'), ['controller' =>'domicilios','action' => 'delete', $domicilio->id], ['confirm' => __('Seguro de borrar el domicilio?', $domicilio->id)]) ?>
+		                    <?= $this->Html->link(__('Editar'), ['controller' =>'domicilios', 'action' => 'editcliente', $domicilio->id] , ['class' => 'btn btn-default '] ) ?>
+		                    <?= $this->Form->postLink(__('Borrar'), ['controller' =>'domicilios','action' => 'delete', $domicilio->id], ['class' => 'btn btn-default '],['confirm' => __('Seguro de borrar el domicilio?', $domicilio->id)]) ?>
 		                </td>
 		            </tr>
 		            <?php endforeach; ?>

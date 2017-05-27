@@ -65,4 +65,10 @@ class User extends Entity
     		return $user;
     	}
     }
+    
+    protected function _getPresentacion()
+    {
+    	$nomyape = $this->_properties['nombre'] . ' ' . $this->_properties['apellido'];
+    	return $nomyape;
+    }
 }

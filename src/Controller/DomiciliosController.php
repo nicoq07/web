@@ -100,18 +100,36 @@ class DomiciliosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $domicilio = $this->Domicilios->patchEntity($domicilio, $this->request->getData());
             if ($this->Domicilios->save($domicilio)) {
-                $this->Flash->success(__('The domicilio has been saved.'));
+                $this->Flash->success(__('Domicilio actualizado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The domicilio could not be saved. Please, try again.'));
+            $this->Flash->error(__('Problemas para guardar el domicilio. Si podés, reintentá.'));
         }
         $users = $this->Domicilios->Users->find('list', ['limit' => 200]);
         $localidades = $this->Domicilios->Localidades->find('list', ['limit' => 200]);
         $this->set(compact('domicilio', 'users', 'localidades'));
         $this->set('_serialize', ['domicilio']);
     }
-
+	
+    public function editcliente($id = null)
+    {
+    	$domicilio = $this->Domicilios->get($id, [
+    			'contain' => []
+    	]);
+    	if ($this->request->is(['patch', 'post', 'put'])) {
+    		$domicilio = $this->Domicilios->patchEntity($domicilio, $this->request->getData());
+    		if ($this->Domicilios->save($domicilio)) {
+    			$this->Flash->success(__('Domicilio actualizado.'));
+    			
+    			return $this->redirect(['controller' => 'users', 'action' => 'direcciones']);
+    		}
+    		$this->Flash->error(__('Problemas para guardar el domicilio. Si podés, reintentá'));
+    	}
+    	$localidades = $this->Domicilios->Localidades->find('list', ['limit' => 200]);
+    	$this->set(compact('domicilio', 'localidades'));
+    	$this->set('_serialize', ['domicilio']);
+    }
     /**
      * Delete method
      *

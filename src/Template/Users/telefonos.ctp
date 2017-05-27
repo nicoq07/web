@@ -6,7 +6,7 @@
 	<div class="col-lg-6">
 		<div class="well">
 		<h3><?= h("Mis teléfonos") ?></h3>
-			    <table class ="table table-striped table-hover"  cellpadding="0" cellspacing="0">
+			    <table class ="table table-striped table-hover" >
 		        <thead>
 		            <tr>
 		                <th scope="col"><?= $this->Paginator->sort('Tipo') ?></th>
@@ -22,8 +22,8 @@
 		                <td><?= h($telefono->numero) ?></td>
 						<td><?= $telefono->active ? __('Si') : __('No'); ?></td>
 		                <td class="actions">
-		                    <?= $this->Html->link(__('Editar'), ['controller' =>'telefonos', 'action' => 'editcliente', $telefono->id]) ?>
-		                    <?= $this->Form->postLink(__('Borrar'), ['controller' =>'telefonos','action' => 'delete', $telefono->id], ['confirm' => __('Seguro de borrar el domicilio?', $telefono->id)]) ?>
+		                    <?= $this->Html->link(__('Editar'), ['controller' =>'telefonos', 'action' => 'editcliente', $telefono->id], ['class' => 'btn btn-default ']) ?>
+	                    	<?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $telefono->id], ['class' => 'btn btn-default '], ['confirm' => __('Seguro de borrar el número # {0}?', $telefono->numero)]) ?>
 		                </td>
 		            </tr>
 		            <?php endforeach; ?>

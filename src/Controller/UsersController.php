@@ -186,7 +186,7 @@ class UsersController extends AppController
 //     use MailerAwareTrait;
     public function contacto()
     {
-    	
+    		//debug($this->request->getData()); 
     	
 //     	$email = new Email('funclub');
 //     	$email

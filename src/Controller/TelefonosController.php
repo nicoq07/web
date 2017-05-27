@@ -19,7 +19,7 @@ class TelefonosController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Personas', 'TipoTelefonos']
+            'contain' => ['Users', 'TipoTelefonos']
         ];
         $telefonos = $this->paginate($this->Telefonos);
 
@@ -37,7 +37,7 @@ class TelefonosController extends AppController
     public function view($id = null)
     {
         $telefono = $this->Telefonos->get($id, [
-            'contain' => ['Personas', 'TipoTelefonos']
+            'contain' => ['Users', 'TipoTelefonos']
         ]);
 
         $this->set('telefono', $telefono);
@@ -61,9 +61,9 @@ class TelefonosController extends AppController
             }
             $this->Flash->error(__('The telefono could not be saved. Please, try again.'));
         }
-        $personas = $this->Telefonos->Personas->find('list', ['limit' => 200]);
+        $users = $this->Telefonos->Users->find('list', ['limit' => 200]);
         $tipoTelefonos = $this->Telefonos->TipoTelefonos->find('list', ['limit' => 200]);
-        $this->set(compact('telefono', 'personas', 'tipoTelefonos'));
+        $this->set(compact('telefono', 'users', 'tipoTelefonos'));
         $this->set('_serialize', ['telefono']);
     }
 
@@ -88,9 +88,9 @@ class TelefonosController extends AppController
             }
             $this->Flash->error(__('The telefono could not be saved. Please, try again.'));
         }
-        $personas = $this->Telefonos->Personas->find('list', ['limit' => 200]);
+        $users = $this->Telefonos->Users->find('list', ['limit' => 200]);
         $tipoTelefonos = $this->Telefonos->TipoTelefonos->find('list', ['limit' => 200]);
-        $this->set(compact('telefono', 'personas', 'tipoTelefonos'));
+        $this->set(compact('telefono', 'tipoTelefonos','users'));
         $this->set('_serialize', ['telefono']);
     }
     
@@ -102,16 +102,15 @@ class TelefonosController extends AppController
     	if ($this->request->is(['patch', 'post', 'put'])) {
     		$telefono = $this->Telefonos->patchEntity($telefono, $this->request->getData());
     		if ($this->Telefonos->save($telefono)) {
-    			$this->Flash->success(__('The telefono has been saved.'));
+    			$this->Flash->success(__('Teléfono actualizado.'));
     			
-    			return $this->redirect(['action' => 'index']);
+    			return $this->redirect(['controller' => 'users', 'action' => 'telefonos']);
     		}
-    		$this->Flash->error(__('The telefono could not be saved. Please, try again.'));
+    		$this->Flash->error(__('Error intentanto guardar el teléfono, reintente!'));
     	}
     	
     	$tipoTelefonos = $this->Telefonos->TipoTelefonos->find('list', ['limit' => 200]);
     	$this->set(compact('telefono',  'tipoTelefonos'));
-    	$this->set('_serialize', ['telefono']);
     }
 
     /**
