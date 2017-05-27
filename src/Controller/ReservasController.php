@@ -93,6 +93,9 @@ class ReservasController extends AppController
 
             if ($lastId = $this->Reservas->save($reserva)) {
                 $this->guardarProductos($session->read('cart'), $lastId->id);
+                $idFactura = $this->guardarFactura($lastId->id, $totalReserva);
+                $this->guardarFacturaProductos($idFactura->id, $session->read('cart'), $this->request->getData()['diferenciaHoras']);
+                $idEnvio = $this->guardarEnvio($lastId->id, $idFactura->id, $session->read('cart'), $this->request->getData()['domicilio']);
                 $this->Flash->success(__('Reserva creada.'));
 
                 return $this->redirect(['controller' => 'PagosReserva', 'action' => 'add', $lastId->id]);
@@ -125,6 +128,65 @@ class ReservasController extends AppController
                 'created' => new \DateTime('now')], 
                 ['created' => 'datetime' , 'modified' => 'datetime']);
             }      
+        }
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
+    }
+
+    private function guardarFactura($idReserva, $totalReserva){        
+        if(!empty($idReserva) && !empty($idReserva)){
+            $factura = $this->Reservas->Facturas->newEntity();
+            $miFactura = array('reserva_id' => $idReserva, 'monto' => $totalReserva, 'pagado' => 0, 'active' => 1);
+            $factura = $this->Reservas->patchEntity($factura, $miFactura);            
+            return $this->Reservas->Facturas->save($factura);
+        }
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
+    }
+
+    private function guardarFacturaProductos($idFactura, $productos, $horas)
+    {
+        if(!empty($productos) && !empty($idFactura) && !empty($horas))
+        {
+            $connection= ConnectionManager::get("default");
+            foreach ($productos as $id => $cant)
+            {                
+                $producto = $this->Reservas->ReservasProductos->Productos->get($id);
+                $connection->insert('factura_productos', [
+                'factura_id' => $idFactura,
+                'producto_id' => $id,
+                'cantidad' => $cant,
+                'precio' => $cant * $horas * $producto->precio,
+                'modified' => new \DateTime('now'),
+                'created' => new \DateTime('now')], 
+                ['created' => 'datetime' , 'modified' => 'datetime']);
+            }      
+        }
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
+    }
+
+    private function guardarEnvio($idReserva, $idFactura, $productos, $idDomicilio){
+        if(!empty($idFactura) && !empty($productos) && !empty($idReserva) && !empty($idDomicilio)){
+            $cantidadEnvios = 0;
+            $cantidadProductos = 0;
+            foreach ($productos as $key => $value) {
+                $cantidadProductos = $cantidadProductos+$value;
+            }
+            if ($cantidadProductos%4 == 0) {
+                $cantidadEnvios = $cantidadProductos/4;
+            } else {
+                $cantidadEnvios = floor($cantidadProductos/4)+1;                
+            }
+
+            for ($i=0; $i < $cantidadEnvios; $i++) { 
+                $remito = $this->Reservas->Facturas->Remitos->newEntity();
+                $miRemito = array('factura_id' => $idFactura, 'active' => 1);
+                $remito = $this->Reservas->patchEntity($remito, $miRemito);
+                $idRemito = $this->Reservas->Facturas->Remitos->save($remito);
+
+                $envio = $this->Reservas->Facturas->Remitos->Envios->newEntity();
+                $miEnvio = array('remito_id' => $idRemito->id, 'reserva_id' => $idReserva, 'domicilio_id' => $idDomicilio, 'active' => 0);
+                $envio = $this->Reservas->Facturas->Remitos->Envios->patchEntity($envio, $miEnvio);
+                $this->Reservas->Facturas->Remitos->Envios->save($envio);
+            }            
         }
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }

@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <?php
-                        echo $this->Form->input('reserva_id', ['type'=>'text', 'disabled'=>true, 'value'=>$reservas->id]);
+                        echo $this->Form->input('reserva_id', ['type'=>'text', 'value'=>$reserva->id, 'readonly'=>'readonly']);
                         //echo $this->Form->control('user_id', ['options' => $users]);
                         ?>
                     </div>
@@ -15,19 +15,22 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <?php echo $this->Form->control('Porcentaje a pagar', ['options' => array(
-                        '0'=>'%50 - $'.$reservas->total*.5,
-                        '1'=>'%75 - $'.$reservas->total*.75,
-                        '2'=>'%100 - $'.$reservas->total), 'empty' => 'Seleccione % a pagar']); ?>
+                        number_format($reserva->total*.5, 2) =>'%50 - $'.$reserva->total*.5,
+                        number_format($reserva->total*.75, 2) =>'%75 - $'.$reserva->total*.75,
+                        number_format($reserva->total, 2)=>'%100 - $'.$reserva->total), 'empty' => 'Seleccione % a pagar']); ?>
                     </div>
                     <div class="col-lg-4">
-                        <?php echo $this->Form->control('medio_pago_id', ['options' => $mediosPagos, 'empty' => 'Elija un medio de pago']); ?>
+                        <?php echo $this->Form->control('monto', ['options' => $mediosPagos, 'empty' => 'Elija un medio de pago']); ?>
                     </div>
                     <div class="col-lg-4">
-                        <?php echo $this->Form->control('Tarjeta', ['options' => array(
+                        <?php /*echo $this->Form->control('Tarjeta', ['options' => array(
                         'VISA', 
                         'MASTERCARD', 
                         'AMERICAN EXPRESS'
-                        ), 'empty' => 'Elija su tarjeta...']);
+                        ), 'empty' => 'Elija su tarjeta...']);*/
+
+                        echo $this->Form->control('tarjeta_id', ['options' => $tarjetas]);                        
+                        echo $this->Html->link('Otra Tarjeta', ['controller'=>'tarjetasCreditoUser', 'action' => 'add'], ['class' => 'btn btn-default']);
                         ?>
                     </div>
                 </div>
@@ -36,23 +39,23 @@
                 <legend>Datos de la tarjeta</legend>
                     <div class="bg-white" style='padding: 20px;'>
                     <?php
-                        echo $this->Form->input('Número de tarjeta', ['type'=>'number', 'placeholder'=>'Ingrese sólo los 16 números']);
+                        //echo $this->Form->input('Número de tarjeta', ['type'=>'number', 'placeholder'=>'Ingrese sólo los 16 números']);
                         echo $this->Form->label('Fecha de vencimiento');
                     ?>
                         <div class="row">
                             <div class="col-lg-6">
                             <?php
-                                echo $this->Form->input('Mes', ['type'=>'number', 'placeholder'=>'MM', 'label'=>false]);
+                                echo $this->Form->input('vencimientoMes', ['type'=>'number', 'placeholder'=>'MM', 'label'=>false]);
                             ?>
                             </div>
                             <div class="col-lg-6">
                             <?php
-                                echo $this->Form->input('Año', ['type'=>'number', 'placeholder'=>'AAAA', 'label'=>false]);
+                                echo $this->Form->input('vencimientoAnio', ['type'=>'number', 'placeholder'=>'AAAA', 'label'=>false]);
                             ?>
                             </div>
                         </div>
                     <?php
-                        echo $this->Form->input('Código de seguridad', ['type'=>'number', 'placeholder'=>'XXX']);
+                        echo $this->Form->input('codSeguridad', ['type'=>'number', 'placeholder'=>'XXX']);
                     ?>                        
                     </div>
                     <br>

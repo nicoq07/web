@@ -18,6 +18,7 @@
         <?php
             echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('numero');
+            echo $this->Form->control('marca');
             echo $this->Form->control('vencimientoMes');
             echo $this->Form->control('vencimientoAnio');
             echo $this->Form->control('codSeguridad');

@@ -8,7 +8,8 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $user_id
- * @property int $numero
+ * @property string $numero
+ * @property string $marca
  * @property int $vencimientoMes
  * @property int $vencimientoAnio
  * @property int $codSeguridad
@@ -34,4 +35,16 @@ class TarjetasCreditoUser extends Entity
         '*' => true,
         'id' => false
     ];
+
+    protected function _getPresentacion()
+    {
+        /*$direccion = $this->_properties['direccion'] . ' ' . $this->_properties['numero'];
+        if ($this->_properties['piso']) {
+            $direccion = $direccion . ' ' . $this->_properties['piso'];
+        }
+        $direccion = $direccion . ', ';*/
+        $numero = (string)$this->_properties['numero'];
+        $ultimosCuatro = substr($numero, -4);
+        return $this->_properties['marca'].", XXXX-XXXX-XXXX-".$ultimosCuatro;
+    }
 }

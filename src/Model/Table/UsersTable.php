@@ -67,6 +67,9 @@ class UsersTable extends Table
         $this->hasMany('Telefonos', [
             'foreignKey' => 'user_id'
         ]);
+        $this->hasMany('TarjetasCreditoUser', [
+            'foreignKey' => 'user_id'
+        ]);
     }
 
     /**

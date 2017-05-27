@@ -28,7 +28,6 @@ class PagosReservaController extends AppController
             'contain' => ['Reservas', 'Users', 'MediosPagos']
         ];
         $pagosReserva = $this->paginate($this->PagosReserva);
-
         $this->set(compact('pagosReserva'));
         $this->set('_serialize', ['pagosReserva']);
     }
@@ -58,19 +57,28 @@ class PagosReservaController extends AppController
     public function add($datos=null){        
         $pagosReserva = $this->PagosReserva->newEntity();
         if ($this->request->is('post')) {
-            $pagosReserva = $this->PagosReserva->patchEntity($pagosReserva, $this->request->getData());
-            if ($this->PagosReserva->save($pagosReserva)) {
-                $this->Flash->success(__('The pagos reserva has been saved.'));
-
+            $miPago = array();
+            $tarjeta = $this->PagosReserva->Reservas->Users->TarjetasCreditoUser->get($this->request->getData()['tarjeta_id']);
+            if ($tarjeta->vencimientoMes == $this->request->getData()['vencimientoMes'] && $tarjeta->vencimientoAnio == $this->request->getData()['vencimientoAnio'] && $tarjeta->codSeguridad == $this->request->getData()['codSeguridad']) {
+                $miPago['reserva_id'] = $this->request->getData()['reserva_id'];
+                $miPago['tarjeta_id'] = $this->request->getData()['tarjeta_id'];
+                $miPago['medio_pago_id'] = $this->request->getData()['medio_pago_id'];
+                $miPago['pagado'] = 1;
+                $miPago['user_id'] = $this->viewVars['current_user']['id'];
+            }
+            
+            $pagosReserva = $this->PagosReserva->patchEntity($pagosReserva, $miPago);
+            if ($lastId = $this->PagosReserva->save($pagosReserva)) {
+                $this->Flash->success(__('Se realizó el pago con éxito.'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The pagos reserva could not be saved. Please, try again.'));
+            $this->Flash->error(__('No pudo realizarse el pago. Intente nuevamente.'));
         }
-        
-        $reservas = $this->PagosReserva->Reservas->get($datos);
+        $reserva = $this->PagosReserva->Reservas->get($datos);
+        $tarjetas = $this->PagosReserva->Reservas->Users->TarjetasCreditoUser->find('list', ['limit' => 200])->where(['TarjetasCreditoUser.user_id ='=>$reserva->user_id]);
         $users = $this->PagosReserva->Users->find('list', ['limit' => 200]);
         $mediosPagos = $this->PagosReserva->MediosPagos->find('list', ['limit' => 200]);
-        $this->set(compact('pagosReserva', 'reservas', 'users', 'mediosPagos'));
+        $this->set(compact('pagosReserva', 'reserva', 'users', 'mediosPagos', 'tarjetas'));
         $this->set('_serialize', ['pagosReserva']);
     }
 

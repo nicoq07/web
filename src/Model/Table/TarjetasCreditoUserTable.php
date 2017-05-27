@@ -35,7 +35,7 @@ class TarjetasCreditoUserTable extends Table
         parent::initialize($config);
 
         $this->setTable('tarjetas_credito_user');
-        $this->setDisplayField('id');
+        $this->setDisplayField(['presentacion']);
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

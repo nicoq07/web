@@ -62,6 +62,9 @@ class ReservasTable extends Table
         $this->hasMany('PagosReserva', [
             'foreignKey' => 'reserva_id'
         ]);
+        $this->hasMany('ReservasProductos', [
+            'foreignKey' => 'reserva_id'
+        ]);
         $this->belongsToMany('Productos', [
             'foreignKey' => 'reserva_id',
             'targetForeignKey' => 'producto_id',
