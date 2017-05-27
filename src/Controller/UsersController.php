@@ -3,8 +3,7 @@ namespace App\Controller;
 
 
 use App\Controller\AppController;
-use Cake\Mailer\MailerAwareTrait;
-use Cake\Mailer\Email;
+
 
 /**
  * Users Controller
@@ -181,20 +180,6 @@ class UsersController extends AppController
     public function logout()
     {
     	return $this->redirect($this->Auth->logout());
-    }
-
-//     use MailerAwareTrait;
-    public function contacto()
-    {
-    		//debug($this->request->getData()); 
-    	
-//     	$email = new Email('funclub');
-//     	$email
-//     	->setTo('nicoq07@gmail.com')
-//     	->setSubject('Test !')
-//     	->send("Hello Nico");
-    	
-    	
     }
 
     public function admin()

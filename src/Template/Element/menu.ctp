@@ -20,7 +20,7 @@
                                <li><a href="#" onclick="Mostrar('empleados')">EMPLEADOS</a></li>
                                 <li><a href="#" onclick="Mostrar('pagos')">PAGOS</a></li>
                                 <li><a href="#" onclick="Mostrar('estadisticas')">ESTADISTICAS</a></li>-->
-                                <li><?= $this->Html->link('Contactos',['controller' => 'users', 'action' => 'contacto'])?></li>
+                                <li><?= $this->Html->link('Contactos',['controller' => 'contact', 'action' => 'index'])?></li>
                                 <li><?= $this->Html->link('Carrito',['controller' => 'reservas', 'action' => 'add'])?></li> 
                                 <!--<li><a href="#" onclick="Mostrar('carrito')">CARRITO</a></li>-->
                                 <?php if (empty($current_user)) : ?>

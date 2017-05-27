@@ -6,22 +6,19 @@
 				<h3>Dudas y consultas</h3>
                 <p>&nbsp; </p>
 				<div class=" clearfix">
-					<form class="form-contact email-form">
-					  <div class="inputs-wrapper">
-					<?= $this->Form->create() ?>
-				    <fieldset>
-				        <?
+					
+					  <div class="form-contact email-form inputs-wrapper">
+				        <?$this->Form->create();
 					        echo $this->Form->input('nombre', ['class' => 'form-nombre validate-required']); 
 					     //   echo $this->Form->control('fecha', ['class' => 'form-fecha validate-required validate-fecha']); 
 					        echo $this->Form->input('telefono', ['label' => 'Teléfono', 'class' => 'validate-required validate-tel']);
 					        echo $this->Form->input('email', ['label' => 'Correo','class' => 'validate-required validate-email']);
 					        echo $this->Form->input('localidad', ['class' => 'validate-required validate-localidad']);
 						 echo $this->Form->textarea('mensaje', ['placeholder' => 'Escribí acá tu mensaje. Expresá todas tus inquietudes, entre más información nos proporciones, mejor.', 'class' => 'form-message validate-required']);?>
-				    </fieldset>
-				    <?= $this->Form->button('Enviar') ?>
-				    <?= $this->Form->end() ?>
+				   
 				    </div>
-				  </form>
+				   <?= $this->Form->submit(__('Acceder'),['class' => 'send-form'])?>
+				    <?= $this->Form->end() ?>
 			  </div>
 			</div>
 		</div><!--end of row-->
