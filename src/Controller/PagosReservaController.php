@@ -68,6 +68,8 @@ class PagosReservaController extends AppController
                 $miPago['medio_pago_id'] = $this->request->getData()['medio_pago_id'];
                 $miPago['pagado'] = 1;
                 $miPago['user_id'] = $this->viewVars['current_user']['id'];
+            } else {
+                $this->Flash->error(__('Los datos de la tarjeta son incorrectos. Intente nuevamente.'));
             }
             
             $pagosReserva = $this->PagosReserva->patchEntity($pagosReserva, $miPago);

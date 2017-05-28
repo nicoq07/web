@@ -70,7 +70,7 @@ class ProductosController extends AppController
                 $conn = ConnectionManager::get('default');    
                 $miquery = "SELECT productos.id, sum(reservas_productos.cantidad) as micantidad
                 from productos, reservas, reservas_productos 
-                where '".$dia." ".$i.":00:00' between reservas.fecha_inicio AND reservas.fecha_fin
+                where '".$dia." ".$i.":00:00' between reservas.no_disponible_inicio AND reservas.no_disponible_fin
                 AND productos.id =".$id."
                 AND productos.id = reservas_productos.producto_id
                 AND reservas.id = reservas_productos.reserva_id

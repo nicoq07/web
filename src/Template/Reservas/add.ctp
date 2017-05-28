@@ -105,7 +105,6 @@ function bajaCarro(idCarrito) {
     var idDomicilio = $("#domicilio").val();
     mostrarPrecioEnvio(idDomicilio);
     $.get('/web/reservas/bajaCarro?idCarrito='+idCarrito, function(d) {
-        $("#totalProductos").val(d);
         actualizarTabla(true,'tablaProductos');
     });
 }
@@ -212,7 +211,6 @@ function bajaCarro(idCarrito) {
                             <input type="hidden" id="precioEnvio" name="precioEnvio">
                             <input type="hidden" id="tiempoEnvio" name="tiempoEnvio">
                             <input type="hidden" id="totalReserva" name="totalReserva">
-                            <input type="hidden" id="totalProductos" name="totalProductos">
                             <input type="hidden" id="calculoTotal" name="calculoTotal">
                             <h4><strong>Inicio del evento: </strong></h4><h6 id="eventoInicio" class="tx_gris"></h6><br>
                             <h4><strong>Finalización del evento: </strong></h4><h6 id="eventoFin" class="tx_gris"></h6><br>

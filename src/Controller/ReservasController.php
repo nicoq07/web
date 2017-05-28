@@ -87,25 +87,41 @@ class ReservasController extends AppController
             $fechaFin =  $this->request->getData()['fecha_fin'];
             $horaIni =  $this->request->getData()['hora_inicio'];
             $horaFin =  $this->request->getData()['hora_fin'];
-            $horaIni = $horaIni - $tiempoEnvio;
-            $horaFin = $horaFin + $tiempoEnvio + 1;
-            $totalReserva =  $this->request->getData()['totalReserva'];        
+            $totalReserva =  $this->request->getData()['totalReserva'];
+            $disponibilidadInicio = $horaIni - $tiempoEnvio;
+            $disponibilidadFin = $horaFin + $tiempoEnvio + 1;
+
+            /*debug($disponibilidadFin);
+            exit();*/
+
+            $disponibilidadInicio = new \DateTime($fechaIni." ".$disponibilidadInicio.":00:00");
+            $disponibilidadInicio = date_format($disponibilidadInicio, 'Y/m/d H:i:s');
+            $disponibilidadFin = new \DateTime($fechaFin." ".$disponibilidadFin.":00:00");
+            $disponibilidadFin = date_format($disponibilidadFin, 'Y/m/d H:i:s');
+
+            /*debug($disponibilidadInicio);
+            exit();*/
+
             $fechaIni = new \DateTime($fechaIni." ".$horaIni.":00:00");
             $fechaIni = date_format($fechaIni, 'Y/m/d H:i:s');
             $fechaFin = new \DateTime($fechaFin." ".$horaFin.":00:00");
-            $fechaFin = date_format($fechaFin, 'Y/m/d H:i:s');
-
+            $fechaFin = date_format($fechaFin, 'Y/m/d H:i:s');            
+            
             //Aca se devería evaluar la reserva.           
             
             $miReserva = array();
             $miReserva['fecha_fin'] = $fechaFin;
             $miReserva['fecha_inicio'] = $fechaIni;
+            $miReserva['no_disponible_fin'] = $disponibilidadFin;
+            $miReserva['no_disponible_inicio'] = $disponibilidadInicio;
             $miReserva['estado_reserva_id'] = 1;
             $miReserva['total'] = $totalReserva;            
             $miReserva['user_id'] = $this->viewVars['current_user']['id'];
             $miReserva['active'] = 1; 
 
             $reserva = $this->Reservas->patchEntity($reserva, $miReserva); 
+            /*debug($reserva);
+            exit();*/
 
             if ($lastId = $this->Reservas->save($reserva)) {
                 $this->guardarProductos($session->read('cart'), $lastId->id);
