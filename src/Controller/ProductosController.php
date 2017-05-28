@@ -84,6 +84,7 @@ class ProductosController extends AppController
                 else
                 {
                     $cantidad = $resu[0]['micantidad'];
+                    if ((int)$cantidad >= (int)$cantidadProdu){
                         $disponibilidad[$i] = 2;
                     }
                     else {
