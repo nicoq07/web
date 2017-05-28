@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * PagosReserva Controller
@@ -69,6 +70,18 @@ class PagosReservaController extends AppController
             
             $pagosReserva = $this->PagosReserva->patchEntity($pagosReserva, $miPago);
             if ($lastId = $this->PagosReserva->save($pagosReserva)) {
+                $envios = $this->PagosReserva->Reservas->Envios->find('all', ['limit' => 200])->where(['Envios.reserva_id ='=>$lastId->reserva_id]);
+
+                $connection= ConnectionManager::get("default");
+                foreach ($envios as $envio)
+                {                
+                    $connection->update('envios', [
+                    'active' => 1,
+                    'modified' => new \DateTime('now')],
+                    [ 'id' => $envio->id ],
+                    ['modified' => 'datetime']);
+                }                
+                
                 $this->Flash->success(__('Se realizó el pago con éxito.'));
                 return $this->redirect(['action' => 'index']);
             }
