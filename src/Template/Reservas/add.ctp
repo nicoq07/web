@@ -13,10 +13,12 @@ function mostrarPrecioEnvio(id) {
             }
             $("#envio").html("$"+(texto[0]*cantidadEnvios));
             $("#precioEnvio").val(texto[0]*cantidadEnvios);
+            $("#tiempoEnvio").val(texto[2]);
         }
         else {
             $("#envio").html("");
             $("#precioEnvio").val("");
+            $("#tiempoEnvio").val("");
         }          
     });
 }
@@ -208,6 +210,7 @@ function bajaCarro(idCarrito) {
                         <legend>Detalle Reserva</legend>
                         <div class="row" id="totales" style="display: none">
                             <input type="hidden" id="precioEnvio" name="precioEnvio">
+                            <input type="hidden" id="tiempoEnvio" name="tiempoEnvio">
                             <input type="hidden" id="totalReserva" name="totalReserva">
                             <input type="hidden" id="totalProductos" name="totalProductos">
                             <input type="hidden" id="calculoTotal" name="calculoTotal">

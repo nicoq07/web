@@ -71,15 +71,31 @@ class ReservasController extends AppController
 
         $reserva = $this->Reservas->newEntity();
         if ($this->request->is('post')) {
+            /*debug($this->request->getData());
+            exit();*/
+
+            $tiempoEnvio = $this->request->getData()['tiempoEnvio'];
+            if ($tiempoEnvio%60 == 0) {
+                $tiempoEnvio = $tiempoEnvio/60;
+            } else {
+                $tiempoEnvio = floor($tiempoEnvio/60)+1;                
+            }
+            /*debug($tiempoEnvio);
+            exit();*/
+
             $fechaIni =  $this->request->getData()['fecha_inicio'];
             $fechaFin =  $this->request->getData()['fecha_fin'];
             $horaIni =  $this->request->getData()['hora_inicio'];
             $horaFin =  $this->request->getData()['hora_fin'];
+            $horaIni = $horaIni - $tiempoEnvio;
+            $horaFin = $horaFin + $tiempoEnvio + 1;
             $totalReserva =  $this->request->getData()['totalReserva'];        
             $fechaIni = new \DateTime($fechaIni." ".$horaIni.":00:00");
             $fechaIni = date_format($fechaIni, 'Y/m/d H:i:s');
             $fechaFin = new \DateTime($fechaFin." ".$horaFin.":00:00");
             $fechaFin = date_format($fechaFin, 'Y/m/d H:i:s');
+
+            //Aca se devería evaluar la reserva.           
             
             $miReserva = array();
             $miReserva['fecha_fin'] = $fechaFin;
@@ -252,7 +268,7 @@ class ReservasController extends AppController
             $idDomicilio = $this->request->query['id'];
             $domicilio = $this->Reservas->Users->Domicilios->get($idDomicilio);
             $localidad = $this->Reservas->Users->Domicilios->Localidades->get($domicilio->localidad_id);
-            echo $localidad->precio."|".$cantidad;
+            echo $localidad->precio."|".$cantidad."|".$localidad->duracion_viaje;
         }
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
