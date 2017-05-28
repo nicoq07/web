@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-05-2017 a las 20:16:13
+-- Tiempo de generación: 29-05-2017 a las 01:32:13
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -61,7 +61,7 @@ CREATE TABLE `categorias` (
 CREATE TABLE `domicilios` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `piso` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `piso` varchar(20) COLLATE latin1_spanish_ci DEFAULT NULL,
   `numero` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
   `direccion` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
   `localidad_id` int(11) NOT NULL,
@@ -99,6 +99,16 @@ CREATE TABLE `estados_reservas` (
   `modified` datetime DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci ROW_FORMAT=COMPACT;
+
+--
+-- Volcado de datos para la tabla `estados_reservas`
+--
+
+INSERT INTO `estados_reservas` (`id`, `descripcion`, `created`, `modified`, `active`) VALUES
+(1, 'Impaga', '2017-05-16 17:50:38', '2017-05-16 17:50:38', 1),
+(2, 'Señada', '2017-05-16 17:50:38', '2017-05-16 17:50:38', 1),
+(3, 'Paga', '2017-05-16 17:50:38', '2017-05-16 17:50:38', 1),
+(4, 'Cancelada', '2017-05-16 17:50:38', '2017-05-16 17:50:38', 1);
 
 -- --------------------------------------------------------
 
@@ -141,7 +151,7 @@ CREATE TABLE `facturas` (
 CREATE TABLE `fotos_productos` (
   `id` int(11) NOT NULL,
   `producto_id` int(11) NOT NULL,
-  `file` blob NOT NULL,
+  `referencia` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1'
@@ -238,7 +248,8 @@ CREATE TABLE `pagos_reserva` (
   `medio_pago_id` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  `pagado` tinyint(1) NOT NULL DEFAULT '0'
+  `pagado` tinyint(1) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
@@ -272,7 +283,8 @@ CREATE TABLE `productos` (
   `precio` decimal(30,2) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1'
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
@@ -345,6 +357,9 @@ CREATE TABLE `reservas` (
   `estado_reserva_id` int(11) NOT NULL,
   `fecha_inicio` datetime DEFAULT NULL,
   `fecha_fin` datetime DEFAULT NULL,
+  `no_disponible_inicio` datetime DEFAULT NULL,
+  `no_disponible_fin` datetime DEFAULT NULL,
+  `total` decimal(30,2) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1'
@@ -380,6 +395,15 @@ CREATE TABLE `roles` (
   `active` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci ROW_FORMAT=COMPACT;
 
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id`, `descripcion`, `created`, `modified`, `active`) VALUES
+(1, 'Administrador', '2017-05-02 18:34:30', '2017-05-02 18:34:30', 1),
+(2, 'Empleado', '2017-05-02 18:34:49', '2017-05-02 18:34:49', 1),
+(3, 'Clientes', '2017-05-02 18:35:08', '2017-05-16 18:08:44', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -389,7 +413,8 @@ CREATE TABLE `roles` (
 CREATE TABLE `tarjetas_credito_user` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `numero` int(11) NOT NULL,
+  `marca` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `numero` varchar(16) COLLATE latin1_spanish_ci NOT NULL,
   `vencimientoMes` int(11) NOT NULL,
   `vencimientoAnio` int(11) NOT NULL,
   `codSeguridad` int(11) NOT NULL,
@@ -553,7 +578,8 @@ ALTER TABLE `pagos_reserva`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_reserva_pago_idx` (`reserva_id`),
   ADD KEY `fk_medio_pago_reserva_idx` (`medio_pago_id`),
-  ADD KEY `tarjeta_id` (`tarjeta_id`);
+  ADD KEY `tarjeta_id` (`tarjeta_id`),
+  ADD KEY `pagos_reserva_id_users_fk` (`user_id`);
 
 --
 -- Indices de la tabla `paises`
@@ -660,12 +686,12 @@ ALTER TABLE `calificaciones_productos`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `domicilios`
 --
 ALTER TABLE `domicilios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `envios`
 --
@@ -675,7 +701,7 @@ ALTER TABLE `envios`
 -- AUTO_INCREMENT de la tabla `estados_reservas`
 --
 ALTER TABLE `estados_reservas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `factura_productos`
 --
@@ -685,7 +711,7 @@ ALTER TABLE `factura_productos`
 -- AUTO_INCREMENT de la tabla `facturas`
 --
 ALTER TABLE `facturas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 --
 -- AUTO_INCREMENT de la tabla `fotos_productos`
 --
@@ -695,17 +721,17 @@ ALTER TABLE `fotos_productos`
 -- AUTO_INCREMENT de la tabla `localidades`
 --
 ALTER TABLE `localidades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `medios_pagos`
 --
 ALTER TABLE `medios_pagos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `multas_user`
 --
 ALTER TABLE `multas_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `pagos_efectivo`
 --
@@ -725,37 +751,37 @@ ALTER TABLE `pagos_reserva`
 -- AUTO_INCREMENT de la tabla `paises`
 --
 ALTER TABLE `paises`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `provincias`
 --
 ALTER TABLE `provincias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `rango_edades`
 --
 ALTER TABLE `rango_edades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `recibos`
 --
 ALTER TABLE `recibos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `remitos`
 --
 ALTER TABLE `remitos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 --
 -- AUTO_INCREMENT de la tabla `reservas_productos`
 --
@@ -765,12 +791,12 @@ ALTER TABLE `reservas_productos`
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `tarjetas_credito_user`
 --
 ALTER TABLE `tarjetas_credito_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `telefonos`
 --
@@ -780,12 +806,12 @@ ALTER TABLE `telefonos`
 -- AUTO_INCREMENT de la tabla `tipo_telefonos`
 --
 ALTER TABLE `tipo_telefonos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Restricciones para tablas volcadas
 --
@@ -863,7 +889,8 @@ ALTER TABLE `pagos_multas`
 ALTER TABLE `pagos_reserva`
   ADD CONSTRAINT `fk_medio_pago_reserva` FOREIGN KEY (`medio_pago_id`) REFERENCES `medios_pagos` (`id`),
   ADD CONSTRAINT `fk_reserva_pago` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`),
-  ADD CONSTRAINT `pagos_reserva_ibfk_1` FOREIGN KEY (`tarjeta_id`) REFERENCES `tarjetas_credito_user` (`id`);
+  ADD CONSTRAINT `pagos_reserva_ibfk_1` FOREIGN KEY (`tarjeta_id`) REFERENCES `tarjetas_credito_user` (`id`),
+  ADD CONSTRAINT `pagos_reserva_id_users_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Filtros para la tabla `productos`
