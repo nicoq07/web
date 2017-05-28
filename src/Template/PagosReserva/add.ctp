@@ -15,9 +15,9 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <?php echo $this->Form->control('monto', ['options' => array(
-                        number_format($reserva->total*.5, 2) =>'%50 - $'.$reserva->total*.5,
-                        number_format($reserva->total*.75, 2) =>'%75 - $'.$reserva->total*.75,
-                        number_format($reserva->total, 2)=>'%100 - $'.$reserva->total), 'empty' => 'Seleccione % a pagar']); ?>
+                        number_format($reserva->total*.5, 2, '.', '') =>'%50 - $'.$reserva->total*.5,
+                        number_format($reserva->total*.75, 2, '.', '') =>'%75 - $'.$reserva->total*.75,
+                        number_format($reserva->total, 2, '.', '')=>'%100 - $'.$reserva->total), 'empty' => 'Seleccione % a pagar']); ?>
                     </div>
                     <div class="col-lg-4">
                         <?php echo $this->Form->control('medio_pago_id', ['options' => $mediosPagos, 'empty' => 'Elija un medio de pago']); ?>

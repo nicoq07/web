@@ -58,6 +58,8 @@ class PagosReservaController extends AppController
     public function add($datos=null){        
         $pagosReserva = $this->PagosReserva->newEntity();
         if ($this->request->is('post')) {
+            /*debug($this->request->getData());
+            exit();*/
             $miPago = array();
             $tarjeta = $this->PagosReserva->Reservas->Users->TarjetasCreditoUser->get($this->request->getData()['tarjeta_id']);
             if ($tarjeta->vencimientoMes == $this->request->getData()['vencimientoMes'] && $tarjeta->vencimientoAnio == $this->request->getData()['vencimientoAnio'] && $tarjeta->codSeguridad == $this->request->getData()['codSeguridad']) {
@@ -70,17 +72,11 @@ class PagosReservaController extends AppController
             
             $pagosReserva = $this->PagosReserva->patchEntity($pagosReserva, $miPago);
             if ($lastId = $this->PagosReserva->save($pagosReserva)) {
-                $envios = $this->PagosReserva->Reservas->Envios->find('all', ['limit' => 200])->where(['Envios.reserva_id ='=>$lastId->reserva_id]);
-
-                $connection= ConnectionManager::get("default");
-                foreach ($envios as $envio)
-                {                
-                    $connection->update('envios', [
-                    'active' => 1,
-                    'modified' => new \DateTime('now')],
-                    [ 'id' => $envio->id ],
-                    ['modified' => 'datetime']);
-                }                
+                $this->actualizarEnvios($lastId->reserva_id);
+                $factura = $this->PagosReserva->Reservas->Facturas->find('all')->where(['Facturas.reserva_id ='=>$lastId->reserva_id]);
+                $factura = $factura->first();
+                $this->crearRecibo($factura->id, $this->request->getData()['monto']);
+                $this->actualizarEstados($factura->id, $factura->monto, $lastId->reserva_id);                
                 
                 $this->Flash->success(__('Se realizó el pago con éxito.'));
                 return $this->redirect(['action' => 'index']);
@@ -158,5 +154,57 @@ class PagosReservaController extends AppController
         $users = $this->PagosReserva->Users->find('list', ['limit' => 200]);
         $this->set(compact('pagosReserva', 'reservas', 'users'));
         $this->set('_serialize', ['pagosReserva']);
+    }
+
+    public function actualizarEnvios($idReserva){
+        $envios = $this->PagosReserva->Reservas->Envios->find('all', ['limit' => 200])->where(['Envios.reserva_id ='=>$idReserva]);
+        $connection= ConnectionManager::get("default");
+        foreach ($envios as $envio)
+        {                
+            $connection->update('envios', [
+            'active' => 1,
+            'modified' => new \DateTime('now')],
+            [ 'id' => $envio->id ],
+            ['modified' => 'datetime']);
+        }
+    }
+
+    public function crearRecibo($idFactura, $monto){
+        $connection= ConnectionManager::get("default");
+        $connection->insert('recibos', [
+        'factura_id' => $idFactura,
+        'monto' => $monto,
+        'active' => 1,
+        'modified' => new \DateTime('now'),
+        'created' => new \DateTime('now')], 
+        ['created' => 'datetime' , 'modified' => 'datetime']);
+    }
+
+    public function actualizarEstados($idFactura, $facturaMonto, $idReserva){
+        $connection= ConnectionManager::get("default");
+        $recibos = $this->PagosReserva->Reservas->Facturas->Recibos->find('all')->where(['Recibos.factura_id ='=>$idFactura]);
+        $totalPagado = 0;
+        $estadoReserva;
+        foreach ($recibos as $recibo) {
+            $totalPagado = $totalPagado + $recibo->monto;
+        }
+
+        if ($facturaMonto == $totalPagado) {
+            $connection->update('facturas', [
+            'pagado' => 1,
+            'modified' => new \DateTime('now')],
+            [ 'id' => $idFactura ],
+            ['modified' => 'datetime']);
+
+            $estadoReserva = 3;                    
+        } else {
+            $estadoReserva = 2;
+        }
+
+        $connection->update('reservas', [
+        'estado_reserva_id' => $estadoReserva,
+        'modified' => new \DateTime('now')],
+        [ 'id' => $idReserva ],
+        ['modified' => 'datetime']);
     }
 }
