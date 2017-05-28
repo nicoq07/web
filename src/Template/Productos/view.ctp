@@ -71,7 +71,7 @@ input[type="radio"]:checked ~ label {
         <div class="col-lg-6">
             <h1 style="color: black"><?= h($producto->descripcion)?></h1>
             <h4 style="color: black"><strong>Categoría: </strong><?= h($producto->categoria->descripcion)?></h4><br>
-            <h4 style="color: black"><strong>Stock: </strong>3</h4><br>
+            <h4 style="color: black"><strong>Stock: </strong><?= h($producto->cantidad)?></h4><br>
             <h4 style="color: black"><strong>Información: </strong><?= h($producto->informacion)?></h4><br>
             <h4 style="color: black"><strong>Medidas: </strong><?= h($producto->dimensiones)?></h4><br>
             <!--button class="btn btn-default right">Reservar <i class="icon-cart"></i></button-->
@@ -109,261 +109,25 @@ input[type="radio"]:checked ~ label {
                     </tr>
                 </thead>
                 <tbody>
+                    <?php while ($dia = current($tabla)){ ?>
                     <tr>
-                        <td>25/04</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
+                        <td><?= h(key($tabla)) ?></td>
+                        <?php foreach ($dia as $hora){?>
+                        <td bgcolor="
+                        <?php
+                        if ($hora == 0)
+                            echo "#33cc33";
+                        else{
+                            if ($hora == 1)
+                                echo "#ffcc00";
+                            else
+                                echo "#ff0000";
+                        }
+                        ?>
+                        "></td>
+                        <?php  }?>
                     </tr>
-                    <tr>
-                        <td>26/04</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="warning"></td>
-                        <td class="warning"></td>
-                        <td class="warning"></td>
-                        <td class="warning"></td>
-                        <td class="warning"></td>
-                        <td class="warning"></td>
-                        <td class="warning"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>27/04</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>28/04</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>29/04</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>30/04</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>01/05</td>
-                        <td class="danger"></td>
-                        <td class="danger"></td>
-                        <td class="danger"></td>
-                        <td class="danger"></td>
-                        <td class="danger"></td>
-                        <td class="danger"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>02/05</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>03/05</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>04/05</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>05/05</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>06/05</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>07/05</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>08/05</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
-                    <tr>
-                        <td>09/05</td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                        <td class="success"></td>
-                    </tr>
+                    <?php next($tabla);} ?>
                 </tbody>
             </table>
             <!--<div class="paginator centrar">

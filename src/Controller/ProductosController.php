@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
+use Cake\I18n\Time;
+use Cake\I18n\Date;
 
 /**
  * Productos Controller
@@ -50,7 +52,49 @@ class ProductosController extends AppController
             'contain' => ['RangoEdades', 'Categorias', 'Reservas', 'CalificacionesProductos', 'FacturaProductos', 'FotosProductos']
         ]);
 
-        $this->set('producto', $producto);
+        $conn = ConnectionManager::get('default');
+        $diasDisponibles = array();
+        for ($i = 0; $i < 15; $i++) {
+            $stmt = $conn->execute('select DATE_ADD(CURRENT_DATE, INTERVAL '.$i.' DAY) as fecha');
+            $resu = $stmt ->fetchAll('assoc');
+            $fecha = $resu[0]['fecha'];
+            $diasDisponibles[] = $fecha;
+        }
+
+        $cantidadProdu = $producto['cantidad'];
+        $tabla = array();
+        foreach($diasDisponibles as $dia)
+        {
+            $disponibilidad = array();
+            for ($i = 9; $i < 23; $i++) {
+                $conn = ConnectionManager::get('default');    
+                $miquery = "SELECT productos.id, sum(reservas_productos.cantidad) as micantidad
+                from productos, reservas, reservas_productos 
+                where '".$dia." ".$i.":00:00' between reservas.fecha_inicio AND reservas.fecha_fin
+                AND productos.id =".$id."
+                AND productos.id = reservas_productos.producto_id
+                AND reservas.id = reservas_productos.reserva_id
+                group by productos.id";
+                $stmt = $conn->execute($miquery);
+                $resu = $stmt ->fetchAll('assoc');       
+                if(sizeof($resu) == 0){
+                    $disponibilidad[$i] = 0;
+                }
+                    
+                else
+                {
+                    $cantidad = $resu[0]['micantidad'];
+                        $disponibilidad[$i] = 2;
+                    }
+                    else {
+                        $disponibilidad[$i] = 1;   
+                    }
+                }
+            }    
+            $tabla[$dia] = $disponibilidad;          
+        }
+
+        $this->set(compact('producto', 'tabla'));
         $this->set('_serialize', ['producto']);
     }
 
@@ -143,12 +187,18 @@ class ProductosController extends AppController
     public function agregarCarro($id = null)
     {
         $this->autoRender = false;
+        $producto = $this->Productos->get($id);
 
         $session = $this->request->session();
         $allProducts = $session->read('cart');
         if (null!=$allProducts) {
             if (array_key_exists($id, $allProducts)) {
-                $allProducts[$id]++;
+                if ($allProducts[$id] == $producto['cantidad']){
+                    $this->Flash->error(__('Ya pediste el máximo de stock que tiene el producto '.$producto['descripcion']));
+                    return $this->redirect($this->referer());
+                }
+                else
+                    $allProducts[$id]++;
             } else {
                 $allProducts[$id] = 1;
             }
@@ -156,7 +206,7 @@ class ProductosController extends AppController
             $allProducts[$id] = 1;
         }
         $session->write('cart', $allProducts);         
-        $this->Flash->success(__('Producto agregado al carrito.'));
+        $this->Flash->success(__($producto['descripcion'].' agregado al carrito. Cantidad actual: '.$allProducts[$id]));
         return $this->redirect($this->referer());
 
     }
