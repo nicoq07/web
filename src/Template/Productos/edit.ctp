@@ -1,47 +1,26 @@
-<?php
-/**
-  * @var \App\View\AppView $this
-  */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $producto->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $producto->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Productos'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Rango Edades'), ['controller' => 'RangoEdades', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Rango Edade'), ['controller' => 'RangoEdades', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Categoria'), ['controller' => 'Categorias', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Calificaciones Productos'), ['controller' => 'CalificacionesProductos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Calificaciones Producto'), ['controller' => 'CalificacionesProductos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Factura Productos'), ['controller' => 'FacturaProductos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Factura Producto'), ['controller' => 'FacturaProductos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Fotos Productos'), ['controller' => 'FotosProductos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Fotos Producto'), ['controller' => 'FotosProductos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Reserva'), ['controller' => 'Reservas', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="productos form large-9 medium-8 columns content">
-    <?= $this->Form->create($producto) ?>
-    <fieldset>
-        <legend><?= __('Edit Producto') ?></legend>
-        <?php
-            echo $this->Form->control('rango_edad_id', ['options' => $rangoEdades]);
-            echo $this->Form->control('categoria_id', ['options' => $categorias]);
-            echo $this->Form->control('descripcion');
-            echo $this->Form->control('informacion');
-            echo $this->Form->control('dimensiones');
-            echo $this->Form->control('precio');
-            echo $this->Form->control('active' , ['label' => 'Activo' ]);
-            echo $this->Form->control('reservas._ids', ['options' => $reservas]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<h5>&nbsp;</h5>
+<div class = "row">
+	<div class="col-lg-6  col-lg-offset-3">
+	    <?= $this->Form->create($producto) ?>
+	    <fieldset>
+	        <legend><?= __('Editar producto') ?></legend>
+	        <?php
+	            echo $this->Form->control('rango_edad_id', ['options' => $rangoEdades , 'label' => 'Rango de Edad']);
+	            echo $this->Form->control('categoria_id', ['options' => $categorias]);
+	            echo $this->Form->control('descripcion', ['label' => 'Título']);
+	            echo $this->Form->label('informacion',['label' => 'Información']);
+	            echo $this->Form->textarea('informacion');
+	            echo $this->Form->control('dimensiones');
+	            echo $this->Form->control('precio');
+	            foreach ($fotos as $foto)
+	            {
+	            	echo $this->Html->image($foto, ['alt' => 'Brownies']);
+	            }
+	            echo $this->Form->control('active' , ['label' => 'Activo' ]);
+	        ?>
+	    </fieldset>
+	    <?= $this->Form->button(__('Actualizar')) ?>
+	    <?= $this->Form->end() ?>
+	</div>
 </div>
+<h5>&nbsp;</h5>

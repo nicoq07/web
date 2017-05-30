@@ -18,7 +18,7 @@ class ProductosController extends AppController
 	public function beforeFilter(\Cake\Event\Event $event)
 	{
 		parent::beforeFilter($event);
-		$this->Auth->allow(['index' , 'home', 'condiciones']);
+		$this->Auth->allow(['index' , 'home', 'condiciones','view']);
 	}
 
     /**
@@ -150,8 +150,8 @@ class ProductosController extends AppController
         }
         $rangoEdades = $this->Productos->RangoEdades->find('list', ['limit' => 200]);
         $categorias = $this->Productos->Categorias->find('list', ['limit' => 200]);
-        $reservas = $this->Productos->Reservas->find('list', ['limit' => 200]);
-        $this->set(compact('producto', 'rangoEdades', 'categorias', 'reservas'));
+        $fotos = $this->Productos->FotosProductos->find('list', ['limit' => 200]);
+        $this->set(compact('producto', 'rangoEdades', 'categorias', 'fotos'));
         $this->set('_serialize', ['producto']);
     }
 	
