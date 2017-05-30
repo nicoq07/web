@@ -136,8 +136,9 @@ class ProductosController extends AppController
      */
     public function edit($id = null)
     {
+    	
         $producto = $this->Productos->get($id, [
-            'contain' => ['Reservas']
+            'contain' => ['FotosProductos']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $producto = $this->Productos->patchEntity($producto, $this->request->getData());
@@ -150,8 +151,8 @@ class ProductosController extends AppController
         }
         $rangoEdades = $this->Productos->RangoEdades->find('list', ['limit' => 200]);
         $categorias = $this->Productos->Categorias->find('list', ['limit' => 200]);
-        $fotos = $this->Productos->FotosProductos->find('list', ['limit' => 200]);
-        $this->set(compact('producto', 'rangoEdades', 'categorias', 'fotos'));
+//         $fotos = $this->Productos->FotosProductos->find('list', ['limit' => 200]);
+        $this->set(compact('producto', 'rangoEdades', 'categorias'));
         $this->set('_serialize', ['producto']);
     }
 	

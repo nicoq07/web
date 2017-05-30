@@ -10,6 +10,21 @@ use App\Controller\AppController;
  */
 class FotosProductosController extends AppController
 {
+	public function isAuthorized($user)
+	{
+		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
+		{
+			return false;
+		}
+		elseif (isset($user['rol_id']) && $user['rol_id'] == EMPLEADO) {
+			
+			return true;
+		}
+		
+		return parent::isAuthorized($user);
+		
+		return true;
+	}
 
     /**
      * Index method

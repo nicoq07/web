@@ -245,8 +245,7 @@ class UsersController extends AppController
     				'contain' => ['PagosReserva']
     		]);
     	}
-    	$localidades = $this->Users->Domicilios->Localidades->find('list')->toArray();
-    	$this->set(compact('user','localidades'));
+    	$this->set(compact('user'));
     	$this->set('_serialize', ['user']);
     }
     

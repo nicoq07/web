@@ -12,10 +12,14 @@
 	            echo $this->Form->textarea('informacion');
 	            echo $this->Form->control('dimensiones');
 	            echo $this->Form->control('precio');
-	            foreach ($fotos as $foto)
-	            {
-	            	echo $this->Html->image($foto, ['alt' => 'Brownies']);
-	            }
+	            foreach ($producto->fotos_productos as $foto)
+	            {?>
+	            	<div style="border-radius: 5px;
+						    border: 1px solid #000000;">
+	            	<img id="Image1" src="<?php echo "../../".$foto->referencia; ?>" class="border">
+	            	 <?php echo $this->Form->postButton('Baja', ['controller' => 'FotosProductos', 'action' => 'delete', $foto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', 'class' => 'btn btn-primary']) ?>
+	            	</div>
+	            <?php }
 	            echo $this->Form->control('active' , ['label' => 'Activo' ]);
 	        ?>
 	    </fieldset>
