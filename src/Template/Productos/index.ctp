@@ -61,18 +61,10 @@
                         {
                           echo	$this->Html->link('Modificar', ['action' => 'edit', $producto->id], ['class' => 'btn btn-default']) ;
                           echo $this->Form->postLink('Baja', ['action' => 'delete', $producto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $producto->id, 'class' => 'btn btn-default']);
+                          echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-default']) ;
+                            echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-default']) ;
                         }
                         
-<<<<<<< HEAD
-                        	echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-primary']) ;
-                        	echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-primary']) ;   
-=======
-                        	echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-default']) ;
-                        	echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-default']) ;
-                        
-                 		
-                         
->>>>>>> 7faf531d10fc85ab2ea2adf012d6e9eddf8bdedb
                         ?>
                     </div>
                 </div>              
