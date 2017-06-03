@@ -24,6 +24,38 @@ function mostrarPrecioEnvio(id) {
 }
 
 function continuarFecha() {
+    var fechaInicio = $("#fecha_inicio").val();
+    var fechaFin = $("#fecha_fin").val();
+    var horaInicio = parseInt($("#hora_inicio").val());
+    var horaFin = parseInt($("#hora_fin").val());
+    var inicioMin = document.getElementById("fecha_inicio").min;
+    var inicioMax = document.getElementById("fecha_inicio").max;
+    var finMin = document.getElementById("fecha_fin").min;
+    var finMax = document.getElementById("fecha_fin").max;
+
+    //Valido que las fechas estén en el rango posible de fechas.
+    if (fechaInicio < inicioMin || fechaInicio > inicioMax) {
+        alert("La fecha de inicio es incorrecta. Por favor intente nuevamente");
+        return;
+    }
+
+    if (fechaFin < finMin || fechaFin > finMax) {
+        alert("La fecha de finalización es incorrecta. Por favor intente nuevamente");
+        return;
+    }
+
+    if (fechaInicio == fechaFin) {
+        if (horaInicio >= horaFin) {
+            alert("La finalización del evento no puede ser igual o posterior a su inicio.");
+            return;
+        }
+    } else {
+        if (fechaInicio > fechaFin) {
+            alert("La finalización del evento no puede ser igual o posterior a su inicio.");
+            return;
+        }
+    }
+
     var inicioEvento = $("#fecha_inicio").val() + " " + $("#hora_inicio").val();
     var finEvento = $("#fecha_fin").val() + " " + $("#hora_fin").val();
     $.get('/web/reservas/calcularHoras?fIni='+$("#fecha_inicio").val()+'&hIni='+$("#hora_inicio").val()+'&fFin='+$("#fecha_fin").val()+'&hFin='+$("#hora_fin").val(), function(d) {
@@ -109,6 +141,13 @@ function bajaCarro(idCarrito) {
     });
 }
 
+function actualizarFechaFin(){
+    //alert($("#fecha_inicio").val());
+    var fechaInicio = $("#fecha_inicio").val();
+    $("#fecha_fin").val(fechaInicio);
+    document.getElementById("fecha_fin").min = fechaInicio;
+}
+
 </script>
 
 <?php 
@@ -148,7 +187,13 @@ function bajaCarro(idCarrito) {
                         ];
 
                         echo $this->Form->label('Fecha');
-                        echo $this->Form->text('fecha_inicio', array('id'=>'fecha_inicio', 'type' => 'date'));
+                        $fecha = date('Y-m-d');
+                        $minfecha = strtotime ('+3 day', strtotime ($fecha));
+                        $minfecha = date ('Y-m-d', $minfecha);
+                        $maxfecha = strtotime ('+3 month', strtotime ($fecha));
+                        $maxfecha = date ('Y-m-d', $maxfecha);
+
+                        echo $this->Form->text('fecha_inicio', array('id'=>'fecha_inicio', 'type' => 'date', 'min'=> $minfecha, 'max'=> $maxfecha, 'value'=> $minfecha, 'onchange'=>'actualizarFechaFin()'));
                         echo $this->Form->label('Horario');
                         echo $this->Form->select('hora_inicio', $arrayHorarios, ['id' => 'hora_inicio']);
                     ?>
@@ -158,7 +203,7 @@ function bajaCarro(idCarrito) {
                     <br>
                     <?php
                         echo $this->Form->label('Fecha');
-                        echo $this->Form->text('fecha_fin', array('id'=>'fecha_fin', 'type' => 'date'));
+                        echo $this->Form->text('fecha_fin', array('id'=>'fecha_fin', 'type' => 'date', 'min'=> $minfecha, 'max'=> $maxfecha, 'value'=> $minfecha));
                         echo $this->Form->label('Horario');
                         echo $this->Form->select('hora_fin', $arrayHorarios, ['id' => 'hora_fin']);
                     ?>

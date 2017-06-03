@@ -51,8 +51,7 @@
                     <td><?= h($reserva->active) ?></td>
                     <td class="actions">
                         <?= $this->Html->link('Detalles', ['action' => 'view', $reserva->id], ['class' => 'btn btn-default']) ?>
-                        <?= $this->Html->link('Modificar', ['action' => 'edit', $reserva->id], ['class' => 'btn btn-default']) ?>
-                        <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $reserva->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $reserva->id, 'class' => 'btn btn-default']) ?>
+                        <?= $this->Form->postLink('Cancelar', ['action' => 'delete', $reserva->id], ['confirm' => '¿Está seguro que desea cancelar la reserva?', $reserva->id, 'class' => 'btn btn-default']) ?>
                         <?php 
                             if ($reserva->estado_reserva_id == 1 || $reserva->estado_reserva_id == 2) {
                                 echo $this->Html->link('Pagar', ['controller' => 'PagosReserva', 'action' => 'add', $reserva->id], ['class' => 'btn btn-default']);

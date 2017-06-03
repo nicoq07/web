@@ -37,12 +37,7 @@
                         <?php echo $this->Form->control('medio_pago_id', ['options' => $mediosPagos, 'empty' => 'Elija un medio de pago']); ?>
                     </div>
                     <div class="col-lg-4">
-                        <?php /*echo $this->Form->control('Tarjeta', ['options' => array(
-                        'VISA', 
-                        'MASTERCARD', 
-                        'AMERICAN EXPRESS'
-                        ), 'empty' => 'Elija su tarjeta...']);*/
-
+                        <?php 
                         echo $this->Form->control('tarjeta_id', ['options' => $tarjetas]);                        
                         echo $this->Html->link('Otra Tarjeta', ['controller'=>'tarjetasCreditoUser', 'action' => 'add'], ['class' => 'btn btn-default']);
                         ?>
