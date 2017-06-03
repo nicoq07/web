@@ -25,6 +25,7 @@
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('active') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('marca') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -33,13 +34,14 @@
             <tr>
                 <td><?= $this->Number->format($tarjetasCreditoUser->id) ?></td>
                 <td><?= $tarjetasCreditoUser->has('user') ? $this->Html->link($tarjetasCreditoUser->user->presentacion, ['controller' => 'Users', 'action' => 'view', $tarjetasCreditoUser->user->id]) : '' ?></td>
-                <td><?= $this->Number->format($tarjetasCreditoUser->numero) ?></td>
+                <td><?= h($tarjetasCreditoUser->numero) ?></td>
                 <td><?= $this->Number->format($tarjetasCreditoUser->vencimientoMes) ?></td>
                 <td><?= $this->Number->format($tarjetasCreditoUser->vencimientoAnio) ?></td>
                 <td><?= $this->Number->format($tarjetasCreditoUser->codSeguridad) ?></td>
                 <td><?= h($tarjetasCreditoUser->created) ?></td>
                 <td><?= h($tarjetasCreditoUser->modified) ?></td>
                 <td><?= h($tarjetasCreditoUser->active) ?></td>
+                <td><?= h($tarjetasCreditoUser->marca) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $tarjetasCreditoUser->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tarjetasCreditoUser->id]) ?>

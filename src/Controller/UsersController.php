@@ -265,14 +265,15 @@ class UsersController extends AppController
     
     public function tarjetas()
     {
-        $user = $this->Auth->user();
-        if($user)
-        {
-            $user = $this->Users->get($user['id'], [
-                    'contain' => ['TarjetasCreditoUser']
-            ]);
-        }
-        $this->set(compact('user'));
-        $this->set('_serialize', ['user']);
-    }    
+    	$user = $this->Auth->user();
+    	if($user)
+    	{
+    		$user = $this->Users->get($user['id'], [
+    				'contain' => ['TarjetasCreditoUser']
+    		]);
+    	}
+    	$this->set(compact('user'));
+    	$this->set('_serialize', ['user']);
+    }
+    
 }

@@ -14,7 +14,6 @@ class DomiciliosController extends AppController
 	{
 		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
 		{
-
 			if(in_array($this->request->action, ['add','editcliente','delete']))
 			{
 				return true;

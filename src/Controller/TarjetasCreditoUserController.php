@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Auth\DefaultPasswordHasher;
 /**
  * TarjetasCreditoUser Controller
  *
@@ -22,6 +22,7 @@ class TarjetasCreditoUserController extends AppController
             'contain' => ['Users']
         ];
         $tarjetasCreditoUser = $this->paginate($this->TarjetasCreditoUser)->toArray();
+        debug(check($tarjetasCreditoUser[0]['numero']));
         $this->set(compact('tarjetasCreditoUser'));
         $this->set('_serialize', ['tarjetasCreditoUser']);
     }

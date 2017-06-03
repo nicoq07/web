@@ -15,19 +15,23 @@
     </ul>
 </nav>
 <div class="tarjetasCreditoUser view large-9 medium-8 columns content">
-    <h3><?= h($tarjetasCreditoUser->id) ?></h3>
+    <h3><?= h($tarjetasCreditoUser->Array) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('User') ?></th>
             <td><?= $tarjetasCreditoUser->has('user') ? $this->Html->link($tarjetasCreditoUser->user->presentacion, ['controller' => 'Users', 'action' => 'view', $tarjetasCreditoUser->user->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($tarjetasCreditoUser->id) ?></td>
+            <th scope="row"><?= __('Numero') ?></th>
+            <td><?= h($tarjetasCreditoUser->numero) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Numero') ?></th>
-            <td><?= $this->Number->format($tarjetasCreditoUser->numero) ?></td>
+            <th scope="row"><?= __('Marca') ?></th>
+            <td><?= h($tarjetasCreditoUser->marca) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Id') ?></th>
+            <td><?= $this->Number->format($tarjetasCreditoUser->id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('VencimientoMes') ?></th>

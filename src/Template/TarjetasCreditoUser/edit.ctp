@@ -28,6 +28,7 @@
             echo $this->Form->control('vencimientoAnio');
             echo $this->Form->control('codSeguridad');
             echo $this->Form->control('active');
+            echo $this->Form->control('marca');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

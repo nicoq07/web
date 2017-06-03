@@ -10,12 +10,16 @@
                 </div>
             </div>
      <div class="row"> 
-        <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) :?> 
+        <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) :?>              
+            
+             
                 <div class="col-lg-2 col-lg-offset-10">
                     <?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
                 </div>
-        <?php endif;?>                        
-                <div class="col-lg-3">
+            
+        <?php endif;?>            
+            
+                 <div class="col-lg-3">
                     <?php echo $this->Form->create($productos, ['id' => 'miform']); ?>
                     <?php echo $this->Form->control('categoria_id', ['options' => $categorias, 'empty' => 'Todos', 'label'=>'Filtrar por Categoría:', 'onchange'=>'document.getElementById("miform").submit()']); ?>             
                 </div>
@@ -26,7 +30,7 @@
                     <?php echo $this->Form->control('precio_ord', ['options' => $opciones, 'empty' => 'Todos', 'label'=>'Filtrar por Precio:', 'onchange'=>'document.getElementById("miform").submit()']); ?>
                     <?php 
                     //$this->Paginator->sort('precio', '<b>Ordenar por precio</b>',
- 					//array('escape' => false)) 
+                    //array('escape' => false)) 
                     ?>
                 </div>
             </div>
@@ -48,7 +52,9 @@
 		                    	 <?php endif;
 		                    	 break;
 		                    	 endif;?>
-                    	<?php  }?>        
+                    	<?php  }?>
+                    	
+                       
                         <h4 class="tx_celeste marg"><?= h($producto->descripcion) ?></h4>
                         <p><strong>Medida: </strong><?= h($producto->dimensiones) ?></p>
                         <p><strong>Precio: </strong><?= $this->Number->format($producto->precio,[
@@ -61,10 +67,13 @@
                         {
                           echo	$this->Html->link('Modificar', ['action' => 'edit', $producto->id], ['class' => 'btn btn-default']) ;
                           echo $this->Form->postLink('Baja', ['action' => 'delete', $producto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $producto->id, 'class' => 'btn btn-default']);
-                          echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-default']) ;
-                            echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-default']) ;
                         }
                         
+                        	echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-default']) ;
+                        	echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-default']) ;
+                        
+                 		
+                         
                         ?>
                     </div>
                 </div>              

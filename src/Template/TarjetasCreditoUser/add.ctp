@@ -18,11 +18,11 @@
         <?php
             echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('numero');
-            echo $this->Form->control('marca');
             echo $this->Form->control('vencimientoMes');
             echo $this->Form->control('vencimientoAnio');
             echo $this->Form->control('codSeguridad');
             echo $this->Form->control('active');
+            echo $this->Form->control('marca');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
