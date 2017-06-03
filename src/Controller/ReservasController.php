@@ -514,7 +514,7 @@ class ReservasController extends AppController
                 $montoNotaCredito = $montoNotaCredito + $recibo->monto;
             }
 
-            /*foreach ($envios as $envio) {
+            foreach ($envios as $envio) {
                 $connection->update('envios', [
                 'active' => 0,
                 'modified' => new \DateTime('now')],
@@ -541,7 +541,7 @@ class ReservasController extends AppController
                 'active' => 0,
                 'modified' => new \DateTime('now')],
                 [ 'id' => $reserva->id ],
-                ['modified' => 'datetime']);*/
+                ['modified' => 'datetime']);
             
             $entidadNota = TableRegistry::get('Notacredito');
             $notaCredito = $entidadNota->newEntity();
