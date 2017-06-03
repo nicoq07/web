@@ -106,17 +106,21 @@ class ReservasController extends AppController
             $horaIni =  $this->request->getData()['hora_inicio'];
             $horaFin =  $this->request->getData()['hora_fin'];
             $totalReserva =  $this->request->getData()['totalReserva'];
-            $disponibilidadInicio = $horaIni - $tiempoEnvio;
-            $disponibilidadFin = $horaFin + $tiempoEnvio + 1;
+            $horaDisponibilidadInicio = $horaIni - $tiempoEnvio;
+            $horaDisponibilidadFin = $horaFin + $tiempoEnvio + 1;
+            
+            if ($horaDisponibilidadFin > 23){
+                $horaDisponibilidadFin = 23;
+            }
 
             /*debug($disponibilidadFin);
             exit();*/
 
-            $disponibilidadInicio = new \DateTime($fechaIni." ".$disponibilidadInicio.":00:00");
+            $disponibilidadInicio = new \DateTime($fechaIni." ".$horaDisponibilidadInicio.":00:00");
             $disponibilidadInicio = date_format($disponibilidadInicio, 'Y/m/d H:i:s');
-            $disponibilidadFin = new \DateTime($fechaFin." ".$disponibilidadFin.":00:00");
+            $disponibilidadFin = new \DateTime($fechaFin." ".$horaDisponibilidadFin.":00:00");
             $disponibilidadFin = date_format($disponibilidadFin, 'Y/m/d H:i:s');
-
+            
             /*debug($disponibilidadInicio);
             exit();*/
 
@@ -125,7 +129,12 @@ class ReservasController extends AppController
             $fechaFin = new \DateTime($fechaFin." ".$horaFin.":00:00");
             $fechaFin = date_format($fechaFin, 'Y/m/d H:i:s');            
             
-            //Aca se devería evaluar la reserva.           
+            //Aca se debería evaluar la reserva. 
+            $bandera = $this->ValidarReserva($disponibilidadInicio, $disponibilidadFin, $horaDisponibilidadInicio, $horaDisponibilidadFin, $allProducts);
+            if($bandera == "false")
+            {
+                return $this->redirect($this->referer());
+            }          
             
             $miReserva = array();
             $miReserva['fecha_fin'] = $fechaFin;
@@ -422,6 +431,70 @@ class ReservasController extends AppController
             }
             echo $cantidad;
         }
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
+    }
+
+    private function ValidarReserva($fechaIni, $fechaFin, $horaIni, $horaFin, $datos){
+        $conn = ConnectionManager::get('default');     
+
+        $firstDate = new \DateTime($fechaIni);
+        $secondDate = new \DateTime($fechaFin);
+        
+        $firstDateDia = date_format(new \DateTime($fechaIni), 'Y/m/d');
+        $secondDateDia = date_format(new \DateTime($fechaFin), 'Y/m/d');
+
+        if ($firstDate > $secondDate)
+        {
+            $this->Flash->error(__('La fecha de inicio debe ser antes que la de fin.'));
+            return "false";
+        }
+        //elseif ($firstDate == $secondDate)
+        else
+        {
+            if ($horaIni >= $horaFin)
+            {
+                $this->Flash->error(__('La hora de inicio debe ser antes que la de fin.'));
+                return "false";
+            }
+            else
+            {
+                $J = 0;
+                for ($i = $firstDate; (strtotime(date_format($i, 'Y/m/d H:i:s')) <= strtotime(date_format($secondDate, 'Y/m/d H:i:s')))  ; ) 
+                {
+                    
+                    foreach ($datos as $id => $cant)
+                    {   
+                        $producto = $this->Reservas->Productos->get($id);
+                        $cantidadProdu = $producto->cantidad; 
+
+                        $cantidadReservada = 0;
+                        $miquery = "SELECT productos.id, sum(reservas_productos.cantidad) as micantidad
+                        from productos, reservas, reservas_productos 
+                        where '".$firstDate->format('Y/m/d H:i:s')."' between reservas.no_disponible_inicio AND reservas.no_disponible_fin
+                        AND productos.id =".$id."
+                        AND productos.id = reservas_productos.producto_id
+                        AND reservas.id = reservas_productos.reserva_id
+                        group by productos.id";
+                        $stmt = $conn->execute($miquery);
+                        $resu = $stmt ->fetchAll('assoc');       
+                        if(sizeof($resu) == 0){
+                            $cantidadReservada = 0;
+                        }
+                        else
+                        {    
+                            $cantidad = $resu[0]['micantidad'];
+                            if ((int)$cantidad+(int)$cant > (int)$cantidadProdu){
+                                $this->Flash->error(__('El producto '.$producto->descripcion.' no se puede reservar en el rango elegido. Verifique su Disponibilidad.'));
+                                return "false";
+                            }
+                        }
+                    }
+                    $i->add(new \DateInterval('PT1H'));
+                }    
+            }
+
+        }
+        return "true";
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 }

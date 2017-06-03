@@ -111,7 +111,7 @@ input[type="radio"]:checked ~ label {
                 <tbody>
                     <?php while ($dia = current($tabla)){ ?>
                     <tr>
-                        <td><?= h(key($tabla)) ?></td>
+                        <td><?php echo date_format(new \DateTime((string)key($tabla)), 'd-m-Y'); ?></td>
                         <?php foreach ($dia as $hora){?>
                         <td bgcolor="
                         <?php
