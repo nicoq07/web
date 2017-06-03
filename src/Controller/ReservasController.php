@@ -155,6 +155,7 @@ class ReservasController extends AppController
                 $idFactura = $this->guardarFactura($lastId->id, $totalReserva);
                 $this->guardarFacturaProductos($idFactura->id, $session->read('cart'), $this->request->getData()['diferenciaHoras']);
                 $idEnvio = $this->guardarEnvio($lastId->id, $idFactura->id, $session->read('cart'), $this->request->getData()['domicilio']);
+                $session->delete('cart');
                 $this->Flash->success(__('Reserva creada.'));
 
                 return $this->redirect(['controller' => 'PagosReserva', 'action' => 'add', $lastId->id]);

@@ -67,13 +67,21 @@ function continuarFecha() {
 function continuarDomicilio() {
     var id;
     id = $("#domicilio").val();
-    mostrarPrecioEnvio(id);
+    if (id != 0) {
+        mostrarPrecioEnvio(id);
+    } else {
+        alert("Debe seleccionar una dirección para continuar.");
+    }    
 }
 
 function continuarProductos() {    
     verDiv('totales');
-    var eventoI = $("#fecha_inicio").val() + " " + $("#hora_inicio").val() + ":00";
-    var eventoF = $("#fecha_fin").val() + " " + $("#hora_fin").val() + ":00";
+    var fechaInicio = $("#fecha_inicio").val();
+    fechaInicio = fechaInicio.split("-");
+    var eventoI = fechaInicio[2] + "/" + fechaInicio[1] + "/" + fechaInicio[0] + " " + $("#hora_inicio").val() + ":00 hs.";
+    var fechaFin = $("#fecha_fin").val();
+    fechaFin = fechaFin.split("-");
+    var eventoF = fechaFin[2] + "/" + fechaFin[1] + "/" + fechaFin[0] + " " + $("#hora_fin").val() + ":00 hs.";
     var domicilio = $("#domicilio option:selected").html();
     var total = parseInt($("#calculoTotal").val());
     var envio = parseInt($("#precioEnvio").val());
@@ -218,6 +226,7 @@ function actualizarFechaFin(){
                             $arrayDomicilios = array();
                             foreach ($domicilios as $domicilio) {
                                 $localidad;
+                                $arrayDomicilios[0] = "Seleccione dirección...";
                                 foreach ($localidades as $localidade) {
                                     if ($localidade->id == $domicilio->localidad_id) {
                                         $arrayDomicilios[$domicilio->id] = $domicilio->presentacion." ".$localidade->descripcion;
@@ -225,7 +234,7 @@ function actualizarFechaFin(){
                                 }
                             }
 
-                            echo $this->Form->control('domicilio', ['options' => $arrayDomicilios, 'empty' => 'Seleccione dirección...']);
+                            echo $this->Form->control('domicilio', ['options' => $arrayDomicilios]);
                         ?>
 
                         <?= $this->Html->link('Cargar Dirección', ['controller'=>'domicilios', 'action' => 'add'], ['class' => 'btn btn-default']) ?>
