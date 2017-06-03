@@ -86,10 +86,12 @@ class PagosReservaController extends AppController
             $this->Flash->error(__('No pudo realizarse el pago. Intente nuevamente.'));
         }
         $reserva = $this->PagosReserva->Reservas->get($datos);
+        $factura = $this->PagosReserva->Reservas->Facturas->find('all')->where(['Facturas.reserva_id ='=>$reserva->id]);
+        $factura = $factura->first();
         $tarjetas = $this->PagosReserva->Reservas->Users->TarjetasCreditoUser->find('list', ['limit' => 200])->where(['TarjetasCreditoUser.user_id ='=>$reserva->user_id]);
         $users = $this->PagosReserva->Users->find('list', ['limit' => 200]);
         $mediosPagos = $this->PagosReserva->MediosPagos->find('list', ['limit' => 200]);
-        $this->set(compact('pagosReserva', 'reserva', 'users', 'mediosPagos', 'tarjetas'));
+        $this->set(compact('pagosReserva', 'reserva', 'users', 'mediosPagos', 'tarjetas', 'factura'));
         $this->set('_serialize', ['pagosReserva']);
     }
 
@@ -172,33 +174,36 @@ class PagosReservaController extends AppController
     }
 
     public function crearRecibo($idFactura, $monto){
+        $factura = $this->PagosReserva->Reservas->Facturas->get($idFactura);
+
         $connection= ConnectionManager::get("default");
         $connection->insert('recibos', [
         'factura_id' => $idFactura,
-        'monto' => $monto,
+        'monto' => $monto*$factura->monto,
         'active' => 1,
         'modified' => new \DateTime('now'),
         'created' => new \DateTime('now')], 
         ['created' => 'datetime' , 'modified' => 'datetime']);
+
+        $connection->update('facturas', [
+            'porcentajePago' => $factura->porcentajePago + $monto,
+            'pagado' => 1,
+            'modified' => new \DateTime('now')],
+            [ 'id' => $idFactura ],
+            ['modified' => 'datetime']);
     }
 
     public function actualizarEstados($idFactura, $facturaMonto, $idReserva){
         $connection= ConnectionManager::get("default");
-        $recibos = $this->PagosReserva->Reservas->Facturas->Recibos->find('all')->where(['Recibos.factura_id ='=>$idFactura]);
-        $totalPagado = 0;
+        $factura = $this->PagosReserva->Reservas->Facturas->get($idFactura);
         $estadoReserva;
-        foreach ($recibos as $recibo) {
-            $totalPagado = $totalPagado + $recibo->monto;
-        }
-
-        if ($facturaMonto == $totalPagado) {
+        if ($factura->porcentajePago == 1) {
             $connection->update('facturas', [
             'pagado' => 1,
             'modified' => new \DateTime('now')],
             [ 'id' => $idFactura ],
             ['modified' => 'datetime']);
-
-            $estadoReserva = 3;                    
+            $estadoReserva = 3;
         } else {
             $estadoReserva = 2;
         }

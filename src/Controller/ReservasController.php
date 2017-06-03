@@ -27,8 +27,9 @@ class ReservasController extends AppController
             'contain' => ['Users', 'EstadosReservas']
         ];
         $reservas = $this->paginate($this->Reservas);
+        $estados = $this->Reservas->EstadosReservas->find('list', ['limit' => 200]);
 
-        $this->set(compact('reservas'));
+        $this->set(compact('reservas', 'estados'));
         $this->set('_serialize', ['reservas']);
     }
 
@@ -167,8 +168,8 @@ class ReservasController extends AppController
     private function guardarFactura($idReserva, $totalReserva){        
         if(!empty($idReserva) && !empty($idReserva)){
             $factura = $this->Reservas->Facturas->newEntity();
-            $miFactura = array('reserva_id' => $idReserva, 'monto' => $totalReserva, 'pagado' => 0, 'active' => 1);
-            $factura = $this->Reservas->patchEntity($factura, $miFactura);            
+            $miFactura = array('reserva_id' => $idReserva, 'monto' => $totalReserva, 'pagado' => 0, 'porcentajePago' => 0, 'active' => 1);
+            $factura = $this->Reservas->patchEntity($factura, $miFactura);
             return $this->Reservas->Facturas->save($factura);
         }
         $this->autoRender = false; // No renderiza mediate el fichero .ctp

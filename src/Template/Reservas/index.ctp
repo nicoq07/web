@@ -7,21 +7,13 @@
     <br>
     <h3 class="centrar">Reservas</h3>
     <div class="row">
-    	
-    
         <div class="col-lg-3">
             <?php echo $this->Form->control('filtro', ['label'=>'Filtrar por fecha:']);?>
         </div>
         <div class="col-lg-3">
             <?php
             echo $this->Form->label('Filtrar por estado:');
-            echo $this->Form->select('estado', [
-                '0'=>'Selecione estado',
-                '1'=>'Realizada',
-                '2'=>'Señada',
-                '3'=>'Paga',
-                '4'=>'Cancelada',
-            ]); ?>
+            echo $this->Form->control('estado_reserva_id', ['options' => $estados, 'label' => false]); ?>
         </div>
         <div class="col-lg-3">
             <?php echo $this->Form->control('user', ['label'=>'Filtrar por cliente:']);?>
@@ -61,6 +53,11 @@
                         <?= $this->Html->link('Detalles', ['action' => 'view', $reserva->id], ['class' => 'btn btn-default']) ?>
                         <?= $this->Html->link('Modificar', ['action' => 'edit', $reserva->id], ['class' => 'btn btn-default']) ?>
                         <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $reserva->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $reserva->id, 'class' => 'btn btn-default']) ?>
+                        <?php 
+                            if ($reserva->estado_reserva_id == 1 || $reserva->estado_reserva_id == 2) {
+                                echo $this->Html->link('Pagar', ['controller' => 'PagosReserva', 'action' => 'add', $reserva->id], ['class' => 'btn btn-default']);
+                            }
+                         ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

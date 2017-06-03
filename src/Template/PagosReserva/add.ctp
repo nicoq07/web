@@ -14,10 +14,24 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <?php echo $this->Form->control('monto', ['options' => array(
-                        number_format($reserva->total*.5, 2, '.', '') =>'%50 - $'.$reserva->total*.5,
-                        number_format($reserva->total*.75, 2, '.', '') =>'%75 - $'.$reserva->total*.75,
-                        number_format($reserva->total, 2, '.', '')=>'%100 - $'.$reserva->total), 'empty' => 'Seleccione % a pagar']); ?>
+                        <?php 
+                            switch ($factura->porcentajePago) {
+                                case '0':
+                                    echo $this->Form->control('monto', ['options' => array(
+                                    number_format(0.5, 2, '.', '') =>'%50 - $'.$reserva->total*.5,
+                                    number_format(0.75, 2, '.', '') =>'%75 - $'.$reserva->total*.75,
+                                    number_format(1, 2, '.', '')=>'%100 - $'.$reserva->total), 'empty' => 'Seleccione % a pagar']);
+                                    break;
+                                case '0.5':
+                                    echo $this->Form->control('monto', ['options' => array(
+                                    number_format(0.5, 2, '.', '') =>'%50 - $'.$reserva->total*.5)]);
+                                    break;
+                                case '0.75':
+                                    echo $this->Form->control('monto', ['options' => array(
+                                    number_format(0.25, 2, '.', '') =>'%25 - $'.$reserva->total*.25)]);
+                                    break;
+                            }
+                         ?>
                     </div>
                     <div class="col-lg-4">
                         <?php echo $this->Form->control('medio_pago_id', ['options' => $mediosPagos, 'empty' => 'Elija un medio de pago']); ?>
