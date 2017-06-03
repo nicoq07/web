@@ -21,8 +21,12 @@ class TarjetasCreditoUserController extends AppController
         $this->paginate = [
             'contain' => ['Users']
         ];
+<<<<<<< Updated upstream
         $tarjetasCreditoUser = $this->paginate($this->TarjetasCreditoUser);
 
+=======
+        $tarjetasCreditoUser = $this->paginate($this->TarjetasCreditoUser)->toArray();
+>>>>>>> Stashed changes
         $this->set(compact('tarjetasCreditoUser'));
         $this->set('_serialize', ['tarjetasCreditoUser']);
     }
