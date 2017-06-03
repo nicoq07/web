@@ -543,24 +543,19 @@ class ReservasController extends AppController
                 [ 'id' => $reserva->id ],
                 ['modified' => 'datetime']);*/
             
-            $notaCredito = TableRegistry::get('Notacredito');
-            debug($notaCredito);
-            exit();
-            $lastId = $connection->insert('notaCredito', [
-            'factura_id' => $factura->id,
-            'monto' => $montoNotaCredito,
-            'active' => 1,
-            'modified' => new \DateTime('now'),
-            'created' => new \DateTime('now')], 
-            ['created' => 'datetime' , 'modified' => 'datetime']);
-
-            debug($lastId);
-            exit();
+            $entidadNota = TableRegistry::get('Notacredito');
+            $notaCredito = $entidadNota->newEntity();
+            $notaCredito->factura_id = $factura->id;
+            $notaCredito->monto = $montoNotaCredito;
+            $notaCredito->active = 1;
+            $notaCredito->created = new \DateTime('now');
+            $notaCredito->modified = new \DateTime('now');
+            $lastId = $entidadNota->save($notaCredito);
 
             $mailCancelar = array();
             $mailCancelar['correo'] = $this->viewVars['current_user']['email'];
             $mailCancelar['asunto'] = "Cancelación de reserva ".$reserva->id;
-            $mailCancelar['mensaje'] = $this->viewVars['current_user']['nombre'].", queríamos informarte que la reserva número ".$reserva->id. " fue cancelada con éxito. Se generó una nota de crédito número ".$idNotaCredito." por el monto $".$montoNotaCredito.". Acercate a nuestra empresa de lunes a viernes de 9 a 12.30hs y de 13.30 a 18hs para retirar el dinero. Desde ya muchas gracias.";
+            $mailCancelar['mensaje'] = $this->viewVars['current_user']['nombre'].", queríamos informarte que la reserva número ".$reserva->id. " fue cancelada con éxito. Se generó una nota de crédito número ".$lastId->id." por el monto $".$montoNotaCredito.". Acercate a nuestra empresa de lunes a viernes de 9 a 12.30hs y de 13.30 a 18hs para retirar el dinero. Desde ya muchas gracias.";
 
             debug($mailCancelar);
             exit();

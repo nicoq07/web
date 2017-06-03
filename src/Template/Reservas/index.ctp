@@ -36,7 +36,6 @@
                     <th scope="col"><?= $this->Paginator->sort('estado_reserva_id') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('fecha_inicio') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('fecha_fin') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('active' , ['label' => 'Activo' ]) ?></th>
                     <th scope="col" class="actions">Acciones</th>
                 </tr>
             </thead>
@@ -45,13 +44,15 @@
                 <tr>
                     <td><?= $this->Number->format($reserva->id) ?></td>
                     <td><?= $reserva->has('user') ? $this->Html->link($reserva->user->id, ['controller' => 'Users', 'action' => 'view', $reserva->user->id]) : '' ?></td>
-                    <td><?= $reserva->has('estados_reserva') ? $this->Html->link($reserva->estados_reserva->id, ['controller' => 'EstadosReservas', 'action' => 'view', $reserva->estados_reserva->id]) : '' ?></td>
+                    <td><?= $reserva->has('estados_reserva') ? h($reserva->estados_reserva->descripcion) : '' ?></td>
                     <td><?= h($reserva->fecha_inicio) ?></td>
                     <td><?= h($reserva->fecha_fin) ?></td>
-                    <td><?= h($reserva->active) ?></td>
                     <td class="actions">
                         <?= $this->Html->link('Detalles', ['action' => 'view', $reserva->id], ['class' => 'btn btn-default']) ?>
-                        <?= $this->Form->postLink('Cancelar', ['action' => 'delete', $reserva->id], ['confirm' => '¿Está seguro que desea cancelar la reserva?', $reserva->id, 'class' => 'btn btn-default']) ?>
+                        <?php 
+                            if ($reserva->estado_reserva_id != 4) {
+                                echo $this->Form->postLink('Cancelar', ['action' => 'cancelar', $reserva->id], ['confirm' => '¿Está seguro que desea cancelar la reserva?', $reserva->id, 'class' => 'btn btn-default']);
+                            } ?>
                         <?php 
                             if ($reserva->estado_reserva_id == 1 || $reserva->estado_reserva_id == 2) {
                                 echo $this->Html->link('Pagar', ['controller' => 'PagosReserva', 'action' => 'add', $reserva->id], ['class' => 'btn btn-default']);
