@@ -2,7 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-
+use Cake\Auth\DefaultPasswordHasher;
 /**
  * TarjetasCreditoUser Entity
  *
@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string $marca
  * @property int $vencimientoMes
  * @property int $vencimientoAnio
- * @property int $codSeguridad
+ * @property string $codSeguridad
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  * @property bool $active
@@ -35,7 +35,7 @@ class TarjetasCreditoUser extends Entity
         '*' => true,
         'id' => false
     ];
-    protected function _setVencimientoNumero($value)
+    protected function _setNumero($value)
     {
     	if (!empty($value))
     	{
@@ -45,12 +45,12 @@ class TarjetasCreditoUser extends Entity
     	else
     	{
     		$id = $this->_properties['id'];
-    		$tarjetaCreditoUser = TableRegistry::get('TarjetasCreditoUser')->recoverNumero($id);
+    		$tarjetaCreditoUser = TableRegistry::get('TarjetasCreditoUser')->recoverPassword($id);
     		return $tarjetaCreditoUser;
     	}
     }
     
-    protected function _setVencimientoCodSeguridad($value)
+    protected function _setcodSeguridad($value)
     {
     	if (!empty($value))
     	{
@@ -60,7 +60,7 @@ class TarjetasCreditoUser extends Entity
     	else
     	{
     		$id = $this->_properties['id'];
-    		$tarjetaCreditoUser = TableRegistry::get('TarjetasCreditoUser')->recoverCodSeguridad($id);
+    		$tarjetaCreditoUser = TableRegistry::get('TarjetasCreditoUser')->recoverPassword($id);
     		return $tarjetaCreditoUser;
     	}
     }
