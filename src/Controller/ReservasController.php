@@ -497,4 +497,95 @@ class ReservasController extends AppController
         return "true";
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
+
+    public function cancelar($id = null){
+        $connection= ConnectionManager::get("default");
+        $reserva = $this->Reservas->get($id);
+        if ($this->isCancelable($reserva->fecha_inicio)) {
+            $factura = $this->Reservas->Facturas->find("all")->where(['reserva_id ='=>$id]);
+            $factura = $factura->first();
+            $envios = $this->Reservas->Envios->find("all")->where(['reserva_id ='=>$id]);
+            $remitos = $this->Reservas->Facturas->Remitos->find("all")->where(['factura_id ='=>$factura->id]);
+            $recibos = $this->Reservas->Facturas->Recibos->find("all")->where(['factura_id ='=>$factura->id]);
+
+            $montoNotaCredito = 0;
+
+            foreach ($recibos as $recibo) {
+                $montoNotaCredito = $montoNotaCredito + $recibo->monto;
+            }
+
+            /*foreach ($envios as $envio) {
+                $connection->update('envios', [
+                'active' => 0,
+                'modified' => new \DateTime('now')],
+                [ 'id' => $envio->id ],
+                ['modified' => 'datetime']);
+            }
+
+            foreach ($remitos as $remito) {
+                $connection->update('remitos', [
+                'active' => 0,
+                'modified' => new \DateTime('now')],
+                [ 'id' => $remito->id ],
+                ['modified' => 'datetime']);
+            }
+
+            $connection->update('facturas', [
+                'active' => 0,
+                'modified' => new \DateTime('now')],
+                [ 'id' => $factura->id ],
+                ['modified' => 'datetime']);
+
+            $connection->update('reservas', [
+                'estado_reserva_id' => 4,
+                'active' => 0,
+                'modified' => new \DateTime('now')],
+                [ 'id' => $reserva->id ],
+                ['modified' => 'datetime']);*/
+            
+            $notaCredito = TableRegistry::get('Notacredito');
+            debug($notaCredito);
+            exit();
+            $lastId = $connection->insert('notaCredito', [
+            'factura_id' => $factura->id,
+            'monto' => $montoNotaCredito,
+            'active' => 1,
+            'modified' => new \DateTime('now'),
+            'created' => new \DateTime('now')], 
+            ['created' => 'datetime' , 'modified' => 'datetime']);
+
+            debug($lastId);
+            exit();
+
+            $mailCancelar = array();
+            $mailCancelar['correo'] = $this->viewVars['current_user']['email'];
+            $mailCancelar['asunto'] = "Cancelación de reserva ".$reserva->id;
+            $mailCancelar['mensaje'] = $this->viewVars['current_user']['nombre'].", queríamos informarte que la reserva número ".$reserva->id. " fue cancelada con éxito. Se generó una nota de crédito número ".$idNotaCredito." por el monto $".$montoNotaCredito.". Acercate a nuestra empresa de lunes a viernes de 9 a 12.30hs y de 13.30 a 18hs para retirar el dinero. Desde ya muchas gracias.";
+
+            debug($mailCancelar);
+            exit();
+
+            $this->Flash->success(__('Reserva cancelada.'));
+
+            return $this->redirect(['action' => 'index']);
+        } else {
+            $this->Flash->error(__('No se puede cancelar la reserva. Verifique las condiciones generales.'));
+            return $this->redirect(['controller' => 'Productos', 'action' => 'condiciones']);
+        }
+        
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
+    }
+
+    public function isCancelable($fecha){
+        $hoy = new \DateTime("now");
+        $fecha = $fecha->format("Y-m-d");
+        $inicio = new \DateTime($fecha);
+        $diferencia = date_diff($inicio, $hoy);
+
+        if ($diferencia->d >= 3) {
+            return false;
+        }
+
+        return true;
+    }
 }
