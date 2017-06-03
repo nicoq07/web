@@ -10,28 +10,24 @@
                 </div>
             </div>
      <div class="row"> 
-        <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) :?>              
-            
-             
+        <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) :?> 
                 <div class="col-lg-2 col-lg-offset-10">
                     <?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
                 </div>
-            
-        <?php endif;?>            
-            
-                <div class="col-lg-5">
-                    <?php echo $this->Form->control('categoria_id', ['options' => $categorias, 'empty' => 'Selecione una categoría', 'label'=>'Filtrar por:']); ?>
+        <?php endif;?>                        
+                <div class="col-lg-3">
+                    <?php echo $this->Form->create($productos, ['id' => 'miform']); ?>
+                    <?php echo $this->Form->control('categoria_id', ['options' => $categorias, 'empty' => 'Todos', 'label'=>'Filtrar por Categoría:', 'onchange'=>'document.getElementById("miform").submit()']); ?>             
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-3">
                     <?php 
-//                     echo $this->Form->label('Ordenar por:');
-//                     echo $this->Form->select('precio', [
-//                         '0'=>'Selecione precio',
-//                         '1'=>'Mayor precio',
-//                         '2'=>'Menor precio',
-//                     ]); ?>
-                    <?= $this->Paginator->sort('precio', '<b>Ordenar por precio</b>',
- 						array('escape' => false)) ?>
+                        $opciones = ['desc' => 'Mayor Precio', 'asc' => 'Menor Precio'];
+                    ?>
+                    <?php echo $this->Form->control('precio_ord', ['options' => $opciones, 'empty' => 'Todos', 'label'=>'Filtrar por Precio:', 'onchange'=>'document.getElementById("miform").submit()']); ?>
+                    <?php 
+                    //$this->Paginator->sort('precio', '<b>Ordenar por precio</b>',
+ 					//array('escape' => false)) 
+                    ?>
                 </div>
             </div>
             <br>
@@ -52,9 +48,7 @@
 		                    	 <?php endif;
 		                    	 break;
 		                    	 endif;?>
-                    	<?php  }?>
-                    	
-                       
+                    	<?php  }?>        
                         <h4 class="tx_celeste marg"><?= h($producto->descripcion) ?></h4>
                         <p><strong>Medida: </strong><?= h($producto->dimensiones) ?></p>
                         <p><strong>Precio: </strong><?= $this->Number->format($producto->precio,[
@@ -69,14 +63,12 @@
                         }
                         
                         	echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-primary']) ;
-                        	echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-primary']) ;
-                        
-                 		
-                         
+                        	echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-primary']) ;   
                         ?>
                     </div>
                 </div>              
                 <?php endforeach; ?>
+                <?php echo $this->Form->end(); ?>
             </div>  
         </div>
     </section>

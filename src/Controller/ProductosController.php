@@ -46,8 +46,24 @@ class ProductosController extends AppController
      */
     public function index()
     {
+        
+        $where = null;
+        if (!(empty($this->request->getData()['categoria_id'])))
+        {
+            $categoria=$this->request->getData()['categoria_id'];
+            $where = ['productos.categoria_id' => $categoria];
+        }
+        $orden = null;
+        if (!(empty($this->request->getData()['precio_ord'])))
+        {
+            $orden=$this->request->getData()['precio_ord'];
+        }
         $this->paginate = [
-            'contain' => ['RangoEdades', 'Categorias']
+            'contain' => ['RangoEdades', 'Categorias'],
+            'conditions' => [$where],
+            'order' => [
+            'Productos.precio' => $orden
+            ]
         ];
         $productos = $this->paginate($this->Productos);
         $categorias = $this->Productos->Categorias->find('list', ['limit' => 200]);
