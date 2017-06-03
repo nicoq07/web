@@ -141,6 +141,7 @@ class ProductosController extends AppController
             'contain' => ['FotosProductos']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+        	debug("entra");
             $producto = $this->Productos->patchEntity($producto, $this->request->getData());
             if ($this->Productos->save($producto)) {
                 $this->Flash->success(__('The producto has been saved.'));

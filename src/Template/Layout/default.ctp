@@ -16,7 +16,8 @@
     		'line-icons.min',
     		'theme.css',
     	    'style',
-            'fileinput.min']) ?>
+            'fileinput.min'
+    		]) ?>
     
     <?= $this->Html->script([
     		
