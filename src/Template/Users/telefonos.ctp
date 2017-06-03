@@ -6,6 +6,8 @@
 	<div class="col-lg-6">
 		<div class="well">
 		<h3><?= h("Mis teléfonos") ?></h3>
+		<h3 align="right"><?= $this->Html->link(__('Nuevo'), ['controller' =>'telefonos', 'action' => 'add'], ['class' => 'btn btn-default ']) ?>
+</h3>
 			    <table class ="table table-striped table-hover" >
 		        <thead>
 		            <tr>

@@ -14,6 +14,24 @@ use Cake\I18n\Date;
  */
 class ProductosController extends AppController
 {
+	public function isAuthorized($user)
+	{
+		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
+		{
+			if(in_array($this->request->action, ['agregarCarro']))
+			{
+				return true;
+			}
+		}
+		elseif (isset($user['rol_id']) && $user['rol_id'] == EMPLEADO) {
+			
+			return true;
+		}
+		
+		return parent::isAuthorized($user);
+		
+		return true;
+	}
 	
 	public function beforeFilter(\Cake\Event\Event $event)
 	{
@@ -141,7 +159,7 @@ class ProductosController extends AppController
             'contain' => ['FotosProductos']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-        	debug("entra");
+        	debug($this->request->getData());
             $producto = $this->Productos->patchEntity($producto, $this->request->getData());
             if ($this->Productos->save($producto)) {
                 $this->Flash->success(__('The producto has been saved.'));

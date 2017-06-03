@@ -23,7 +23,7 @@ class UsersController extends AppController
 	{
 		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
 		{
-			if(in_array($this->request->action, ['index','view','logout','login','home']))
+			if(in_array($this->request->action, ['index','view','logout','login','home','perfil','direcciones','reservas','pagos','telefonos','tarjetas']))
 			{
 				return true;
 			}

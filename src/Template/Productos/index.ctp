@@ -9,10 +9,10 @@
                     <h1>&nbsp;</h1>
                 </div>
             </div>
-     
+     <div class="row"> 
         <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) :?>              
             
-            <div class="row">  
+             
                 <div class="col-lg-2 col-lg-offset-10">
                     <?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
                 </div>
@@ -37,7 +37,7 @@
             <br>
             <div class="row">
                 <?php foreach ($productos as $producto): ?>
-                <div class="col-lg-4 col-lg-6">
+                <div class="col-lg-5 col-lg-6">
                     <div class="blog-snippet-1">
                     	<?php foreach ($fotos as $foto){?>
 	                    	<?php if ($producto->id === $foto->producto_id):?>
@@ -61,9 +61,19 @@
                                         'before' => '$',
                                         'locale' => 'es_Ar'
                                         ]) ?></p>
-                        <?= $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-primary']) ?>
-                        <?= $this->Html->link('Modificar', ['action' => 'edit', $producto->id], ['class' => 'btn btn-primary']) ?>
-                        <?= $this->Form->postLink('Baja', ['action' => 'delete', $producto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $producto->id, 'class' => 'btn btn-primary']) ?>
+                        <?php 
+                        if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) 
+                        {
+                          echo	$this->Html->link('Modificar', ['action' => 'edit', $producto->id], ['class' => 'btn btn-primary']) ;
+                          echo $this->Form->postLink('Baja', ['action' => 'delete', $producto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $producto->id, 'class' => 'btn btn-primary']);
+                        }
+                        
+                        	echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-primary']) ;
+                        	echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-primary']) ;
+                        
+                 		
+                         
+                        ?>
                     </div>
                 </div>              
                 <?php endforeach; ?>

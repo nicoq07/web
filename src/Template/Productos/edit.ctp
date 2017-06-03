@@ -15,6 +15,32 @@ $(document).on('ready', function() {
         mainClass: "input-group-lg"
     });
 });
+
+function borrarFoto(id) {
+    $.get('/web/FotosProductos/delete?id='+id, function(d) {      
+    	alert(d);  
+//         if (d) {
+//             alert(d);
+//             var texto = d.split('|');
+//             var cantidadEnvios = 0;
+//             if (texto[1]%4 == 0) {
+//                 cantidadEnvios = texto[1]/4;
+//             } else {
+//                 cantidadEnvios = Math.floor((texto[1]/4)+1)
+//             }
+//             $("#envio").html("$"+(texto[0]*cantidadEnvios));
+//             $("#precioEnvio").val(texto[0]*cantidadEnvios);
+//             $("#tiempoEnvio").val(texto[2]);
+//         }
+//         else {
+//             $("#envio").html("");
+//             $("#precioEnvio").val("");
+//             $("#tiempoEnvio").val("");
+//         }          
+    });
+}
+
+
 </script>
 
 <h5>&nbsp;</h5>
@@ -39,7 +65,7 @@ $(document).on('ready', function() {
 	            	<div class="col-lg-4" style="border-radius: 5px; border: 1px solid #000000;">
 	            	<div style= "padding:5px 0px 0px 0px; text-align:center">
 	            	<img style= "padding:0px 0px 5px 0px" id="Image1" src="<?php echo "../../".$foto->referencia; ?>">
-	            	 <?php echo $this->Form->button('X', ['controller' => 'FotosProductos', 'action' => 'delete', $foto->id],['confirm' => '¿Está seguro que desea eliminarlo?', 'class' => 'btn']) ?>
+	            	 <?php echo $this->Form->button('X', ['type' => 'button', 'onclick' => "borrarFoto($foto->id)" ],['confirm' => '¿Está seguro que desea eliminarlo?', 'class' => 'btn']) ?>
 	            	</div>
 	            	</div>
 	            <?php }

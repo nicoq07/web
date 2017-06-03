@@ -29,7 +29,7 @@
                     <td><?= h($user->nombre) ?></td>
                     <td><?= h($user->apellido) ?></td>
                     <td><?= h($user->email) ?></td>
-                    <td><?= $user->has('role') ? $this->Html->link($user->role->id, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
+                    <td><?= $user->has('role') ? $this->Html->link($user->role->descripcion, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
                     <td><?= h($user->active) ?></td>
                     <td class="actions">
                         <?= $this->Html->link('Modificar', ['action' => 'edit', $user->id], ['class' => 'btn btn-default']) ?>

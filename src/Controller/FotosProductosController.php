@@ -116,14 +116,35 @@ class FotosProductosController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+    	if ($this->request->is('ajax')) {
+    		$this->autoRender = false;
+    		$this->layout = null;
+    		
+    		$response = array();
+    		
+    		if ($this->FotosProductos->delete($id)) {
+    			$response['success'] = false;
+    			$response['message'] = __('User deleted');
+//     			$response['redirect'] = Router::url(array('action' => 'index'));
+    		} else {
+    			$response['success'] = true;
+    			$response['message'] = __('User was not deleted');
+//     			$response['redirect'] = Router::url(array('action' => 'index'));
+    		}
+    		
+    		echo json_encode($response);
+    	}
+    	
+//     	echo json_encode("hola");
+		
+//         $this->request->allowMethod(['post', 'delete']);
         $fotosProducto = $this->FotosProductos->get($id);
-        if ($this->FotosProductos->delete($fotosProducto)) {
-            $this->Flash->success(__('The fotos producto has been deleted.'));
-        } else {
-            $this->Flash->error(__('The fotos producto could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
+//         if ($this->FotosProductos->delete($fotosProducto)) {
+//             $this->Flash->success(__('The fotos producto has been deleted.'));
+//         } else {
+//             $this->Flash->error(__('The fotos producto could not be deleted. Please, try again.'));
+//         }
+//         $this->autoRender = false;
+//         return $this->redirect(['action' => 'index']);
     }
 }

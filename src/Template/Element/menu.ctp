@@ -20,7 +20,7 @@
                                <li><a href="#" onclick="Mostrar('empleados')">EMPLEADOS</a></li>
                                 <li><a href="#" onclick="Mostrar('pagos')">PAGOS</a></li>
                                 <li><a href="#" onclick="Mostrar('estadisticas')">ESTADISTICAS</a></li>-->
-                                <li><?= $this->Html->link('Contactos',['controller' => 'contact', 'action' => 'index'])?></li>
+                                <li><?= $this->Html->link('Contacto',['controller' => 'contact', 'action' => 'index'])?></li>
                                 <li><?= $this->Html->link('Carrito',['controller' => 'reservas', 'action' => 'add'])?></li> 
                                 <!--<li><a href="#" onclick="Mostrar('carrito')">CARRITO</a></li>-->
                                 <?php if (empty($current_user)) : ?>
@@ -40,7 +40,7 @@
 					                    		 	<?= $this->Html->link('Ver productos',['controller' => 'productos', 'action' => 'index'])?>
 					                    		 </li>
 					                    		 <li>
-					                    		 	<?= $this->Html->link('Agregar',['controller' => 'productos', 'action' => 'add'])?>
+					                    		 	<?= $this->Html->link('Agregar productos',['controller' => 'productos', 'action' => 'add'])?>
 					                    		 </li>
 					                    		 <li>
 					                    		 	<?= $this->Html->link('ver caterogías',['controller' => 'categorias', 'action' => 'index'])?>
@@ -54,9 +54,6 @@
 					                    		  <li>
 					                    		 	<?= $this->Html->link('Agregar rango edad',['controller' => 'rangoEdades', 'action' => 'add'])?>
 					                    		 </li>
-					                    		  <li>
-					                    		 	<?= $this->Html->link('Agregar foto',['controller' => 'fotosProductos', 'action' => 'add'])?>
-					                    		 </li>
 				                    		 </ul>
 				                    	</li>
 				                    	<li class="dropdown-submenu">
@@ -67,12 +64,6 @@
 					                    		 </li>
 					                    		  <li>
 					                    		 	<?= $this->Html->link('Ver todos',['controller' => 'users', 'action' => 'index'])?>
-					                    		 </li>
-					                    		 <li>
-					                    		 	<?= $this->Html->link('Agregar rol',['controller' => 'roles', 'action' => 'add'])?>
-					                    		 </li>
-					                    		 <li>
-					                    		 	<?= $this->Html->link('Ver roles',['controller' => 'roles', 'action' => 'index'])?>
 					                    		 </li>
 				                    		 </ul>
 				                    	</li>
@@ -93,16 +84,16 @@
 					                    		 <li>
 					                    		 	<?= $this->Html->link('Ver todos',['controller' => 'envios', 'action' => 'index'])?>
 					                    		 </li>
+					                    		 <li>
+					                    		 	<?= $this->Html->link('Agregar localidad',['controller' => 'localidades', 'action' => 'add'])?>
+					                    		 </li>
 				                    		 </ul>
 				                    	</li>
 				                    	<li class="dropdown-submenu">
 				                    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pagos <b class="caret"></b></a>
 				                    		 <ul class="dropdown-menu">
-					                    		 <li>
-					                    		 	<?= $this->Html->link('Ver todos',['controller' => 'pagosReserva', 'action' => 'index'])?>
-					                    		 </li>
 					                    		  <li>
-					                    		 	<?= $this->Html->link('Nuevo',['controller' => 'pagosReserva', 'action' => 'add'])?>
+					                    		 	<?= $this->Html->link('Nuevo pago en efectivo',['controller' => 'pagosReserva', 'action' => 'add'])?>
 					                    		 </li>
 					                    		 
 					                    		 
@@ -112,9 +103,6 @@
 				                    	<?php if (!empty($current_user) ) :?>
 				                    	<li>
 					                    	<?= $this->Html->link('Perfil',['controller' => 'users', 'action' => 'perfil'])?>
-					                    </li>
-					                     <li>
-					                    	<?= $this->Html->link('Agregar domicilio',['controller' => 'domicilios', 'action' => 'add'])?>
 					                    </li>
 				                    	<?php endif; ?>
 				                    	

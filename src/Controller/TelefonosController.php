@@ -10,7 +10,24 @@ use App\Controller\AppController;
  */
 class TelefonosController extends AppController
 {
-
+	public function isAuthorized($user)
+	{
+		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
+		{
+			if(in_array($this->request->action, ['add']))
+			{
+				return true;
+			}
+		}
+		elseif (isset($user['rol_id']) && $user['rol_id'] == EMPLEADO) {
+			
+			return true;
+		}
+		
+		return parent::isAuthorized($user);
+		
+		return true;
+	}
     /**
      * Index method
      *
@@ -53,13 +70,22 @@ class TelefonosController extends AppController
     {
         $telefono = $this->Telefonos->newEntity();
         if ($this->request->is('post')) {
-            $telefono = $this->Telefonos->patchEntity($telefono, $this->request->getData());
+        	$telefono = $this->Telefonos->patchEntity($telefono, $this->request->getData());
+        	$user = $this->Auth->user();
+        	if ($user['rol_id'] == CLIENTE)
+        	{
+        		$telefono->user_id = $user['id'];
+        	}
+            
             if ($this->Telefonos->save($telefono)) {
-                $this->Flash->success(__('The telefono has been saved.'));
-
+                $this->Flash->success(__('Teléfono guardado.'));
+                if ($user['rol_id'] == CLIENTE)
+                {
+                	return $this->redirect(['controller' =>'users' ,'action' => 'telefonos']);
+                }
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The telefono could not be saved. Please, try again.'));
+            $this->Flash->error(__('Error al intentar guardar el telefono, reintente!.'));
         }
         $users = $this->Telefonos->Users->find('list', ['limit' => 200]);
         $tipoTelefonos = $this->Telefonos->TipoTelefonos->find('list', ['limit' => 200]);
