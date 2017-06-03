@@ -14,7 +14,7 @@ class DomiciliosController extends AppController
 	{
 		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
 		{
-			if(in_array($this->request->action, ['add']))
+			if(in_array($this->request->action, ['add','editcliente','delete']))
 			{
 				return true;
 			}
@@ -72,12 +72,22 @@ class DomiciliosController extends AppController
         $domicilio = $this->Domicilios->newEntity();
         if ($this->request->is('post')) {
             $domicilio = $this->Domicilios->patchEntity($domicilio, $this->request->getData());
+            $user = $this->Auth->user();
+            if ($user['rol_id'] == CLIENTE)
+            {
+            	$domicilio->user_id = $user['id'];
+            }
             if ($this->Domicilios->save($domicilio)) {
-                $this->Flash->success(__('The domicilio has been saved.'));
-
+            	if ($user['rol_id'] == CLIENTE)
+            	{
+            		$this->Flash->success(__('Domicilio guardado.'));
+            		return $this->redirect(['controller' =>'users' ,'action' => 'direcciones']);
+            	}
+                
+            	$this->Flash->success(__('Domicilio guardado.'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The domicilio could not be saved. Please, try again.'));
+            $this->Flash->error(__('Error al intentar guardar, reintente.'));
         }
         $users = $this->Domicilios->Users->find('list', ['limit' => 200]);
         $localidades = $this->Domicilios->Localidades->find('list', ['limit' => 200]);
