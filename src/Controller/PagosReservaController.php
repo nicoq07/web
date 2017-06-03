@@ -187,7 +187,7 @@ class PagosReservaController extends AppController
 
         $connection->update('facturas', [
             'porcentajePago' => $factura->porcentajePago + $monto,
-            'pagado' => 1,
+            'pagado' => 0,
             'modified' => new \DateTime('now')],
             [ 'id' => $idFactura ],
             ['modified' => 'datetime']);

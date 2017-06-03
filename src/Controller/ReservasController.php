@@ -557,9 +557,6 @@ class ReservasController extends AppController
             $mailCancelar['asunto'] = "Cancelación de reserva ".$reserva->id;
             $mailCancelar['mensaje'] = $this->viewVars['current_user']['nombre'].", queríamos informarte que la reserva número ".$reserva->id. " fue cancelada con éxito. Se generó una nota de crédito número ".$lastId->id." por el monto $".$montoNotaCredito.". Acercate a nuestra empresa de lunes a viernes de 9 a 12.30hs y de 13.30 a 18hs para retirar el dinero. Desde ya muchas gracias.";
 
-            debug($mailCancelar);
-            exit();
-
             $this->Flash->success(__('Reserva cancelada.'));
 
             return $this->redirect(['action' => 'index']);
@@ -577,7 +574,7 @@ class ReservasController extends AppController
         $inicio = new \DateTime($fecha);
         $diferencia = date_diff($inicio, $hoy);
 
-        if ($diferencia->d >= 3) {
+        if ($diferencia->d <= 3) {
             return false;
         }
 
