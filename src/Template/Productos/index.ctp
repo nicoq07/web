@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <div class="col-sm-10 col-sm-offset-1">
+                    <div class="col-lg-6 col-lg-offset-3">
                         <h1 class="azul">INFLABLES - Chicos y Medianos</h1>
                     </div>
                     <h1>&nbsp;</h1>
@@ -33,7 +33,7 @@
             <br>
             <div class="row">
                 <?php foreach ($productos as $producto): ?>
-                <div class="col-lg-5 col-lg-6">
+                <div class="col-lg-4">
                     <div class="blog-snippet-1">
                     	<?php foreach ($fotos as $foto){?>
 	                    	<?php if ($producto->id === $foto->producto_id):?>
@@ -55,15 +55,24 @@
                                         'before' => '$',
                                         'locale' => 'es_Ar'
                                         ]) ?></p>
+                       
                         <?php 
                         if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) 
                         {
-                          echo	$this->Html->link('Modificar', ['action' => 'edit', $producto->id], ['class' => 'btn btn-primary']) ;
-                          echo $this->Form->postLink('Baja', ['action' => 'delete', $producto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $producto->id, 'class' => 'btn btn-primary']);
+                          echo	$this->Html->link('Modificar', ['action' => 'edit', $producto->id], ['class' => 'btn btn-default']) ;
+                          echo $this->Form->postLink('Baja', ['action' => 'delete', $producto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $producto->id, 'class' => 'btn btn-default']);
                         }
                         
+<<<<<<< HEAD
                         	echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-primary']) ;
                         	echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-primary']) ;   
+=======
+                        	echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-default']) ;
+                        	echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-default']) ;
+                        
+                 		
+                         
+>>>>>>> 7faf531d10fc85ab2ea2adf012d6e9eddf8bdedb
                         ?>
                     </div>
                 </div>              
