@@ -7,6 +7,7 @@ use Cake\Network\Session;
 use Cake\I18n\Time;
 use Cake\I18n\Date;
 use Cake\Datasource\ConnectionManager;
+use Cake\Mailer\Email;
 
 /**
  * Reservas Controller
@@ -501,6 +502,7 @@ class ReservasController extends AppController
 
     public function cancelar($id = null){
         $connection= ConnectionManager::get("default");
+        $connection->begin();
         $reserva = $this->Reservas->get($id);
         if ($this->isCancelable($reserva->fecha_inicio)) {
             $factura = $this->Reservas->Facturas->find("all")->where(['reserva_id ='=>$id]);
@@ -556,12 +558,25 @@ class ReservasController extends AppController
             $mailCancelar = array();
             $mailCancelar['correo'] = $this->viewVars['current_user']['email'];
             $mailCancelar['asunto'] = "Cancelación de reserva ".$reserva->id;
-            $mailCancelar['mensaje'] = $this->viewVars['current_user']['nombre'].", queríamos informarte que la reserva número ".$reserva->id. " fue cancelada con éxito. Se generó una nota de crédito número ".$lastId->id." por el monto $".$montoNotaCredito.". Acercate a nuestra empresa de lunes a viernes de 9 a 12.30hs y de 13.30 a 18hs para retirar el dinero. Desde ya muchas gracias.";
-
-            $this->Flash->success(__('Reserva cancelada.'));
-
-            return $this->redirect(['action' => 'index']);
+            $mailCancelar['mensaje'] = $this->viewVars['current_user']['nombre'].", \n \t queríamos informarte que la reserva número ".$reserva->id. " fue cancelada con éxito. Se generó una nota de crédito número ".$lastId->id." por el monto $".$montoNotaCredito.".
+			\n Acercate a nuestra empresa de lunes a viernes de 9 a 12.30hs y de 13.30 a 18hs para retirar el dinero. Desde ya muchas gracias.";
+			
+            if ($this->mailCancelacion($mailCancelar))
+            {
+            	$connection->commit();
+            	$this->Flash->success(__('Reserva cancelada.'));
+            	return $this->redirect(['action' => 'index']);
+            }
+            else 
+            {
+            	$connection->rollback();
+            	$this->Flash->error(__('No se pudo cancelar la reserva. Por favor póngase en contacto con nosotros.'));
+            	return $this->redirect(['action' => 'index']);
+            }
+           
+            
         } else {
+        	$connection->rollback();
             $this->Flash->error(__('No se puede cancelar la reserva. Verifique las condiciones generales.'));
             return $this->redirect(['controller' => 'Productos', 'action' => 'condiciones']);
         }
@@ -580,5 +595,21 @@ class ReservasController extends AppController
         }
 
         return true;
+    }
+    
+    private function mailCancelacion(array $data)
+    {
+    	$email = new Email('funclub');
+    	$email
+    	->setFrom(['fun.club.srl@gmail.com' => 'Fun Club'])
+    	->setTo($data['correo'])
+    	->setSubject($data['asunto']);
+    	
+    	if ($email->send($data['mensaje']))
+    	{
+    		return true;
+    	}
+    	return false;
+    	
     }
 }
