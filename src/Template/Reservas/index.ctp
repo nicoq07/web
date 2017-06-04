@@ -6,26 +6,36 @@
 <div class="container">
     <br>
     <h3 class="centrar">Reservas</h3>
+    <?php echo $this->Form->create($reservas, ['id' => 'miform']); ?>
     <div class="row">
         <div class="col-lg-3">
-            <?php echo $this->Form->control('filtro', ['label'=>'Filtrar por fecha:']);?>
+            <?php 
+            echo $this->Form->label('Filtrar por Fecha:');
+            echo $this->Form->text('fecha', ['label'=>'Filtrar por fecha:', 'type' => 'date','onchange'=>'document.getElementById("miform").submit()']);?>
         </div>
         <div class="col-lg-3">
             <?php
             echo $this->Form->label('Filtrar por estado:');
-            echo $this->Form->control('estado_reserva_id', ['options' => $estados, 'label' => false]); ?>
+            echo $this->Form->control('estado_reserva_id', ['options' => $estados, 'label' => false, 'empty' => 'Todos','onchange'=>'document.getElementById("miform").submit()']); ?>
         </div>
         <div class="col-lg-3">
-            <?php echo $this->Form->control('user', ['label'=>'Filtrar por cliente:']);?>
+            <?php echo $this->Form->control('idlistuser', ['label'=>'Filtrar por cliente:', 'list'=>'user', 'onchange'=>'document.getElementById("miform").submit()']);?>
         </div>
-        <div class="col-lg-2">
+        <datalist id="user">
+            <?php foreach ($users as $user): ?>
+                <option value="<?php echo $user['id']; ?>" label="<?php echo $user['nombre']." ".$user['apellido']." - ".$user['email']; ?>">
+            <?php endforeach; ?>
+        </datalist>
+        <!--div class="col-lg-2">
             <button class="btn btn-default">Buscar</button>
-        </div>
+        </div-->
         <div class="col-lg-1">
        		<?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
         </div>
     </div>
-    
+    <?php echo $this->Form->end(); ?>
+
+
 
     <div class="table-responsive">
         <table class="table table-striped" cellpadding="0" cellspacing="0">

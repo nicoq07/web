@@ -19,7 +19,8 @@ class EnviosController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Remitos', 'Reservas', 'Domicilios']
+            'contain' => ['Remitos', 'Reservas', 'Domicilios'],
+            'conditions' => ['envios.active' => 1],
         ];
         $envios = $this->paginate($this->Envios);
 

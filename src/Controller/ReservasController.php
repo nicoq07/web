@@ -41,13 +41,33 @@ class ReservasController extends AppController
      */
     public function index()
     {
+        $where = null;
+        if (!(empty($this->request->getData()['idlistuser'])))
+        {
+            $userid=$this->request->getData()['idlistuser'];
+            $where = ['reservas.user_id' => $userid];
+        }
+        $where2 = null;
+        if (!(empty($this->request->getData()['estado_reserva_id'])))
+        {
+            $estadoid=$this->request->getData()['estado_reserva_id'];
+            $where2 = ['reservas.estado_reserva_id' => $estadoid];
+        }
+        $where3 = null;
+        if (!(empty($this->request->getData()['fecha'])))
+        {
+            $fechafiltro=$this->request->getData()['fecha'];
+            $where3 = ['"'.$fechafiltro.'" BETWEEN DATE(reservas.fecha_inicio) AND DATE(reservas.fecha_fin)'];
+        }
+
         $this->paginate = [
-            'contain' => ['Users', 'EstadosReservas']
+            'contain' => ['Users', 'EstadosReservas'],
+            'conditions' => [$where, $where2, $where3]
         ];
+        $users = $this->Reservas->Users->find('all', ['limit' => 200]);
         $reservas = $this->paginate($this->Reservas);
         $estados = $this->Reservas->EstadosReservas->find('list', ['limit' => 200]);
-
-        $this->set(compact('reservas', 'estados'));
+        $this->set(compact('reservas', 'estados', 'users'));
         $this->set('_serialize', ['reservas']);
     }
 
