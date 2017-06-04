@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * MultasUser Controller
@@ -49,17 +50,25 @@ class MultasUserController extends AppController
      *
      * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($id = null)
     {
         $multasUser = $this->MultasUser->newEntity();
         if ($this->request->is('post')) {
             $multasUser = $this->MultasUser->patchEntity($multasUser, $this->request->getData());
+            $multasUser->user_id = $id;
+            $multasUser->active = 1;
             if ($this->MultasUser->save($multasUser)) {
-                $this->Flash->success(__('The multas user has been saved.'));
+                $connection= ConnectionManager::get("default");
+                $connection->update('users', [
+                    'active' => 0,
+                    'modified' => new \DateTime('now')],
+                    [ 'id' => $id ],
+                    ['modified' => 'datetime']);
+                $this->Flash->success(__('La multa fue creada con éxito.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'users', 'action' => 'index']);
             }
-            $this->Flash->error(__('The multas user could not be saved. Please, try again.'));
+            $this->Flash->error(__('La multa no pudo ser creada. Reintente por favor.'));
         }
         $users = $this->MultasUser->Users->find('list', ['limit' => 200]);
         $this->set(compact('multasUser', 'users'));

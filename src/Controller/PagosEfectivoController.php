@@ -73,7 +73,7 @@ class PagosEfectivoController extends AppController
                 $miPago['active'] = 1;
                 $pagosEfectivo = $this->PagosEfectivo->patchEntity($pagosEfectivo, $miPago);
                 if ($this->PagosEfectivo->save($pagosEfectivo)) {
-                    $this->Flash->success(__('The pagos efectivo has been saved.'));
+                    $this->Flash->success(__('El pago se realizó con éxito.'));
 
                     return $this->redirect(['action' => 'index']);
                 }
@@ -83,7 +83,7 @@ class PagosEfectivoController extends AppController
             }
 
             
-            $this->Flash->error(__('The pagos efectivo could not be saved. Please, try again.'));
+            $this->Flash->error(__('El pago no pudo realizarse. reintente por favor.'));
         }
         $reservas = $this->PagosEfectivo->Reservas->find('list', ['limit' => 200]);
         $recibos = $this->PagosEfectivo->Recibos->find('list', ['limit' => 200]);
