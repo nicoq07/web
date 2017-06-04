@@ -34,12 +34,14 @@ class ContactForm extends Form
     {
         // Send an email.
     	
-    	$email = new Email();
+    	$email = new Email('funclub');
     	$email
     	->setFrom($data['email'])
-    	->setTo([$data['email'] => 'Web Contacto'])
-    	->setSubject('Consulta '.  $data['name']);
-    	if ($email->send($data['body']))
+    	->setTo('fun.club.srl@gmail.com')
+    	->setSubject('Web Contacto');
+//     	debug($email); exit;
+    	
+    	if ($email->send($data['body']. "\n \n" .  $data['name'] . "\n" . $data['email']))
     	{
     		return true;
     	}

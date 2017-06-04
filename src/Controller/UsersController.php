@@ -16,14 +16,17 @@ class UsersController extends AppController
 	public function beforeFilter(\Cake\Event\Event $event)
 	{
 		parent::beforeFilter($event);
-		$this->Auth->allow(['add', 'contacto']);
+		$this->Auth->allow(['add', 'contact']);
 	}
 	
 	public function isAuthorized($user)
 	{
 		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
 		{
-			if(in_array($this->request->action, ['index','view','logout','login','home','perfil','direcciones','reservas','pagos','telefonos','tarjetas']))
+			if(in_array($this->request->action, ['index','view','logout','login','home','perfil',
+								'direcciones','reservas','pagos','telefonos','tarjetas',
+								'contact'
+			]))
 			{
 				return true;
 			}

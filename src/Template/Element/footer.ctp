@@ -21,7 +21,7 @@
 					<div class="align-vertical">
 						<i class="icon text-white icon-mail"></i>
 						
-						<?= $this->Html->link('Enviar mensaje',['controller' => 'users', 'action' => 'contacto'], ['class' => 'text-white'])?><span class="text-white"><i class="icon arrow_right"></i></span>
+						<?= $this->Html->link('Enviar mensaje',['controller' => 'contact', 'action' => 'index'], ['class' => 'text-white'])?><span class="text-white"><i class="icon arrow_right"></i></span>
 					</div>
 				</div>
 			</footer>
