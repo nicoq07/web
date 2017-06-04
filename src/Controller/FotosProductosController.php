@@ -25,6 +25,14 @@ class FotosProductosController extends AppController
 		
 		return true;
 	}
+// 	public function beforeFilter() {
+// 		parent::beforeFilter();
+		
+// 		// Change layout for Ajax requests
+// 		if ($this->request->is('ajax')) {
+// 			$this->layout = 'ajax';
+// 		}
+// 	}
 
     /**
      * Index method
@@ -116,35 +124,78 @@ class FotosProductosController extends AppController
      */
     public function delete($id = null)
     {
-    	if ($this->request->is('ajax')) {
-    		$this->autoRender = false;
-    		$this->layout = null;
+    	
+    	$data = [];
+//     	echo "a";
+//     	$emp=$this->Employees->newEntity();
+//     	if($this->request->is('ajax')) {
+//     		$this->request->getData['id']=$id;
+//     	}
+    	
+    	
+    	
+    	
+//     	if ($this->request->is('ajax')) {
+//     		$this->autoRender = false;
+//     		$this->layout = null;
     		
-    		$response = array();
+//     		$response = array();
     		
-    		if ($this->FotosProductos->delete($id)) {
-    			$response['success'] = false;
-    			$response['message'] = __('User deleted');
-//     			$response['redirect'] = Router::url(array('action' => 'index'));
-    		} else {
-    			$response['success'] = true;
-    			$response['message'] = __('User was not deleted');
-//     			$response['redirect'] = Router::url(array('action' => 'index'));
-    		}
+//     		if ($this->FotosProductos->delete($id)) {
+//     			$response['success'] = false;
+//     			$response['message'] = __('User deleted');
+// //     			$response['redirect'] = Router::url(array('action' => 'index'));
+//     		} else {
+//     			$response['success'] = true;
+//     			$response['message'] = __('User was not deleted');
+// //     			$response['redirect'] = Router::url(array('action' => 'index'));
+//     		}
     		
-    		echo json_encode($response);
-    	}
+//     		echo json_encode($response);
+//     	}
     	
 //     	echo json_encode("hola");
 		
 //         $this->request->allowMethod(['post', 'delete']);
-        $fotosProducto = $this->FotosProductos->get($id);
+//         $fotosProducto = $this->FotosProductos->get($id);
 //         if ($this->FotosProductos->delete($fotosProducto)) {
 //             $this->Flash->success(__('The fotos producto has been deleted.'));
 //         } else {
 //             $this->Flash->error(__('The fotos producto could not be deleted. Please, try again.'));
 //         }
-//         $this->autoRender = false;
+         $this->autoRender = false;
 //         return $this->redirect(['action' => 'index']);
+    }
+    
+    public function ajax_get_time() {
+    	$this->request->onlyAllow('ajax'); // No direct access via browser URL
+    	
+    	$content = '<div class="alert alert-warning" role="alert">Something unexpected occured</div>';
+    	
+    	if ($this->request->is('post')) 
+    	{
+    		
+    		$this->Timezone->set($this->request->data);
+    		if($this->Timezone->validates()){
+    			
+    			
+    		}else{
+    			$errors = $this->Timezone->validationErrors;
+    			$flatErrors = Set::flatten($errors);
+    			if(count($errors) > 0) {
+    				$content = '<div class="alert alert-danger" role="alert">Could not get timezone. The following errors occurred: ';
+    				$content .= '<ul>';
+    				foreach($flatErrors as $key => $value) {
+    					$content .= '<li><strong>'.$value.'</strong></li>';
+    				}
+    				$content .= '</ul>';
+    				$content .= '</div>';
+    			}
+    		}
+    		
+    	}
+    	$this->autoRender = false;
+    	
+    	
     }
 }

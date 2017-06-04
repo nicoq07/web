@@ -170,13 +170,29 @@ class ProductosController extends AppController
      */
     public function edit($id = null)
     {
-    	
+//     	debug($this->request->getData());
         $producto = $this->Productos->get($id, [
             'contain' => ['FotosProductos']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-        	debug($this->request->getData());
+        	
+        	if (!empty($this->request->getData()['borrarFoto']))
+        	{
+        		$id = $this->request->getData()['borrarFoto'];
+        		$fotoEntity = TableRegistry::get('FotosProductos');
+        		$foto = $fotoEntity->get($id);
+        		if ($fotoEntity->delete($foto)) {
+        			
+        			$this->Flash->success(__('Foto borrada.'));
+        			return $this->redirect($this->referer());
+        		} else 
+        		{
+        			return $this->redirect($this->referer());
+        			$this->Flash->error(__('Error al intentar borrar la foto, reintente!'));
+        		}
+        	}
             $producto = $this->Productos->patchEntity($producto, $this->request->getData());
+            $this->guardarImg($this->request->getData()['foto'], $producto->id);
             if ($this->Productos->save($producto)) {
                 $this->Flash->success(__('The producto has been saved.'));
 

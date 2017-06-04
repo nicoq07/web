@@ -38,7 +38,15 @@ function borrarFoto(id) {
 //             $("#tiempoEnvio").val("");
 //         }          
     });
+
+    
 }
+function show(bloq) {
+    obj = document.getElementById(bloq);
+    obj.style.display = (obj.style.display=='none') ? 'block' : 'none';
+  }
+
+
 
 
 </script>
@@ -62,10 +70,12 @@ function borrarFoto(id) {
         <?php    foreach ($producto->fotos_productos as $foto)
 	            { 
 	            {?>
-	            	<div class="col-lg-4" style="border-radius: 5px; border: 1px solid #000000;">
+	            	<div id="photo<?php echo $foto->id?>"  class="col-lg-4" style="border-radius: 5px; border: 1px solid #000000;">
 	            	<div style= "padding:5px 0px 0px 0px; text-align:center">
 	            	<img style= "padding:0px 0px 5px 0px" id="Image1" src="<?php echo "../../".$foto->referencia; ?>">
-	            	 <?php echo $this->Form->button('X', ['type' => 'button', 'onclick' => "borrarFoto($foto->id)" ],['confirm' => '¿Está seguro que desea eliminarlo?', 'class' => 'btn']) ?>
+	            	 <?php //echo $this->Form->button('X', ['type' => 'button', 'onclick' => "show('photo$foto->id')" ],['confirm' => '¿Está seguro que desea eliminarlo?', 'class' => 'btn']) ?>
+	            	 <?php echo $this->Form->button('X', ['name' => 'borrarFoto', 'value' => $foto->id,'action' => 'edit', ],['confirm' => '¿Está seguro que desea eliminarlo?', 'class' => 'btn'])?>
+	            	
 	            	</div>
 	            	</div>
 	            <?php }
