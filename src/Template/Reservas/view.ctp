@@ -1,4 +1,98 @@
-<?php
+<section class="duplicatable-content bkg">
+        <div class="col-lg-8 col-lg-offset-2">                        
+            <div>
+                <legend>Detalle de la reserva</legend>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4><strong>Número: </strong></h4>
+                        <h6 class="tx_gris"><?= h($reserva->id) ?></h6>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4><strong>Estado: </strong></h4>
+                        <h6 class="tx_gris"><?= $reserva->has('estados_reserva') ? h($reserva->estados_reserva->descripcion) : '' ?></h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4><strong>Inicio del evento: </strong></h4>
+                        <h6 class="tx_gris"><?= h($reserva->fecha_inicio) ?></h6>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4><strong>Finalización del evento: </strong></h4>
+                        <h6 class="tx_gris"><?= h($reserva->fecha_fin) ?></h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 table-responsive">
+                        <legend>Productos</legend>
+                        <?php if (!empty($reserva->productos)): ?>
+                            <table class="table table-striped" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <th scope="col"><?= __('Código') ?></th>
+                                    <th scope="col"><?= __('Rango Edad') ?></th>
+                                    <th scope="col"><?= __('Categoria') ?></th>
+                                    <th scope="col"><?= __('Descripción') ?></th>
+                                    <th scope="col"><?= __('Informacion') ?></th>
+                                    <th scope="col"><?= __('Dimensiones') ?></th>
+                                </tr>
+                                <?php foreach ($reserva->productos as $productos): ?>
+                                <tr>
+                                    <td><?= h($productos->id) ?></td>
+                                    <td><?= h($productos->rango_edad_id) ?></td>
+                                    <td><?= h($productos->categoria_id) ?></td>
+                                    <td><?= h($productos->descripcion) ?></td>
+                                    <td><?= h($productos->informacion) ?></td>
+                                    <td><?= h($productos->dimensiones) ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <legend>Factura</legend>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4><strong>Número: </strong></h4>
+                                <h6 class="tx_gris"><?= h($reserva->facturas[0]->id) ?></h6>
+                            </div>
+                            <div class="col-lg-6">
+                                <h4><strong>Monto: </strong></h4>
+                                <h6 class="tx_gris"><?= h("$".$reserva->facturas[0]->monto) ?></h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4><strong>Porcentaje pagado: </strong></h4>
+                                <h6 class="tx_gris">
+                                    <?php 
+                                    $texto = "%".$reserva->facturas[0]->porcentajePago*100;
+                                    $texto = $texto.' - $'.$reserva->facturas[0]->porcentajePago*$reserva->facturas[0]->monto;
+                                    echo $texto;
+                                    ?>
+                                </h6>
+                            </div>
+                            <div class="col-lg-6">
+                                <h4><strong>Pagada por completo: </strong></h4>
+                                <h6 class="tx_gris">
+                                    <?php 
+                                    if ($reserva->facturas[0]->pagado == 1) {
+                                        echo "Si";
+                                    } else {
+                                        echo "No";
+                                    }
+                                    ?>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+</section>
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -196,4 +290,4 @@
         </table>
         <?php endif; ?>
     </div>
-</div>
+</div>-->
