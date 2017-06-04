@@ -90,7 +90,7 @@ class PagosReservaController extends AppController
         $factura = $factura->first();
         $tarjetas = $this->PagosReserva->Reservas->Users->TarjetasCreditoUser->find('list', ['limit' => 200])->where(['TarjetasCreditoUser.user_id ='=>$reserva->user_id]);
         $users = $this->PagosReserva->Users->find('list', ['limit' => 200]);
-        $mediosPagos = $this->PagosReserva->MediosPagos->find('list', ['limit' => 200]);
+        $mediosPagos = $this->PagosReserva->MediosPagos->find('list', ['limit' => 200])->where(['active =' => 1]);
         $this->set(compact('pagosReserva', 'reserva', 'users', 'mediosPagos', 'tarjetas', 'factura'));
         $this->set('_serialize', ['pagosReserva']);
     }

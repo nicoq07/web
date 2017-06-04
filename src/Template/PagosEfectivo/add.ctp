@@ -1,4 +1,33 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="row">   
+        <div class="col-lg-6 col-lg-offset-3">
+            <?= $this->Form->create($pagosEfectivo) ?>
+            <fieldset>
+                <legend>Nuevo pago</legend>
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-3">
+                        <?php
+                        echo $this->Form->input('reserva_id', ['type'=>'text', 'label'=>'Número de reserva']);
+                        //echo $this->Form->control('user_id', ['options' => $users]);
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-3">
+                        <?php 
+                            echo $this->Form->input('monto', ['type'=>'text', 'label'=>'Monto abonado']);
+                         ?>
+                    </div>
+                </div>
+                <br>
+                <?= $this->Form->button('Realizar pago', ['class'=>'pull-right']) ?>
+            </fieldset>            
+            <?= $this->Form->end() ?>
+           </div>
+      </div>
+</section>
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -25,4 +54,4 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+</div>-->

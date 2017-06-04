@@ -93,7 +93,7 @@
 				                    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pagos <b class="caret"></b></a>
 				                    		 <ul class="dropdown-menu">
 					                    		  <li>
-					                    		 	<?= $this->Html->link('Nuevo pago en efectivo',['controller' => 'pagosReserva', 'action' => 'add'])?>
+					                    		 	<?= $this->Html->link('Nuevo pago en efectivo',['controller' => 'pagosEfectivo', 'action' => 'add'])?>
 					                    		 </li>
 					                    		 
 					                    		 
