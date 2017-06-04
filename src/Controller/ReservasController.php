@@ -596,12 +596,13 @@ class ReservasController extends AppController
     }
 
     public function isCancelable($fecha){
-        $hoy = new \DateTime("now");
+        $hoy = new Date("now");
+        $hoy->format('Y-m-d');
         $fecha = $fecha->format("Y-m-d");
-        $inicio = new \DateTime($fecha);
+        $inicio = new Date($fecha);        
         $diferencia = date_diff($inicio, $hoy);
-
-        if ($diferencia->d <= 3) {
+        
+        if ($diferencia->d < 3) {
             return false;
         }
 
