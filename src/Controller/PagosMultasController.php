@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * PagosMultas Controller
@@ -49,21 +50,48 @@ class PagosMultasController extends AppController
      *
      * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($id = null)
     {
         $pagosMulta = $this->PagosMultas->newEntity();
+        $multasUser = $this->PagosMultas->MultasUser->find('all')->where(['id =' => $id]);
+        $multasUser = $multasUser->first();
         if ($this->request->is('post')) {
-            $pagosMulta = $this->PagosMultas->patchEntity($pagosMulta, $this->request->getData());
-            if ($this->PagosMultas->save($pagosMulta)) {
-                $this->Flash->success(__('The pagos multa has been saved.'));
+            $miPago = array();
+            $tarjeta = $this->PagosMultas->MultasUser->Users->TarjetasCreditoUser->get($this->request->getData()['tarjeta_id']);
+            if ($tarjeta->vencimientoMes == $this->request->getData()['vencimientoMes'] && $tarjeta->vencimientoAnio == $this->request->getData()['vencimientoAnio'] && $tarjeta->codSeguridad == $this->request->getData()['codSeguridad']) {
+                $miPago['multas_user_id'] = $this->request->getData()['multas_user_id'];
+                $miPago['medio_pago_id'] = $this->request->getData()['medio_pago_id'];
+                $miPago['tarjeta_id'] = $this->request->getData()['tarjeta_id'];
+                $miPago['monto'] = $this->request->getData()['monto'];
+                $miPago['pagado'] = 1;
+                $pagosMulta = $this->PagosMultas->patchEntity($pagosMulta, $miPago);
+                $pagosMulta->pagado = 1;
+                $user = $this->PagosMultas->MultasUser->Users;
+                if ($this->PagosMultas->save($pagosMulta)) {
+                    $connection= ConnectionManager::get("default");
+                    $connection->update('users', [
+                        'active' => 1,
+                        'modified' => new \DateTime('now')],
+                        [ 'id' => $multasUser->user_id ],
+                        ['modified' => 'datetime']);
+                    $connection->update('multas_user', [
+                        'active' => 0,
+                        'modified' => new \DateTime('now')],
+                        [ 'id' => $multasUser->id ],
+                        ['modified' => 'datetime']);
+                    $this->Flash->success(__('El pago se realizó con éxito.'));
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The pagos multa could not be saved. Please, try again.'));
+                    return $this->redirect(['action' => 'index']);
+                }
+            } else {
+                $this->Flash->error(__('Los datos de la tarjeta son incorrectos. Intente nuevamente.'));
+            }          
+            
+            $this->Flash->error(__('No pudo realizarse el pago. Intente nuevamente.'));
         }
-        $multasUser = $this->PagosMultas->MultasUser->find('list', ['limit' => 200]);
-        $mediosPagos = $this->PagosMultas->MediosPagos->find('list', ['limit' => 200]);
-        $this->set(compact('pagosMulta', 'multasUser', 'mediosPagos'));
+        $mediosPagos = $this->PagosMultas->MediosPagos->find('list', ['limit' => 200])->where(['active =' => 1]);
+        $tarjetas = $this->PagosMultas->MultasUser->Users->TarjetasCreditoUser->find('list')->where(['user_id ='=>$multasUser->user_id]);
+        $this->set(compact('pagosMulta', 'multasUser', 'mediosPagos', 'tarjetas'));
         $this->set('_serialize', ['pagosMulta']);
     }
 

@@ -28,8 +28,11 @@
                     <td><?= $this->Number->format($multasUser->precio) ?></td>
                     <td><?= h($multasUser->active) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link('Modificar', ['action' => 'edit', $multasUser->id], ['class' => 'btn btn-default']) ?>
-                        <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $multasUser->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $multasUser->id, 'class' => 'btn btn-default']) ?>
+                        <?php
+                            if ($multasUser->active == 1) {
+                                echo $this->Html->link('Pagar', ['controller' => 'PagosMultas', 'action' => 'add', $multasUser->id], ['class' => 'btn btn-default']);
+                            }
+                        ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

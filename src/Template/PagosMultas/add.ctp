@@ -1,19 +1,62 @@
 <section class="duplicatable-content bkg">
     <div class="row">   
-        <div class="col-lg-8 col-lg-offset-2">
+        <div class="col-lg-6 col-lg-offset-3">
             <?= $this->Form->create($pagosMulta) ?>
             <fieldset>
-                <legend>Nuevo pago</legend>
-                <?php
-                    echo $this->Form->control('multas_user_id', ['options' => $multasUser]);
-                    echo $this->Form->control('medio_pago_id', ['options' => $mediosPagos]);
-                    echo $this->Form->control('monto');
+            <legend>Nuevo pago</legend>
+            <div class="col-lg-6">
+                <?= $this->Form->input('multas_user_id', ['type' => 'text', 'value' => $multasUser->id, 'readonly' => 'readonly', 'label' => 'Código de multa']); ?>
+            </div>
+            <div class="col-lg-6">
+                <?= $this->Form->input('monto', ['type' => 'text', 'value' => $multasUser->precio, 'readonly' => 'readonly']); ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="col-lg-6">
+                <?= $this->Form->control('medio_pago_id', ['options' => $mediosPagos]); ?>
+            </div>
+            <div class="col-lg-6">
+                <?php 
+                echo $this->Form->control('tarjeta_id', ['options' => $tarjetas, 'id' => 'tarjeta_id']);                        
+                echo $this->Html->link('Otra Tarjeta', ['controller'=>'tarjetasCreditoUser', 'action' => 'add'], ['class' => 'btn btn-default']);
                 ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <legend>Datos de la tarjeta</legend>
+            <div class="bg-white" style='padding: 20px;'>
+            <?php
+                //echo $this->Form->input('Número de tarjeta', ['type'=>'number', 'placeholder'=>'Ingrese sólo los 16 números']);
+                echo $this->Form->label('Fecha de vencimiento');
+            ?>
+                <div class="row">
+                    <div class="col-lg-6">
+                    <?php
+                        echo $this->Form->input('vencimientoMes', ['type'=>'number', 'placeholder'=>'MM', 'label'=>false]);
+                    ?>
+                    </div>
+                    <div class="col-lg-6">
+                    <?php
+                        echo $this->Form->input('vencimientoAnio', ['type'=>'number', 'placeholder'=>'AAAA', 'label'=>false]);
+                    ?>
+                    </div>
+                </div>
+            <?php
+                echo $this->Form->input('codSeguridad', ['type'=>'number', 'placeholder'=>'XXX']);
+            ?>                        
+            </div>
+        </div>            
             </fieldset>
-            <?= $this->Form->button(__('Crear')) ?>
-            <?= $this->Form->end() ?>
-           </div>
-      </div>
+    </div>
+    <div class="col-lg-6 col-lg-offset-3">
+        <br>
+        <?= $this->Form->button('Realizar pago', ['class'=>'pull-right']) ?>
+        <?= $this->Form->end() ?> 
+    </div>
 </section>
 
 
