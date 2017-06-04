@@ -46,12 +46,12 @@ function continuarFecha() {
 
     if (fechaInicio == fechaFin) {
         if (horaInicio >= horaFin) {
-            alert("La finalización del evento no puede ser igual o posterior a su inicio.");
+            alert("La finalización del evento debe ser posterior a su inicio.");
             return;
         }
     } else {
         if (fechaInicio > fechaFin) {
-            alert("La finalización del evento no puede ser igual o posterior a su inicio.");
+            alert("La finalización del evento debe ser posterior a su inicio.");
             return;
         }
     }

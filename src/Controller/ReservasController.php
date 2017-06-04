@@ -63,8 +63,19 @@ class ReservasController extends AppController
         $reserva = $this->Reservas->get($id, [
             'contain' => ['Users', 'EstadosReservas', 'Productos', 'Envios', 'Facturas', 'PagosReserva']
         ]);
+        $recibos = $this->Reservas->Facturas->Recibos->find()->where(['factura_id =' => $reserva->facturas[0]->id]);
+        $domicilio = $this->Reservas->Envios->Domicilios->get($reserva->envios[0]->domicilio_id);
+        $localidad = $this->Reservas->Envios->Domicilios->Localidades->get($domicilio->localidad_id);
+
+        foreach ($reserva->productos as $producto) {
+            $producto->rango_edad_id = $this->Reservas->ReservasProductos->Productos->RangoEdades->get($producto->rango_edad_id);
+            $producto->categoria_id = $this->Reservas->ReservasProductos->Productos->Categorias->get($producto->categoria_id);
+        }
 
         $this->set('reserva', $reserva);
+        $this->set('recibos', $recibos);
+        $this->set('domicilio', $domicilio);
+        $this->set('localidad', $localidad);
         $this->set('_serialize', ['reserva']);
     }
 

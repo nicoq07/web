@@ -15,11 +15,11 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <h4><strong>Inicio del evento: </strong></h4>
-                        <h6 class="tx_gris"><?= h($reserva->fecha_inicio) ?></h6>
+                        <h6 class="tx_gris"><?= h($reserva->fecha_inicio->format("d/m/y h:i A")) ?></h6>
                     </div>
                     <div class="col-lg-6">
                         <h4><strong>Finalización del evento: </strong></h4>
-                        <h6 class="tx_gris"><?= h($reserva->fecha_fin) ?></h6>
+                        <h6 class="tx_gris"><?= h($reserva->fecha_fin->format("d/m/y h:i A")) ?></h6>
                     </div>
                 </div>
                 <div class="row">
@@ -38,8 +38,8 @@
                                 <?php foreach ($reserva->productos as $productos): ?>
                                 <tr>
                                     <td><?= h($productos->id) ?></td>
-                                    <td><?= h($productos->rango_edad_id) ?></td>
-                                    <td><?= h($productos->categoria_id) ?></td>
+                                    <td><?= h($productos->rango_edad_id->rango) ?></td>
+                                    <td><?= h($productos->categoria_id->descripcion) ?></td>
                                     <td><?= h($productos->descripcion) ?></td>
                                     <td><?= h($productos->informacion) ?></td>
                                     <td><?= h($productos->dimensiones) ?></td>
@@ -87,7 +87,49 @@
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 table-responsive">
+                        <legend>Pagos realizados</legend>
+                        <?php if (!empty($recibos)): ?>
+                            <table class="table table-striped" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <th scope="col"><?= __('Recibo') ?></th>
+                                    <th scope="col"><?= __('Monto') ?></th>
+                                    <th scope="col"><?= __('Fecha de pago') ?></th>
+                                </tr>
+                                <?php foreach ($recibos as $recibo): ?>
+                                <tr>
+                                    <td><?= h($recibo->id) ?></td>
+                                    <td><?= h("$".$recibo->monto) ?></td>
+                                    <td><?= h($recibo->created->format("d/m/y h:i A")) ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 table-responsive">
+                        <legend>Envíos</legend>
+                        <?php if (!empty($reserva->envios)): ?>
+                            <table class="table table-striped" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <th scope="col"><?= __('Remito') ?></th>
+                                    <th scope="col"><?= __('Dirección') ?></th>
+                                    <th scope="col"><?= __('Tiempo estimado de viaje') ?></th>
+                                </tr>
+                                <?php foreach ($reserva->envios as $envio): ?>
+                                <tr>
+                                    <td><?= h($envio->remito_id) ?></td>
+                                    <td><?= h($domicilio->presentacion." ".$localidad->descripcion) ?></td>
+                                    <td><?= h($localidad->duracion_viaje." min.") ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
         </div>
 </section>
