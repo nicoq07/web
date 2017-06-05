@@ -186,7 +186,7 @@ class ReservasController extends AppController
                 $this->guardarProductos($session->read('cart'), $lastId->id);
                 $idFactura = $this->guardarFactura($lastId->id, $totalReserva);
                 $this->guardarFacturaProductos($idFactura->id, $session->read('cart'), $this->request->getData()['diferenciaHoras']);
-                $idEnvio = $this->guardarEnvio($lastId->id, $idFactura->id, $session->read('cart'), $this->request->getData()['domicilio']);
+                $idEnvio = $this->guardarEnvio($lastId->id, $idFactura->id, $session->read('cart'), $this->request->getData()['domicilio'], $disponibilidadInicio);
                 $session->delete('cart');
                 $this->Flash->success(__('Reserva creada.'));
 
@@ -255,7 +255,7 @@ class ReservasController extends AppController
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 
-    private function guardarEnvio($idReserva, $idFactura, $productos, $idDomicilio){
+    private function guardarEnvio($idReserva, $idFactura, $productos, $idDomicilio, $fechaEvento){
         if(!empty($idFactura) && !empty($productos) && !empty($idReserva) && !empty($idDomicilio)){
             $cantidadEnvios = 0;
             $cantidadProductos = 0;
@@ -275,7 +275,7 @@ class ReservasController extends AppController
                 $idRemito = $this->Reservas->Facturas->Remitos->save($remito);
 
                 $envio = $this->Reservas->Facturas->Remitos->Envios->newEntity();
-                $miEnvio = array('remito_id' => $idRemito->id, 'reserva_id' => $idReserva, 'domicilio_id' => $idDomicilio, 'active' => 0);
+                $miEnvio = array('remito_id' => $idRemito->id, 'reserva_id' => $idReserva, 'domicilio_id' => $idDomicilio, 'fecha_evento' => $fechaEvento, 'active' => 0);
                 $envio = $this->Reservas->Facturas->Remitos->Envios->patchEntity($envio, $miEnvio);
                 $this->Reservas->Facturas->Remitos->Envios->save($envio);
             }            
