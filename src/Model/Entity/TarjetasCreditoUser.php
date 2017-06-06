@@ -75,4 +75,17 @@ class TarjetasCreditoUser extends Entity
         $ultimosCuatro = substr($numero, -4);
         return $this->_properties['marca'].", XXXX-XXXX-XXXX-".$ultimosCuatro;
     }
+    
+    
+    protected function _getNum()
+    {
+    	/*$direccion = $this->_properties['direccion'] . ' ' . $this->_properties['numero'];
+    	 if ($this->_properties['piso']) {
+    	 $direccion = $direccion . ' ' . $this->_properties['piso'];
+    	 }
+    	 $direccion = $direccion . ', ';*/
+    	$numero = (string)$this->_properties['numero'];
+    	$ultimosCuatro = substr($numero, -4);
+    	return "XXXX-XXXX-XXXX-".$ultimosCuatro;
+    }
 }

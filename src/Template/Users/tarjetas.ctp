@@ -10,13 +10,18 @@
 			        <thead>
 			            <tr>
 			                <th scope="col"><?= $this->Paginator->sort('marca') ?></th>
-			                <th scope="col"><?= h('numero') ?></th>
-			                <th scope="col" class="actions"><?= __('Actions') ?></th>
+			                <th scope="col"><?= $this->Paginator->sort('numero')?></th>
+			                <th scope="col" class="actions"><?= __('Acciones') ?></th>
 			            </tr>
 			        </thead>
 			        <tbody>
 			            <?php foreach ($user->tarjetas_credito_user as $card): ?>
 			            <tr>
+			             <td> <?php echo h($card->marca)?>	</td>
+			             <td> <?php echo h($card->num)?>	</td>
+			             <td class="actions">
+			                    <?= $this->Form->postLink(__('Borrar'), ['controller' =>'tarjetasCreditoUser','action' => 'delete', $card->id], ['confirm' => __("Seguro de borrar la tajera $card->num ?")]) ?>
+			                </td>
 			            </tr>
 			            <?php endforeach; ?>
 			        </tbody>

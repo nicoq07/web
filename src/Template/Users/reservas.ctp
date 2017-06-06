@@ -14,7 +14,6 @@
 			                <th scope="col"><?= h('Cantidad de productos') ?></th>
 			                <th scope="col"><?= $this->Paginator->sort('Fecha inicio') ?></th>
 			                <th scope="col"><?= $this->Paginator->sort('Fecha fin') ?></th>
-			                <th scope="col" class="actions"><?= __('Actions') ?></th>
 			            </tr>
 			        </thead>
 			        <tbody>
@@ -26,7 +25,6 @@
 				            <td><?= h($reserva->fecha_inicio->format('d-m-Y H:i a'))  ?></td>
 				            <td><?= h($reserva->fecha_fin->format('d-m-Y H:i a'))  ?></td>
 			                <td class="actions">
-			                    <?= $this->Form->postLink(__('Cancelar'), ['controller' =>'reservas','action' => 'delete', $reserva->id], ['confirm' => __('Seguro de borrar el domicilio?', $reserva->id)]) ?>
 			                </td>
 			            </tr>
 			            <?php endforeach; ?>
