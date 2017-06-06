@@ -20,7 +20,7 @@ class ReservasController extends AppController
 	{
 		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
 		{
-			if(in_array($this->request->action, ['add']))
+			if(in_array($this->request->action, ['add', 'index', 'view', 'guardarProductos', 'guardarFactura', 'guardarFacturaProductos', 'guardarEnvio', 'actualizarEnvio', 'calcularHoras', 'actualizarTabla', 'bajaCarro', 'contarProductos', 'ValidarReserva', 'cancelar', 'isCancelable', 'mailCancelacion']))
 			{
 				return true;
 			}
@@ -60,9 +60,17 @@ class ReservasController extends AppController
             $where3 = ['"'.$fechafiltro.'" BETWEEN DATE(reservas.fecha_inicio) AND DATE(reservas.fecha_fin)'];
         }
 
+        $where4 = null;
+
+        if(!(empty($this->Auth->user()['id'])) && $this->Auth->user()['rol_id'] != ADMINISTRADOR)
+        {
+            $userid=$this->Auth->user()['id'];
+            $where4 = ['reservas.user_id' => $userid];
+        }
+
         $this->paginate = [
             'contain' => ['Users', 'EstadosReservas'],
-            'conditions' => [$where, $where2, $where3]
+            'conditions' => [$where, $where2, $where3, $where4]
         ];
         $users = $this->Reservas->Users->find('all', ['limit' => 200]);
         $reservas = $this->paginate($this->Reservas);
