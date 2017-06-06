@@ -15,7 +15,7 @@
                     <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('descripcion') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('precio') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('active' , ['label' => 'Activo' ]) ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('active' , ['label' => 'Estado' ]) ?></th>
                     <th scope="col" class="actions">Acciones</th>
                 </tr>
             </thead>
@@ -23,10 +23,18 @@
                 <?php foreach ($multasUser as $multasUser): ?>
                 <tr>
                     <td><?= $this->Number->format($multasUser->id) ?></td>
-                    <td><?= $multasUser->has('user') ? $this->Html->link($multasUser->user->id, ['controller' => 'Users', 'action' => 'view', $multasUser->user->id]) : '' ?></td>
+                    <td><?= $multasUser->has('user') ? $this->Html->link($multasUser->user->presentacion, ['controller' => 'Users', 'action' => 'view', $multasUser->user->id]) : '' ?></td>
                     <td><?= h($multasUser->descripcion) ?></td>
                     <td><?= $this->Number->format($multasUser->precio) ?></td>
-                    <td><?= h($multasUser->active) ?></td>
+                    <td>
+                        <?php
+                            if ($multasUser->active == 1) {
+                                echo "Impaga";
+                            } else {
+                                echo "Paga";
+                            }
+                        ?>
+                    </td>
                     <td class="actions">
                         <?php
                             if ($multasUser->active == 1) {

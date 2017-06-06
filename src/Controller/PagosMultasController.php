@@ -11,6 +11,24 @@ use Cake\Datasource\ConnectionManager;
  */
 class PagosMultasController extends AppController
 {
+    public function isAuthorized($user)
+    {
+        if(isset($user['rol_id']) &&  $user['rol_id'] == BLOQUEADO)
+        {
+            if(in_array($this->request->action, ['add']))
+            {
+                return true;
+            }
+        }
+        elseif (isset($user['rol_id']) && $user['rol_id'] == EMPLEADO) {
+            
+            return true;
+        }
+        
+        return parent::isAuthorized($user);
+        
+        return true;
+    }
 
     /**
      * Index method
@@ -70,7 +88,7 @@ class PagosMultasController extends AppController
                 if ($this->PagosMultas->save($pagosMulta)) {
                     $connection= ConnectionManager::get("default");
                     $connection->update('users', [
-                        'active' => 1,
+                        'rol_id' => CLIENTE,
                         'modified' => new \DateTime('now')],
                         [ 'id' => $multasUser->user_id ],
                         ['modified' => 'datetime']);
@@ -81,7 +99,7 @@ class PagosMultasController extends AppController
                         ['modified' => 'datetime']);
                     $this->Flash->success(__('El pago se realizó con éxito.'));
 
-                    return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['controller' => 'MultasUser', 'action' => 'index']);
                 }
             } else {
                 $this->Flash->error(__('Los datos de la tarjeta son incorrectos. Intente nuevamente.'));

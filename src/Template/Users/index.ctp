@@ -33,7 +33,11 @@
                     <td><?= h($user->active) ?></td>
                     <td class="actions">
                         <?= $this->Html->link('Modificar', ['action' => 'edit', $user->id], ['class' => 'btn btn-default']) ?>
-                        <?= $this->Html->link('Multar', [ 'controller' => 'multasUser', 'action' => 'add', $user->id], ['class' => 'btn btn-default']) ?>
+                        <?php 
+                            if ($user->rol_id == CLIENTE) {
+                                echo $this->Html->link('Multar', [ 'controller' => 'multasUser', 'action' => 'add', $user->id], ['class' => 'btn btn-default']);
+                            }
+                        ?>
                         <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $user->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $user->id, 'class' => 'btn btn-default']) ?>
                     </td>
                 </tr>

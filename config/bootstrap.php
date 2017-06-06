@@ -227,4 +227,5 @@ Plugin::loadAll();
 define('ADMINISTRADOR', 1);
 define('EMPLEADO', 2);
 define('CLIENTE', 3);
+define('BLOQUEADO', 4);
 //FIN CONSTANTES DE ROLES

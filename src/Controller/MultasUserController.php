@@ -11,6 +11,24 @@ use Cake\Datasource\ConnectionManager;
  */
 class MultasUserController extends AppController
 {
+    public function isAuthorized($user)
+    {
+        if(isset($user['rol_id']) &&  $user['rol_id'] == BLOQUEADO)
+        {
+            if(in_array($this->request->action, ['add', 'index']))
+            {
+                return true;
+            }
+        }
+        elseif (isset($user['rol_id']) && $user['rol_id'] == EMPLEADO) {
+            
+            return true;
+        }
+        
+        return parent::isAuthorized($user);
+        
+        return true;
+    }
 
     /**
      * Index method
@@ -60,7 +78,7 @@ class MultasUserController extends AppController
             if ($this->MultasUser->save($multasUser)) {
                 $connection= ConnectionManager::get("default");
                 $connection->update('users', [
-                    'active' => 0,
+                    'rol_id' => BLOQUEADO,
                     'modified' => new \DateTime('now')],
                     [ 'id' => $id ],
                     ['modified' => 'datetime']);

@@ -24,10 +24,9 @@
                                 <li><?= $this->Html->link('Carrito',['controller' => 'reservas', 'action' => 'add'])?></li> 
                                 <!--<li><a href="#" onclick="Mostrar('carrito')">CARRITO</a></li>-->
                                 <?php if (empty($current_user)) : ?>
-                                <li><?= $this->Html->link('Ingresar',['controller' => 'users', 'action' => 'login'])?></li>
-                               
-                               
+                                <li><?= $this->Html->link('Ingresar',['controller' => 'users', 'action' => 'login'])?></li>                               
                                 <?php endif;?>
+
                                 <?php if (!empty($current_user)) : ?>
                                 <li>
 				                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo h($current_user['nombre'])?>  <b class="caret"></b></a>
@@ -100,6 +99,13 @@
 				                    		 </ul>
 				                    	</li>
 				                    	<?php endif; ?>
+
+				                    	<?php if (!empty($current_user) && $current_user['rol_id'] == BLOQUEADO ) : ?>
+				                    			 <li>
+					                    		 	<?= $this->Html->link('Ver multas',['controller' => 'MultasUser', 'action' => 'index'])?>
+					                    		 </li>					                    		 
+				                    	<?php endif; ?>
+
 				                    	<?php if (!empty($current_user) ) :?>
 				                    	<li>
 					                    	<?= $this->Html->link('Perfil',['controller' => 'users', 'action' => 'perfil'])?>
