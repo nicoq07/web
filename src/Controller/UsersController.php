@@ -229,7 +229,6 @@ class UsersController extends AppController
     		$reservas = $this->Users->Reservas->find()->where(['user_id'=>$user['id']])->contain(['Productos','EstadosReservas'])->all();
     		
     	}
-    	
     	//$productos = $this->Users->Reservas->ReservasProductos->find();
     	
 //     	debug($productos);
@@ -248,7 +247,8 @@ class UsersController extends AppController
     				'contain' => ['PagosReserva']
     		]);
     	}
-    	$this->set(compact('user'));
+    	$medio = $this->Users->PagosReserva->MediosPagos->find('list')->toArray();
+    	$this->set(compact('user','medio'));
     	$this->set('_serialize', ['user']);
     }
     
