@@ -45,8 +45,7 @@ class ProductosController extends AppController
      * @return \Cake\Network\Response|null
      */
     public function index()
-    {
-        
+    {        
         $where = null;
         if (!(empty($this->request->getData()['categoria_id'])))
         {
@@ -82,13 +81,27 @@ class ProductosController extends AppController
      */
     public function view($id = null)
     {
-        try {
-            $producto = $this->Productos->get($id, [
-            'contain' => ['RangoEdades', 'Categorias', 'Reservas', 'CalificacionesProductos', 'FacturaProductos', 'FotosProductos']
-        ]);
-        } catch (Exception $e) {
-            $this->Flash->error(__('Éste producto no existe, reintente por favor!.'));
-        }        
+        $producto = $this->Productos->get($id, [
+        'contain' => ['RangoEdades', 'Categorias', 'Reservas', 'CalificacionesProductos', 'FacturaProductos', 'FotosProductos']]);  
+
+        if ($this->request->is(['put'])) {
+            $entidadCalificacion = TableRegistry::get('CalificacionesProductos');
+            $calificacion = $entidadCalificacion->newEntity();
+            $calificacion->calificacion = $this->request->getData()['calificacion'];
+            $calificacion->comentario = $this->request->getData()['comentario'];
+            $calificacion->user_id = $this->viewVars['current_user']['id'];
+            $calificacion->producto_id = $id;
+            $calificacion->active = 1;
+            $calificacion->created = new \DateTime('now');
+            $calificacion->modified = new \DateTime('now');
+
+            if ($entidadCalificacion->save($calificacion))
+            {
+                $this->Flash->success(__('Calificación guardada.'));
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('Error al calificar el producto, reintente por favor.'));
+        }
 
         $conn = ConnectionManager::get('default');
         $diasDisponibles = array();

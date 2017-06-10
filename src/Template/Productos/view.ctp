@@ -176,6 +176,37 @@ input[type="radio"]:checked ~ label {
 </div>
 <?php } ?>
 
+<div class="container">
+    <?= $this->Form->create($producto) ?>
+    <h2>Calificá este producto</h2>
+    <fieldset>
+    <div class="row">
+        <div class="col-lg-2">
+            <h4 class="clasificacion centrar">
+                <input id="radioEstrella1" type="radio" name="calificacion" value="5">
+                <label for="radioEstrella1">★</label>
+                <input id="radioEstrella2" type="radio" name="calificacion" value="4">
+                <label for="radioEstrella2">★</label>
+                <input id="radioEstrella3" type="radio" name="calificacion" value="3">
+                <label for="radioEstrella3">★</label>
+                <input id="radioEstrella4" type="radio" name="calificacion" value="2">
+                <label for="radioEstrella4">★</label>
+                <input id="radioEstrella5" type="radio" name="calificacion" value="1" checked="checked">
+                <label for="radioEstrella5">★</label>
+            </h4>
+        </div>
+        <div class="col-lg-10">
+            <blockquote>
+                <?php echo $this->Form->control('comentario'); ?>
+                <?= $this->Form->button(__('Calificar')) ?>
+                <?php //$this->Html->link('Enviar', ['action' => 'calificar'], ['class' => 'btn btn-default', 'type'=>'submit']); ?>
+            </blockquote>
+        </div>
+    </div>
+    </fieldset>
+    
+    <?= $this->Form->end() ?>
+</div>
 
 <!--<div class="container">
 <h2>Calificaciones</h2>
