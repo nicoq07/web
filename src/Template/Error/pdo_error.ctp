@@ -7,6 +7,6 @@
         <?= h($message) ?>
     </p>
     <br>
-    <p><strong>- No puede realizar ésta acción. Comuníquese con el administrador.</strong></p>
+    <p><strong>- No puede realizar ésta acción. Es posible que existan elementos activos relacionados. Comuníquese con el administrador.</strong></p>
     <br>
 </div>

@@ -45,6 +45,6 @@ endif;*/
         <?= h($message) ?>
     </p>
     <br>
-    <p><strong>- El elemento al que sea acceder, no está disponible, esegúrece de que dicho elemento exista y esté disponible.</strong></p>
+    <p><strong>- El elemento al que desea acceder, no está disponible, asegúrese de que dicho elemento exista y esté disponible.</strong></p>
     <br>
 </div>

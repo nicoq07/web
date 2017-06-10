@@ -7,6 +7,6 @@
         <?= h($message) ?>
     </p>
     <br>
-    <p><strong>- Asegúrece de escribir correctamente la página a la que desea ir y de que ésta se encuentre disponible.</strong></p>
+    <p><strong>- Asegúrese de escribir correctamente la página a la que desea ir y de que ésta se encuentre disponible.</strong></p>
     <br>
 </div>

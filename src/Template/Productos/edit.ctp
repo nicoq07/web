@@ -87,8 +87,7 @@ function show(bloq) {
 				<h5>&nbsp;</h5>
 				<?php
 				
-	            echo $this->Form->input('foto[]',['label'=>'Agregar más fotos', 'type' => 'file', 'class' => 'btn btn-default', 'data-show-upload' => false, 'data-show-caption' => true, 'multiple class' =>'file-loading', 'accept'=>'image/jpeg, image/png']);
-	           
+	            echo $this->Form->input('foto[]',['label'=>'Agregar más fotos', 'type' => 'file', 'class' => 'btn btn-default', 'data-show-upload' => false, 'data-show-caption' => true, 'multiple class' =>'file-loading', 'accept'=>'image/jpeg, image/png']);   
 	        ?>
 	    </fieldset>
 	    <?= $this->Form->button(__('Actualizar')) ?>

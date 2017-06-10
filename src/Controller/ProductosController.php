@@ -83,6 +83,28 @@ class ProductosController extends AppController
     {
         $producto = $this->Productos->get($id, [
         'contain' => ['RangoEdades', 'Categorias', 'Reservas', 'CalificacionesProductos', 'FacturaProductos', 'FotosProductos']]);  
+        $usoProdu = 0;
+        $conn = ConnectionManager::get('default');  
+        if ($this->viewVars['current_user']['id'] != null)
+        { 
+            $miquery2 = "SELECT 1 from productos, reservas_productos, reservas, users
+            where productos.id =".$id." 
+            AND productos.id = reservas_productos.producto_id 
+            AND reservas_productos.reserva_id = reservas.id 
+            AND reservas.user_id =".$this->viewVars['current_user']['id'];
+            $calificacion_id = null;
+            $stmt = $conn->execute($miquery2);
+            $resu = $stmt ->fetchAll('assoc');
+            if(sizeof($resu) == 0){
+                $usoProdu = 0;
+            }                    
+            else
+            {
+                $usoProdu = 1;
+                $calificacion_id = $this->Productos->CalificacionesProductos->find()->select('id')->where(['producto_id =' => $id], ['user_id =' => $this->viewVars['current_user']['id']]);
+                $calificacion_id = $calificacion_id->first();
+            }
+        }    
 
         if ($this->request->is(['put'])) {
             $entidadCalificacion = TableRegistry::get('CalificacionesProductos');
@@ -94,11 +116,12 @@ class ProductosController extends AppController
             $calificacion->active = 1;
             $calificacion->created = new \DateTime('now');
             $calificacion->modified = new \DateTime('now');
+            $calificacion->id = $calificacion_id['id'];
 
             if ($entidadCalificacion->save($calificacion))
             {
                 $this->Flash->success(__('Calificación guardada.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('Error al calificar el producto, reintente por favor.'));
         }
@@ -110,23 +133,6 @@ class ProductosController extends AppController
             $resu = $stmt ->fetchAll('assoc');
             $fecha = $resu[0]['fecha'];
             $diasDisponibles[] = $fecha;
-        }
-
-        $conn = ConnectionManager::get('default');   
-        $usoProdu = 0;
-        $miquery2 = "SELECT 1 from productos, reservas_productos, reservas, users
-        where productos.id =".$id." 
-        AND productos.id = reservas_productos.producto_id 
-        AND reservas_productos.reserva_id = reservas.id 
-        AND reservas.user_id =".$this->viewVars['current_user']['id'];
-        $stmt = $conn->execute($miquery2);
-        $resu = $stmt ->fetchAll('assoc');
-        if(sizeof($resu) == 0){
-            $usoProdu = 0;
-        }                    
-        else
-        {
-            $usoProdu = 1;
         }
 
         $cantidadProdu = $producto['cantidad'];
