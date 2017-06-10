@@ -144,23 +144,33 @@ input[type="radio"]:checked ~ label {
     </div>
 </div>
 
-<?php if (!empty($producto->calificaciones_productos)) { ?>
+<?php 
+$comentarioGuardado = "";
+$calificacionGuardada = 1;
+if (!empty($producto->calificaciones_productos)) { ?>
 <div class="container">
 <h2>Calificaciones</h2>   
-    <?php foreach ($producto->calificaciones_productos as $calificacion):?>
+    <?php 
+        $cont = 0;        
+        foreach ($producto->calificaciones_productos as $calificacion):?>
     <div class="row">
         <div class="col-lg-2">
             <h4 class="clasificacion centrar">
-                <?php 
+                <?php                    
+                    if ($calificacion->user_id == $this->viewVars['current_user']['id']) {
+                        $comentarioGuardado = $calificacion->comentario;
+                        $calificacionGuardada = $calificacion->calificacion;
+                    }
                     $estrellas = "";
                     for ($i=5; $i >=1 ; $i--) { 
-                        $estrellas = '<input id="radio'.$i.'" type="radio" name="estrellas'.$i.'" value="'.$i.'" disabled="true"';
+                        $estrellas = '<input id="radio'.$i.'" type="radio" name="estrellas'.$cont.'" value="'.$i.'" disabled="true"';
                         if ($i == $calificacion->calificacion) {
                             $estrellas .= 'checked="checked"';
                         }
-                        $estrellas .= '> <label for="radio1">★</label>';
+                        $estrellas .= '> <label for="radio'.$i.'">★</label>';
                         echo($estrellas);
                     }
+                    $cont ++;
                 ?>
             </h4>
         </div>
@@ -183,21 +193,24 @@ input[type="radio"]:checked ~ label {
     <div class="row">
         <div class="col-lg-2">
             <h4 class="clasificacion centrar">
-                <input id="radioEstrella1" type="radio" name="calificacion" value="5">
-                <label for="radioEstrella1">★</label>
-                <input id="radioEstrella2" type="radio" name="calificacion" value="4">
-                <label for="radioEstrella2">★</label>
-                <input id="radioEstrella3" type="radio" name="calificacion" value="3">
-                <label for="radioEstrella3">★</label>
-                <input id="radioEstrella4" type="radio" name="calificacion" value="2">
-                <label for="radioEstrella4">★</label>
-                <input id="radioEstrella5" type="radio" name="calificacion" value="1" checked="checked">
-                <label for="radioEstrella5">★</label>
+                <?php
+                $estrellas = "";
+                    for ($i=5; $i >=1 ; $i--) { 
+                        $estrellas = '<input id="radios'.$i.'" type="radio" name="estrellas" value="'.$i.'"';
+                        if ($i == $calificacionGuardada) {
+                            $estrellas .= 'checked="checked"';
+                        }
+                        $estrellas .= '> <label for="radios'.$i.'">★</label>';
+                        echo($estrellas);
+                    }
+                ?>
             </h4>
         </div>
         <div class="col-lg-10">
             <blockquote>
-                <?php echo $this->Form->control('comentario'); ?>
+                <?php
+                    echo $this->Form->control('comentario', ['value' => $comentarioGuardado]);
+                ?>
                 <?= $this->Form->button(__('Calificar')) ?>
                 <?php //$this->Html->link('Enviar', ['action' => 'calificar'], ['class' => 'btn btn-default', 'type'=>'submit']); ?>
             </blockquote>
