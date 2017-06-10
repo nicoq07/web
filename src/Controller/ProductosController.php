@@ -82,9 +82,13 @@ class ProductosController extends AppController
      */
     public function view($id = null)
     {
-        $producto = $this->Productos->get($id, [
+        try {
+            $producto = $this->Productos->get($id, [
             'contain' => ['RangoEdades', 'Categorias', 'Reservas', 'CalificacionesProductos', 'FacturaProductos', 'FotosProductos']
         ]);
+        } catch (Exception $e) {
+            $this->Flash->error(__('Éste producto no existe, reintente por favor!.'));
+        }        
 
         $conn = ConnectionManager::get('default');
         $diasDisponibles = array();
@@ -229,7 +233,8 @@ class ProductosController extends AppController
     
     public function home()
     {
-    	
+    	$productos = $this->Productos->find('all', ['order'=>['created'=>'DESC'], 'limit'=>3, 'contain' => ['FotosProductos']]);
+        $this->set('productos', $productos);
     }
     
     public function condiciones()

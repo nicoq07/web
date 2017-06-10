@@ -2,7 +2,7 @@
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
-$this->layout = 'error';
+/*$this->layout = 'error';
 
 if (Configure::read('debug')):
     $this->layout = 'dev_error';
@@ -34,10 +34,17 @@ if (Configure::read('debug')):
     endif;
 
     $this->end();
-endif;
+endif;*/
 ?>
-<h2><?= __d('cake', 'An Internal Error Has Occurred') ?></h2>
-<p class="error">
-    <strong><?= __d('cake', 'Error') ?>: </strong>
-    <?= h($message) ?>
-</p>
+<div class="col-lg-6 col-lg-offset-3 centrar">
+    <br>
+    <h2><?= __d('cake', '¡Tenemos un problema!') ?></h2>
+    <br>
+    <p class="error">
+        <strong><?= __d('cake', 'Error') ?>: </strong>
+        <?= h($message) ?>
+    </p>
+    <br>
+    <p><strong>- El elemento al que sea acceder, no está disponible, esegúrece de que dicho elemento exista y esté disponible.</strong></p>
+    <br>
+</div>

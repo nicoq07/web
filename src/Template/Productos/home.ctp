@@ -18,7 +18,7 @@
 							      <h1 class="text-white">Fun Club</br>
 							        Juegos para eventos</h1>
 							      <?= $this->Html->link('Nuestros juegos',['controller' => 'productos', 'action' => 'index'],['class' => 'btn btn-primary btn-white'])?>
-							      <?= $this->Html->link('Contacto',['controller' => 'users', 'action' => 'contacto'],['class' => 'btn btn-primary btn-filled'])?>
+							      <?= $this->Html->link('Contacto',['controller' => 'contact', 'action' => 'index'],['class' => 'btn btn-primary btn-filled'])?>
 							      <!--<a target="_blank" href="" class="btn btn-primary btn-white">Nuestros juegos</a> <a href=".php" class="btn btn-primary btn-filled">Contacto</a>-->
 							  	</div>
 						      </div>
@@ -73,7 +73,29 @@
 						
 						<div class="row">
 							<h1 class="text-white centrar">PRODUCTOS DESTACADOS</h1><br>
+							
+							<?php foreach ($productos as $producto): ?>
 							<div class="col-md-4 col-sm-6">
+								<div class="blog-snippet-1">									
+									<a href="<?php echo $this->Url->build([
+										    "controller" => "Productos",
+										    "action" => "view",
+		                    				$producto->id
+										]) ?>">
+										<img alt="Blog Thumb" src=<?= h($producto->fotos_productos[0]->referencia) ?> >
+									</a>
+									<h2 class="text-white centrar"><?= h($producto->descripcion) ?></h2>
+									<p class="text-white"><strong>Medida: </strong><?= h($producto->dimensiones) ?></p>
+									<p class="text-white"><strong>Precio: $</strong> <?= h($producto->precio) ?></p>
+									<a href="<?php echo $this->Url->build([
+										    "controller" => "Productos",
+										    "action" => "view",
+		                    				$producto->id
+										]) ?>" class="text-white"><span class="text-white">Ver más <i class="icon arrow_right"></i></span></a>
+								</div>
+							</div>
+							<?php endforeach; ?>
+							<!--<div class="col-md-4 col-sm-6">
 								<div class="blog-snippet-1">									
 									<a href="#">
 										<img alt="Blog Thumb" src="webroot/img/chicos/cubo/1.jpg" >
@@ -107,7 +129,7 @@
 									<p class="text-white"><strong>Precio: $</strong> ..... </p>
 									<a href="#" class="text-white"><span class="text-white">Ver más <i class="icon arrow_right"></i></span></a>
 								</div>
-							</div>
+							</div>-->
 						</div>	
 					</div>
 				</section>

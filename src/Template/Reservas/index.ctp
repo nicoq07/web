@@ -60,7 +60,7 @@
                     <td class="actions">
                         <?= $this->Html->link('Detalles', ['action' => 'view', $reserva->id], ['class' => 'btn btn-default']) ?>
                         <?php 
-                            if ($reserva->estado_reserva_id != 4) {
+                            if ($reserva->estado_reserva_id != 4 && $reserva->estado_reserva_id != 5) {
                                 echo $this->Form->postLink('Cancelar', ['action' => 'cancelar', $reserva->id], ['confirm' => '¿Está seguro que desea cancelar la reserva?', $reserva->id, 'class' => 'btn btn-default']);
                             } ?>
                         <?php 

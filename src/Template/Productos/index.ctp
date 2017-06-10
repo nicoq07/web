@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="col-lg-6 col-lg-offset-3">
-                        <h1 class="azul">INFLABLES - Chicos y Medianos</h1>
+                        <h1 class="azul">PRODUCTOS</h1>
                     </div>
                     <h1>&nbsp;</h1>
                 </div>
