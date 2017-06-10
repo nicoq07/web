@@ -64,7 +64,8 @@ function show(bloq) {
 	            echo $this->Form->label('informacion',['label' => 'Información']);
 	            echo $this->Form->textarea('informacion');
 	            echo $this->Form->control('dimensiones');
-	            echo $this->Form->control('precio');?>
+	            echo $this->Form->control('precio');
+	            echo $this->Form->control('cantidad');?>
 				<div class="row">
 	            
         <?php    foreach ($producto->fotos_productos as $foto)

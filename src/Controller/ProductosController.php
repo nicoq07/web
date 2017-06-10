@@ -112,13 +112,29 @@ class ProductosController extends AppController
             $diasDisponibles[] = $fecha;
         }
 
+        $conn = ConnectionManager::get('default');   
+        $usoProdu = 0;
+        $miquery2 = "SELECT 1 from productos, reservas_productos, reservas, users
+        where productos.id =".$id." 
+        AND productos.id = reservas_productos.producto_id 
+        AND reservas_productos.reserva_id = reservas.id 
+        AND reservas.user_id =".$this->viewVars['current_user']['id'];
+        $stmt = $conn->execute($miquery2);
+        $resu = $stmt ->fetchAll('assoc');
+        if(sizeof($resu) == 0){
+            $usoProdu = 0;
+        }                    
+        else
+        {
+            $usoProdu = 1;
+        }
+
         $cantidadProdu = $producto['cantidad'];
         $tabla = array();
         foreach($diasDisponibles as $dia)
         {
             $disponibilidad = array();
-            for ($i = 9; $i < 23; $i++) {
-                $conn = ConnectionManager::get('default');    
+            for ($i = 9; $i < 23; $i++) {   
                 $miquery = "SELECT productos.id, sum(reservas_productos.cantidad) as micantidad
                 from productos, reservas, reservas_productos 
                 where '".$dia." ".$i.":00:00' between reservas.no_disponible_inicio AND reservas.no_disponible_fin
@@ -130,8 +146,7 @@ class ProductosController extends AppController
                 $resu = $stmt ->fetchAll('assoc');       
                 if(sizeof($resu) == 0){
                     $disponibilidad[$i] = 0;
-                }
-                    
+                }                    
                 else
                 {
                     $cantidad = $resu[0]['micantidad'];
@@ -146,7 +161,7 @@ class ProductosController extends AppController
             $tabla[$dia] = $disponibilidad;          
         }
 
-        $this->set(compact('producto', 'tabla'));
+        $this->set(compact('producto', 'tabla', 'usoProdu'));
         $this->set('_serialize', ['producto']);
     }
 
