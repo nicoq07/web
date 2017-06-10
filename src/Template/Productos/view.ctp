@@ -196,7 +196,7 @@ if (!empty($producto->calificaciones_productos)) { ?>
                 <?php
                 $estrellas = "";
                     for ($i=5; $i >=1 ; $i--) { 
-                        $estrellas = '<input id="radios'.$i.'" type="radio" name="estrellas" value="'.$i.'"';
+                        $estrellas = '<input id="radios'.$i.'" type="radio" name="calificacion" value="'.$i.'"';
                         if ($i == $calificacionGuardada) {
                             $estrellas .= 'checked="checked"';
                         }
