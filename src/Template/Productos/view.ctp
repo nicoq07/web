@@ -186,7 +186,7 @@ if (!empty($producto->calificaciones_productos)) { ?>
 </div>
 <?php } ?>
 
-<div class="container">
+<div class="container" id="calificar">
     <?php if ($usoProdu == 1){ ?>
         <?= $this->Form->create($producto) ?>
         <h2>Calificá este producto</h2>
@@ -218,7 +218,7 @@ if (!empty($producto->calificaciones_productos)) { ?>
             </div>
         </div>
         </fieldset>
-        <?= $this->Form->end() ?>
+        <?= $this->Form->end()?>
     <?php } ?>
 </div>
 

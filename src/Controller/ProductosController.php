@@ -81,19 +81,24 @@ class ProductosController extends AppController
      */
     public function view($id = null)
     {
+        $userid = null;
+        $userid = $this->request->query('userid');
+        if ($userid == null)
+            $userid = $this->viewVars['current_user']['id'];
+        $usoProdu = $this->request->query('usoprodu');
+        $calificacion_id = null;
         $producto = $this->Productos->get($id, [
         'contain' => ['RangoEdades', 'Categorias', 'Reservas', 'CalificacionesProductos', 'FacturaProductos', 'FotosProductos']]);  
-        $usoProdu = 0;
+        //$usoProdu = 0;
         $conn = ConnectionManager::get('default');  
-        if ($this->viewVars['current_user']['id'] != null)
+        if ($userid != null)
         { 
             $miquery2 = "SELECT 1 from productos, reservas_productos, reservas, users
             where productos.id =".$id." 
             AND productos.id = reservas_productos.producto_id 
             AND reservas_productos.reserva_id = reservas.id 
-            AND reservas.estado_reserva_id = 6
-            AND reservas.user_id =".$this->viewVars['current_user']['id'];
-            $calificacion_id = null;
+            AND reservas.estado_reserva_id = 6 
+            AND reservas.user_id =".$userid;
             $stmt = $conn->execute($miquery2);
             $resu = $stmt ->fetchAll('assoc');
             if(sizeof($resu) == 0){
@@ -102,7 +107,7 @@ class ProductosController extends AppController
             else
             {
                 $usoProdu = 1;
-                $calificacion_id = $this->Productos->CalificacionesProductos->find()->select('id')->where(['producto_id =' => $id], ['user_id =' => $this->viewVars['current_user']['id']]);
+                $calificacion_id = $this->Productos->CalificacionesProductos->find()->select('id')->where(['producto_id =' => $id], ['user_id =' => $userid]);
                 $calificacion_id = $calificacion_id->first();
             }
         }    
@@ -112,7 +117,7 @@ class ProductosController extends AppController
             $calificacion = $entidadCalificacion->newEntity();
             $calificacion->calificacion = $this->request->getData()['calificacion'];
             $calificacion->comentario = $this->request->getData()['comentario'];
-            $calificacion->user_id = $this->viewVars['current_user']['id'];
+            $calificacion->user_id = $userid;
             $calificacion->producto_id = $id;
             $calificacion->active = 1;
             $calificacion->created = new \DateTime('now');

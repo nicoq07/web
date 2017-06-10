@@ -655,10 +655,11 @@ class ReservasController extends AppController
     public function enviarMail($id=null){
         echo $id;
         $productos = $this->Reservas->ReservasProductos->find()->where(['reserva_id =' => $id]);
+        $usuario = $this->Reservas->Users->find()->where(['user_id =' => ]);
         $arrayProductos = array();
         $cont = 0;
         foreach ($productos as $producto) {
-            $arrayProductos[$cont] = "http://localhost/web/Productos/view/".$producto->id;
+            $arrayProductos[$cont] = "http://localhost/web/Productos/view/".$producto->id."/#calificar?usoprodu=1&userid=".;
             $cont ++;
         }
 
