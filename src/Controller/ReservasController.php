@@ -649,7 +649,46 @@ class ReservasController extends AppController
     	{
     		return true;
     	}
-    	return false;
-    	
+    	return false;   	
+    }
+
+    public function enviarMail($id=null){
+        echo $id;
+        $productos = $this->Reservas->ReservasProductos->find()->where(['reserva_id =' => $id]);
+        $arrayProductos = array();
+        $cont = 0;
+        foreach ($productos as $producto) {
+            $arrayProductos[$cont] = "http://localhost/web/Productos/view/".$producto->id;
+            $cont ++;
+        }
+
+        $mail = array();
+        $mail['correo'] = $this->viewVars['current_user']['email'];
+        $mail['asunto'] = "Calificación de productos de la reserva ".$producto->reserva_id;
+        $mail['mensaje'] = $this->viewVars['current_user']['nombre'].", \n \t gracias por usar nuestros productos, a partír de este momento vas a poder calificarlos, lo cual sería de gran agrado para nosotros si lo hicieras. 
+        \n Te enviamos los enlaces para que puedas hacerlo desde aquí: \n\n";
+        foreach ($arrayProductos as $key => $value) {
+            $mail['mensaje'] .= $value."\n";
+        }
+        $mail['mensaje'] .="\nMuchas gracias. Esperemos que vuelvas a utilizar muestros productos.";
+
+        if ($this->mailCancelacion($mail))
+        {
+            $connection= ConnectionManager::get("default");
+            $connection->update('reservas', [
+                'estado_reserva_id' => 6,
+                'modified' => new \DateTime('now')],
+                [ 'id' => $producto->reserva_id ],
+                ['modified' => 'datetime']);
+            $this->Flash->success(__('Se ha enviado el mail.'));
+            return $this->redirect(['action' => 'index']);
+        }
+        else 
+        {
+            $this->Flash->error(__('No se pudo enviar el mail. Por favor intente luego.'));
+            return $this->redirect(['action' => 'index']);
+        }        
+        
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 }

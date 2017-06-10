@@ -91,6 +91,7 @@ class ProductosController extends AppController
             where productos.id =".$id." 
             AND productos.id = reservas_productos.producto_id 
             AND reservas_productos.reserva_id = reservas.id 
+            AND reservas.estado_reserva_id = 6
             AND reservas.user_id =".$this->viewVars['current_user']['id'];
             $calificacion_id = null;
             $stmt = $conn->execute($miquery2);

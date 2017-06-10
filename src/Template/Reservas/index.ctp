@@ -35,8 +35,6 @@
     </div>
     <?php echo $this->Form->end(); ?>
 
-
-
     <div class="table-responsive">
         <table class="table table-striped" cellpadding="0" cellspacing="0">
             <thead>
@@ -60,12 +58,14 @@
                     <td class="actions">
                         <?= $this->Html->link('Detalles', ['action' => 'view', $reserva->id], ['class' => 'btn btn-default']) ?>
                         <?php 
-                            if ($reserva->estado_reserva_id != 4 && $reserva->estado_reserva_id != 5) {
+                            if ($reserva->estado_reserva_id != 4 && $reserva->estado_reserva_id != 5 && $reserva->estado_reserva_id != 6) {
                                 echo $this->Form->postLink('Cancelar', ['action' => 'cancelar', $reserva->id], ['confirm' => '¿Está seguro que desea cancelar la reserva?', $reserva->id, 'class' => 'btn btn-default']);
-                            } ?>
-                        <?php 
+                            }
                             if ($reserva->estado_reserva_id == 1 || $reserva->estado_reserva_id == 2) {
                                 echo $this->Html->link('Pagar', ['controller' => 'PagosReserva', 'action' => 'add', $reserva->id], ['class' => 'btn btn-default']);
+                            }
+                            if ($reserva->estado_reserva_id == 5 && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) {
+                                echo $this->Html->link('Calificar', ['action' => 'enviarMail', $reserva->id], ['class' => 'btn btn-default']);
                             }
                          ?>
                     </td>
