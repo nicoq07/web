@@ -74,6 +74,7 @@ input[type="radio"]:checked ~ label {
             <h4 style="color: black"><strong>Stock: </strong><?= h($producto->cantidad)?></h4><br>
             <h4 style="color: black"><strong>Información: </strong><?= h($producto->informacion)?></h4><br>
             <h4 style="color: black"><strong>Medidas: </strong><?= h($producto->dimensiones)?></h4><br>
+            <h4 style="color: black"><strong>Precio: </strong><?= h("$".$producto->precio)?></h4><br>
             <!--button class="btn btn-default right">Reservar <i class="icon-cart"></i></button-->
             <?= $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-primary']) ?>
         </div>
@@ -143,7 +144,40 @@ input[type="radio"]:checked ~ label {
     </div>
 </div>
 
+<?php if (!empty($producto->calificaciones_productos)) { ?>
 <div class="container">
+<h2>Calificaciones</h2>   
+    <?php foreach ($producto->calificaciones_productos as $calificacion):?>
+    <div class="row">
+        <div class="col-lg-2">
+            <h4 class="clasificacion centrar">
+                <?php 
+                    $estrellas = "";
+                    for ($i=5; $i >=1 ; $i--) { 
+                        $estrellas = '<input id="radio'.$i.'" type="radio" name="estrellas'.$i.'" value="'.$i.'" disabled="true"';
+                        if ($i == $calificacion->calificacion) {
+                            $estrellas .= 'checked="checked"';
+                        }
+                        $estrellas .= '> <label for="radio1">★</label>';
+                        echo($estrellas);
+                    }
+                ?>
+            </h4>
+        </div>
+        <div class="col-lg-10">
+            <blockquote>
+                <p>
+                    <?= h($calificacion->comentario) ?>
+                </p>
+            </blockquote>
+        </div>
+    </div>
+    <?php endforeach;?>
+</div>
+<?php } ?>
+
+
+<!--<div class="container">
 <h2>Calificaciones</h2>
     <div class="row">
         <div class="col-lg-2">
@@ -216,15 +250,7 @@ input[type="radio"]:checked ~ label {
             </blockquote>
         </div>
     </div>
-</div>
-
-
-
-
-
-
-
-
+</div>-->
 
 
 <!--<?php
