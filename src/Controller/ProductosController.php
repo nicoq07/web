@@ -352,6 +352,25 @@ class ProductosController extends AppController
     }
 
     public function sacarStock($id=null){
-
+        $producto = $this->Productos->get($id);
+        if ($this->request->is('put')) {            
+            debug($this->request->getData());
+            exit();
+            if ($producto->cantidad <= $this->request->getData()['cantidadADescontar']) {
+                $producto->active = 0;
+                $producto->cantidad = 0;
+            } else {
+                $producto->active = 1;
+                $producto->cantidad -= $this->request->getData()['cantidadADescontar'];
+            }            
+            if ($this->Productos->save($producto))
+            {
+                $this->Flash->success(__('Se actualizó el stock.'));
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('No se pudo actualizar el stock, reintente por favor.'));
+        }
+        $this->set(compact('producto'));
+        $this->set('_serialize', ['producto']);
     } 
 }
