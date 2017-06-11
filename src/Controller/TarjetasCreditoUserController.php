@@ -38,6 +38,8 @@ class TarjetasCreditoUserController extends AppController
     {
         $this->paginate = [
             'contain' => ['Users']
+        		,
+        	'conditions' => ['active' => '1']
         ];
         $tarjetasCreditoUser = $this->paginate($this->TarjetasCreditoUser)->toArray();
         debug(check($tarjetasCreditoUser[0]['numero']));
@@ -67,20 +69,34 @@ class TarjetasCreditoUserController extends AppController
      *
      * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($user_id = null)
     {
+    	
         $tarjetasCreditoUser = $this->TarjetasCreditoUser->newEntity();
+        if (!empty($user_id))
+        {
+        	$tarjetasCreditoUser->user_id = $user_id;
+        }
         if ($this->request->is('post')) {
             $tarjetasCreditoUser = $this->TarjetasCreditoUser->patchEntity($tarjetasCreditoUser, $this->request->getData());
+            
             if ($this->TarjetasCreditoUser->save($tarjetasCreditoUser)) {
-                $this->Flash->success(__('The tarjetas credito user has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('Tarjeta agregada'));
+                if (!empty($user_id))
+                {
+                	return $this->redirect(['controller' => 'users', 'action' => 'tarjetas']);;
+                }
+                return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The tarjetas credito user could not be saved. Please, try again.'));
+            $this->Flash->error(__('Error al guardar la tarjeta, reintente.'));
         }
-        $users = $this->TarjetasCreditoUser->Users->find('list', ['limit' => 200]);
-        $this->set(compact('tarjetasCreditoUser', 'users'));
+        
+        $marca = array('VISA','MASTERCARD','AMERICAN EXPRESS');
+        $marca = array_combine($marca,$marca);
+        $users = $this->TarjetasCreditoUser->Users->find('list',[
+        		'conditions' => ['active' => '1']
+        ],['limit' => 200]);
+        $this->set(compact('tarjetasCreditoUser', 'users','marca'));
         $this->set('_serialize', ['tarjetasCreditoUser']);
     }
 
@@ -108,6 +124,20 @@ class TarjetasCreditoUserController extends AppController
         $users = $this->TarjetasCreditoUser->Users->find('list', ['limit' => 200]);
         $this->set(compact('tarjetasCreditoUser', 'users'));
         $this->set('_serialize', ['tarjetasCreditoUser']);
+    }
+    
+    public function desactivar($id = null)
+    {
+    	if ($this->request->is(['patch', 'post', 'put'])) {
+    		$tarjetasCreditoUser = $tarjetasCreditoUser = $this->TarjetasCreditoUser->get($id);
+    		$tarjetasCreditoUser->active = false;
+    		if ($this->TarjetasCreditoUser->save($tarjetasCreditoUser)) {
+    			$this->Flash->success(__('Tarjeta borrada'));
+    			
+    			return $this->redirect($this->referer());
+    		}
+    		$this->Flash->error(__('La tarjeta no pudo borrarse, reintente!'));
+    	}
     }
 
     /**
