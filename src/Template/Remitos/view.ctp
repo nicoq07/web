@@ -1,4 +1,23 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="col-lg-8 col-lg-offset-2">                        
+        <div>
+            <legend>Detalle del remito</legend>
+            <table class="table table-striped" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th scope="col"><?= __('Número') ?></th>
+                    <th scope="col"><?= __('Factura') ?></th>
+                </tr>
+                <tr>
+                    <td><?= h($remito->id) ?></td>
+                    <td> <?= $this->Html->link($remito->factura_id, ['controller' => 'Facturas', 'action' => 'view', $remito->factura_id]) ?> </td>
+                </tr>
+            </table>
+        </div>
+    </div>                
+</section>
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -73,4 +92,4 @@
         </table>
         <?php endif; ?>
     </div>
-</div>
+</div>-->

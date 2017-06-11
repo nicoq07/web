@@ -45,7 +45,7 @@
                         <td><?= h($producto->id) ?></td>
                         <td> <?= $this->Html->link($producto->producto_id, ['controller' => 'Productos', 'action' => 'view', $producto->producto_id]) ?> </td>
                         <td><?= h($producto->cantidad) ?></td>
-                        <td><?= h($producto->precio) ?></td>
+                        <td><?= "$".h($producto->precio) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </table>

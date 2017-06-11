@@ -72,9 +72,6 @@
 					                    		 <li>
 					                    		 	<?= $this->Html->link('Ver reservas',['controller' => 'reservas', 'action' => 'index'])?>
 					                    		 </li>
-					                    		 <li>
-					                    		 	<?= $this->Html->link('Crear',['controller' => 'reservas', 'action' => 'add'])?>
-					                    		 </li>
 				                    		 </ul>
 				                    	</li>
 				                    	<li class="dropdown-submenu">
@@ -94,8 +91,9 @@
 					                    		  <li>
 					                    		 	<?= $this->Html->link('Nuevo pago en efectivo',['controller' => 'pagosEfectivo', 'action' => 'add'])?>
 					                    		 </li>
-					                    		 
-					                    		 
+					                    		 <li>
+					                    		 	<?= $this->Html->link('Ver pagos en efectivo',['controller' => 'pagosEfectivo', 'action' => 'index'])?>
+					                    		 </li>					                    		 
 				                    		 </ul>
 				                    	</li>
 				                    	<?php endif; ?>

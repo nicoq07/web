@@ -23,9 +23,9 @@ class ReservasController extends AppController
 			if(in_array($this->request->action, ['add', 'index', 'view', 'guardarProductos', 'guardarFactura', 'guardarFacturaProductos', 'guardarEnvio', 'actualizarEnvio', 'calcularHoras', 'actualizarTabla', 'bajaCarro', 'contarProductos', 'ValidarReserva', 'cancelar', 'isCancelable', 'mailCancelacion']))
 			{
 				return true;
-			}
+			}            
 		}
-		elseif (isset($user['rol_id']) && $user['rol_id'] == EMPLEADO) {
+		elseif (isset($user['rol_id']) && ($user['rol_id'] == EMPLEADO || $user['rol_id'] == ADMINISTRADOR)) {
 			if(in_array($this->request->action, ['index', 'view']))
             {
                 return true;

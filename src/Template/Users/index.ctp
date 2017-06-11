@@ -6,7 +6,11 @@
 <div class="container">
     <br>
     <h3 class="centrar">Usuarios</h3>
-    <div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?></div>
+    <?php 
+        if (isset($current_user) && $current_user['rol_id'] == ADMINISTRADOR) {
+            echo "<div class='pull-right'><?= $this->Html->link('<span class='glyphicon glyphicon-plus'></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?></div>";
+        }
+    ?> 
     <div class="table-responsive">
         <table class="table table-striped" cellpadding="0" cellspacing="0">
             <thead>

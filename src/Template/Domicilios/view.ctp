@@ -1,4 +1,28 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="col-lg-8 col-lg-offset-2">                        
+        <div>
+            <legend>Domicilio</legend>
+            <table class="table table-striped" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th scope="col"><?= __('Número') ?></th>
+                    <th scope="col"><?= __('Usuario') ?></th>
+                    <th scope="col"><?= __('Direccion') ?></th>
+                    <th scope="col"><?= __('Piso') ?></th>
+                    <th scope="col"><?= __('Localidad') ?></th>
+                </tr>
+                <tr>
+                    <td> <?= h($domicilio->id) ?> </td>
+                    <td> <?= h($domicilio->user->presentacion) ?> </td>
+                    <td><?= h($domicilio->presentacion) ?></td>
+                    <td> <?= h($domicilio->piso) ?> </td>
+                    <td> <?= h($domicilio->localidade->descripcion) ?> </td>
+                </tr>
+            </table>
+        </div>
+    </div>                
+</section>
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -91,4 +115,4 @@
         </table>
         <?php endif; ?>
     </div>
-</div>
+</div>-->
