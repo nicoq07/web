@@ -82,7 +82,7 @@
 										    "action" => "view",
 		                    				$producto->id
 										]) ?>">
-										<img alt="Blog Thumb" src=<?= h($producto->fotos_productos[0]->referencia) ?> >
+										<img alt="<?php echo $producto->descripcion?>" src=<?= !empty($producto->fotos_productos[0]->referencia) ? h($producto->fotos_productos[0]->referencia) :  "" ?> >
 									</a>
 									<h2 class="text-white centrar"><?= h($producto->descripcion) ?></h2>
 									<p class="text-white"><strong>Medida: </strong><?= h($producto->dimensiones) ?></p>
