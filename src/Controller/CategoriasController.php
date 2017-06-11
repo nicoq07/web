@@ -10,6 +10,20 @@ use App\Controller\AppController;
  */
 class CategoriasController extends AppController
 {
+    public function isAuthorized($user)
+    {
+        if(isset($user['rol_id']) &&  ($user['rol_id'] == EMPLEADO || $user['rol_id'] == ADMINISTRADOR))
+        {
+            if(in_array($this->request->action, ['index', 'add', 'delete', 'edit', 'view']))
+            {
+                return true;
+            }
+        }
+        
+        return parent::isAuthorized($user);
+        
+        return true;
+    }
 
     /**
      * Index method

@@ -20,26 +20,31 @@ class UsersController extends AppController
 	}
 	
 	public function isAuthorized($user)
-	{
-		if(isset($user['rol_id']) &&  ($user['rol_id'] == CLIENTE || $user['rol_id'] == BLOQUEADO))
-		{
-			if(in_array($this->request->action, ['index','view','logout','login','home','perfil',
-								'direcciones','reservas','pagos','telefonos','tarjetas',
-								'contact'
-			]))
-			{
-				return true;
-			}
-		}
-		elseif (isset($user['rol_id']) && $user['rol_id'] == EMPLEADO) {
-			
-			return true;
-		}
-		
-		return parent::isAuthorized($user);
+    {
+        if(isset($user['rol_id']) &&  ($user['rol_id'] == CLIENTE || $user['rol_id'] == BLOQUEADO))
+        {
+            if(in_array($this->request->action, ['index','view','logout','login','home','perfil',
+                                'direcciones','reservas','pagos','telefonos','tarjetas',
+                                'contact'
+            ]))
+            {
+                return true;
+            }
+        }
+        elseif (isset($user['rol_id']) && $user['rol_id'] == EMPLEADO) {
+            if(in_array($this->request->action, ['index','view','logout','login','home','perfil',
+                                'direcciones','reservas','pagos','telefonos','tarjetas',
+                                'contact'
+            ]))
+            {
+                return true;
+            }
+        }
+        
+        return parent::isAuthorized($user);
 
-		return true;
-	}
+        return true;
+    }
 
     /**
      * Index method

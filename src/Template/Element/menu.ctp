@@ -169,7 +169,7 @@
 					                    		 </li>					                    		 
 				                    	<?php endif; ?>
 
-				                    	<?php if (!empty($current_user) ) :?>
+				                    	<?php if (!empty($current_user) && ($current_user['rol_id'] != ADMINISTRADOR && $current_user['rol_id'] != EMPLEADO)) :?>
 				                    	<li>
 					                    	<?= $this->Html->link('Perfil',['controller' => 'users', 'action' => 'perfil'])?>
 					                    </li>
