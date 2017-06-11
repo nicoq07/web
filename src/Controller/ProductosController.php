@@ -86,12 +86,14 @@ class ProductosController extends AppController
         if ($userid == null)
             $userid = $this->viewVars['current_user']['id'];
         $usoProdu = $this->request->query('usoprodu');
+        if ($usoProdu == null)
+            $usoProdu = 1;
         $calificacion_id = null;
         $producto = $this->Productos->get($id, [
         'contain' => ['RangoEdades', 'Categorias', 'Reservas', 'CalificacionesProductos', 'FacturaProductos', 'FotosProductos']]);  
         //$usoProdu = 0;
         $conn = ConnectionManager::get('default');  
-        if ($userid != null && $usoProdu != 0)
+        if ($userid != null && $usoProdu == 1)
         { 
             $miquery2 = "SELECT 1 from productos, reservas_productos, reservas, users
             where productos.id =".$id." 
