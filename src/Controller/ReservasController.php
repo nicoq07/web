@@ -660,14 +660,14 @@ class ReservasController extends AppController
         $arrayProductos = array();
         $cont = 0;
         foreach ($productos as $producto) {
-            $arrayProductos[$cont] = "http://localhost/web/Productos/view/".$producto->id."?usoprodu=1&userid=".$usuario->id."#calificar";
+            $arrayProductos[$cont] = "http://localhost/web/Productos/view/".$producto->producto_id."?usoprodu=1&userid=".$usuario->id."#calificar";
             $cont ++;
         }
 
         $mail = array();
         $mail['correo'] = $usuario->email;
         $mail['asunto'] = "Calificación de productos de la reserva ".$producto->reserva_id;
-        $mail['mensaje'] = $usuario->nombre.", \n \t gracias por usar nuestros productos, a partír de este momento vas a poder calificarlos, lo cual sería de gran agrado para nosotros si lo hicieras. 
+        $mail['mensaje'] = $usuario->nombre.", \n \t gracias por usar nuestros productos, a partír de este momento vas a poder calificarlos, lo cual sería un agrado para nosotros que lo hicieras. 
         \n Te enviamos los enlaces para que puedas hacerlo desde aquí: \n\n";
         foreach ($arrayProductos as $key => $value) {
             $mail['mensaje'] .= $value."\n";
