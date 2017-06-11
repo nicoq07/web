@@ -22,10 +22,10 @@
                 <tr>
                     <td><?= $this->Number->format($categoria->id) ?></td>
                     <td><?= h($categoria->descripcion) ?></td>
-                    <td><?= h($categoria->active) ?></td>
+                    <td><?= $categoria->active ? h("Si") : h("No") ?></td>
                     <td class="actions">
                         <?= $this->Html->link('Modificar', ['action' => 'edit', $categoria->id], ['class' => 'btn btn-default']) ?>
-                        <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $categoria->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $categoria->id, 'class' => 'btn btn-default']) ?>
+                        <?= $this->Form->postLink('Eliminar', ['action' => 'desactivar', $categoria->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $categoria->id, 'class' => 'btn btn-default']) ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

@@ -18,7 +18,7 @@ class CategoriasController extends AppController
      */
     public function index()
     {
-        $categorias = $this->paginate($this->Categorias);
+    	$categorias= $this->paginate($this->Categorias->find('all'));
 
         $this->set(compact('categorias'));
         $this->set('_serialize', ['categorias']);
@@ -52,11 +52,11 @@ class CategoriasController extends AppController
         if ($this->request->is('post')) {
             $categoria = $this->Categorias->patchEntity($categoria, $this->request->getData());
             if ($this->Categorias->save($categoria)) {
-                $this->Flash->success(__('The categoria has been saved.'));
+                $this->Flash->success(__('Categoría guardada'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The categoria could not be saved. Please, try again.'));
+            $this->Flash->error(__('La categoría no pudo guardarse, reintente'));
         }
         $this->set(compact('categoria'));
         $this->set('_serialize', ['categoria']);
@@ -77,11 +77,11 @@ class CategoriasController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $categoria = $this->Categorias->patchEntity($categoria, $this->request->getData());
             if ($this->Categorias->save($categoria)) {
-                $this->Flash->success(__('The categoria has been saved.'));
+                $this->Flash->success(__('Categoría guardada'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The categoria could not be saved. Please, try again.'));
+            $this->Flash->error(__('La categoría no pudo editarse, reintente'));
         }
         $this->set(compact('categoria'));
         $this->set('_serialize', ['categoria']);
@@ -99,11 +99,24 @@ class CategoriasController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $categoria = $this->Categorias->get($id);
         if ($this->Categorias->delete($categoria)) {
-            $this->Flash->success(__('The categoria has been deleted.'));
+            $this->Flash->success(__('Categoría borrada'));
         } else {
-            $this->Flash->error(__('The categoria could not be deleted. Please, try again.'));
+            $this->Flash->error(__('La categoría no pudo borrarse, reintente'));
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+    public function desactivar($id = null)
+    {
+    	if ($this->request->is(['patch', 'post', 'put'])) {
+    		$categoria= $this->Categorias->get($id);
+    		$categoria->active = false;
+    		if ($this->Categorias->save($categoria)) {
+    			$this->Flash->success(__('Categoría borrada'));
+    			return $this->redirect($this->referer());
+    		}
+    		$this->Flash->error(__('La categoría no pudo borrarse, reintente!'));
+    	}
     }
 }
