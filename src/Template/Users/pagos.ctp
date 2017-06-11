@@ -12,6 +12,7 @@
 		                <th scope="col"><?= $this->Paginator->sort('id', ['Cod Reserva']) ?></th>
 		                <th scope="col"><?= h("Método de pago") ?></th>
 		                <th scope="col"><?= $this->Paginator->sort('pagado') ?></th>
+		                <th scope="col"></th>
 		            </tr>
 		        </thead>
 		        <tbody>
@@ -20,6 +21,8 @@
 		                <td><?= h($pago->reserva_id) ?></td>
 		                <td><?= $medio[$pago->medio_pago_id]; ?></td>
 						<td><?= $pago->pagado ? __('Si') : __('No'); ?></td>
+						<td><?= $pago->pagado ?  "" : 
+						$this->Html->link(__('Pagar'), ['controller' =>'pagosReserva', 'action' => 'add',$pago->reserva_id], ['class' => 'btn btn-default ']); ?></td>
 		            </tr>
 		            <?php endforeach; ?>
 		        </tbody>

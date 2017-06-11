@@ -140,6 +140,25 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
 
+    	
+    public function cambiarpassword($id = null)
+    {
+    	$user = $this->Users->get($id, [
+    			'contain' => []
+    	]);
+    	if ($this->request->is(['patch', 'post', 'put'])) {
+    		$user = $this->Users->patchEntity($user, $this->request->getData());
+    		if ($this->Users->save($user)) {
+    			$this->Flash->success(__('Contraseña actualizada!'));
+    			
+    			return $this->redirect($this->referer());
+    		}
+    		$this->Flash->error(__('Tenemos un problema para cambiar tu contraseña. Reintentá!'));
+    	}
+    	$this->set(compact('user'));
+    	$this->set('_serialize', ['user']);
+    }
+    
     /**
      * Delete method
      *
@@ -212,7 +231,10 @@ class UsersController extends AppController
     	if($user)
     	{
     		$user = $this->Users->get($user['id'], [
-    				'contain' => ['Domicilios']
+    				'contain' => ['Domicilios'=> function ($q) {
+    				return $q
+    				->where(['Domicilios.active' => true]);
+    				}]
     		]);
     	}
     	
@@ -272,8 +294,14 @@ class UsersController extends AppController
     	if($user)
     	{
     		$user = $this->Users->get($user['id'], [
-    				'contain' => ['TarjetasCreditoUser']
+    				'contain' => ['TarjetasCreditoUser'=> function ($q) {
+    				return $q
+    				->where(['TarjetasCreditoUser.active' => true]);
+    				}]
     		]);
+    		
+    		
+    		
     	}
     	$this->set(compact('user'));
     	$this->set('_serialize', ['user']);
