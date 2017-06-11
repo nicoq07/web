@@ -130,7 +130,7 @@ class TarjetasCreditoUserController extends AppController
     public function desactivar($id = null)
     {
     	if ($this->request->is(['patch', 'post', 'put'])) {
-    		$tarjetasCreditoUser = $tarjetasCreditoUser = $this->TarjetasCreditoUser->get($id);
+    		$tarjetasCreditoUser = $this->TarjetasCreditoUser->get($id);
     		$tarjetasCreditoUser->active = false;
     		if ($this->TarjetasCreditoUser->save($tarjetasCreditoUser)) {
     			$this->Flash->success(__('Tarjeta borrada'));
