@@ -66,14 +66,13 @@
                         if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) 
                         {
                           echo	$this->Html->link('Modificar', ['action' => 'edit', $producto->id], ['class' => 'btn btn-default']) ;
-                          echo $this->Form->postLink('Baja', ['action' => 'delete', $producto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $producto->id, 'class' => 'btn btn-default']);
+                          /*echo $this->Form->postLink('Baja', ['action' => 'delete', $producto->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $producto->id, 'class' => 'btn btn-default']);*/
+                          echo  $this->Html->link(' + ', ['action' => 'agregarStock', $producto->id], ['class' => 'btn btn-default']);
+                          echo  $this->Html->link(' - ', ['action' => 'sacarStock', $producto->id], ['class' => 'btn btn-default']);
                         }
                         
                         	echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-default']) ;
-                        	echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-default']) ;
-                        
-                 		
-                         
+                        	echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-default']) ;                         
                         ?>
                     </div>
                 </div>              
