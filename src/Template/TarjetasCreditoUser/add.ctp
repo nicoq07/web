@@ -1,30 +1,35 @@
-<?php
-/**
-  * @var \App\View\AppView $this
-  */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Tarjetas Credito User'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="tarjetasCreditoUser form large-9 medium-8 columns content">
-    <?= $this->Form->create($tarjetasCreditoUser) ?>
-    <fieldset>
-        <legend><?= __('Add Tarjetas Credito User') ?></legend>
-        <?php
-            echo $this->Form->control('user_id', ['options' => $users]);
-            echo $this->Form->control('numero');
-            echo $this->Form->control('vencimientoMes');
-            echo $this->Form->control('vencimientoAnio');
-            echo $this->Form->control('codSeguridad');
-            echo $this->Form->control('active');
-            echo $this->Form->control('marca');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+&nbsp;
+<div class="row">
+                	<div class = "col-lg-4 col-lg-offset-4">
+					<h3> Agregar tarjeta</h3>
+					&nbsp;
+					
+                    <?= $this->Form->create($tarjetasCreditoUser) ?>
+                    <?php
+                   
+                    ?>
+                            <?php
+                            if (!$current_user['rol_id'] == CLIENTE || !$current_user['rol_id'] == BLOQUEADO)
+                            {
+                            	echo $this->Form->control('user_id', ['options' => $users]);
+                            	
+                            }
+	                            echo $this->Form->control('marca', ['name' => 'marca', 'options' => $marca]);
+	                            echo $this->Form->input('numero', ['label' => 'Número de tarjeta',  'placeholder'=>'Ingrese sólo los 16 números', 'maxlength' => '16']);
+	                            echo $this->Form->label('Fecha de vencimiento');
+                                echo $this->Form->input('vencimientoMes', ['type' => 'number', 'placeholder' => 'MM', 'label'=>false]);
+                                echo $this->Form->input('vencimientoAnio', ['type' => 'number', 'placeholder' => 'AAAA', 'label'=>false]);
+                                echo $this->Form->input('codSeguridad', ['label' => 'Código de seguridad' , 'type' => 'password', 'maxlength' => '3','placeholder'=>'XXX']);
+                                echo $this->Form->input('active', ['label' => 'Activa']);
+                                
+                                ?>
+                                                    <?= $this->Form->button('Guardar tarjeta') ?>
+                                
+                         </div>
+                    <?php
+                    ?>                         
+                  
+                    <br>
+                        <?= $this->Form->end() ?>
 </div>
+&nbsp;

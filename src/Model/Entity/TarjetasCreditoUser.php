@@ -35,35 +35,7 @@ class TarjetasCreditoUser extends Entity
         '*' => true,
         'id' => false
     ];
-    protected function _setNumero($value)
-    {
-    	if (!empty($value))
-    	{
-    		$hasher = new DefaultPasswordHasher();
-    		return $hasher->hash($value);
-    	}
-    	else
-    	{
-    		$id = $this->_properties['id'];
-    		$tarjetaCreditoUser = TableRegistry::get('TarjetasCreditoUser')->recoverPassword($id);
-    		return $tarjetaCreditoUser;
-    	}
-    }
     
-    protected function _setcodSeguridad($value)
-    {
-    	if (!empty($value))
-    	{
-    		$hasher = new DefaultPasswordHasher();
-    		return $hasher->hash($value);
-    	}
-    	else
-    	{
-    		$id = $this->_properties['id'];
-    		$tarjetaCreditoUser = TableRegistry::get('TarjetasCreditoUser')->recoverPassword($id);
-    		return $tarjetaCreditoUser;
-    	}
-    }
     protected function _getPresentacion()
     {
         /*$direccion = $this->_properties['direccion'] . ' ' . $this->_properties['numero'];
