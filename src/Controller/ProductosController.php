@@ -328,10 +328,10 @@ class ProductosController extends AppController
     			}
     			$referencia = "webroot". DS . 'imagenes' . DS .  "IdProd-".$idProd. "-"  .$img['name'];
     			$connection->insert('fotos_productos', [
-    					'producto_id' => $idProd,
-    					'referencia' => $referencia,
-    					'modified' => new \DateTime('now'),
-    					'created' => new \DateTime('now')], ['created' => 'datetime' , 'modified' => 'datetime']);
+                   'producto_id' => $idProd,
+                   'referencia' => $referencia,
+                   'modified' => new \DateTime('now'),
+                   'created' => new \DateTime('now')], ['created' => 'datetime' , 'modified' => 'datetime']);
     		}
     		
     	}
@@ -362,130 +362,170 @@ class ProductosController extends AppController
             if ($this->request->getData()['tipoBaja'] == 'completa')
             {
                 $producto->active = 0;
-                debug("baja completa");
-            }
-            if ($producto->cantidad <= $this->request->getData()['cantidadADescontar']) {
-                $producto->active = 0;
-                $producto->cantidad = 0;
-            } else {
-                $aDescontar = $this->request->getData()['cantidadADescontar'];
-                $nuevaCantidad = $producto->cantidad - $aDescontar; 
-                $producto->active = 1;
-                $producto->cantidad = $nuevaCantidad;
+                //debug("baja completa");
                 $fechaIni = new \DateTime('now');
-                if ($this->request->getData()['tiempoBaja'] == 'indeterminada')
-                {
-                    $agregoMeses = new \DateTime('now');
-                    $agregoMeses->add(new \DateInterval('P3M'));
-                    $fechaFin= new \DateTime(date_format($agregoMeses, 'Y/m/d H:i:s'));
+                $agregoMeses = new \DateTime('now');
+                $agregoMeses->add(new \DateInterval('P3M'));
+                $fechaFin= new \DateTime(date_format($agregoMeses, 'Y/m/d H:i:s'));
+                $miquery3 = "SELECT reservas_productos.producto_id, reservas_productos.id, reservas_productos.cantidad
+                from productos, reservas, reservas_productos 
+                where reservas.no_disponible_inicio between '".$fechaIni->format('Y/m/d H:i:s')."' AND '".$fechaFin->format('Y/m/d H:i:s')."' 
+                AND productos.id = ".$id."
+                AND productos.id = reservas_productos.producto_id
+                AND reservas.id = reservas_productos.reserva_id";
+                debug($miquery3);
+                $stmt = $conn->execute($miquery3);
+                $resu = $stmt ->fetchAll('assoc');  
+                if(sizeof($resu) == 0){
+                    $cantidadReservada = 0;
                 }
                 else
                 {
-                    $fechaFin = new \DateTime($this->request->getData()['fecha']);
-                }
-                debug($fechaIni);
-                debug ($fechaFin);
-                $count = 1;
-                $aDescontarHora = 0;
-                for ($i = $fechaIni; (strtotime(date_format($i, 'Y/m/d H:i:s')) <= strtotime(date_format($fechaFin, 'Y/m/d H:i:s')))  ; ) 
-                {
-                    $aDescontarHora = $aDescontar;
-                    //debug($aDescontarHora);
-                    //debug($aDescontar);
-                    //debug(strtotime(date_format($fechaIni, 'Y/m/d H:i:s')));
-                    //debug(strtotime(date_format($fechaFin, 'Y/m/d H:i:s')));
-                    //debug((strtotime(date_format($i, 'Y/m/d H:i:s')) <= strtotime(date_format($fechaFin, 'Y/m/d H:i:s'))));
-                    //debug('loop'.$count++);
-                    //reviso por hora si en algún momento, mi nueva Cantidad no satisface el stock pedido
-                    $cantidadReservada = 0;
-                    $miquery = "SELECT productos.id, sum(reservas_productos.cantidad) as micantidad
-                    from productos, reservas, reservas_productos 
-                    where '".$fechaIni->format('Y/m/d H:i:s')."' between reservas.no_disponible_inicio AND reservas.no_disponible_fin
-                    AND productos.id =".$id."
-                    AND productos.id = reservas_productos.producto_id
-                    AND reservas.id = reservas_productos.reserva_id
-                    group by productos.id";
-                    $stmt = $conn->execute($miquery);
-                    $resu = $stmt ->fetchAll('assoc');       
-                    if(sizeof($resu) == 0){
-                        $cantidadReservada = 0;
+                    foreach ($resu as $reserProdu)
+                    {
+                        $DetalleABajar=array();
+                        $DetalleABajar['producto_id'] = $reserProdu['producto_id'];
+                        $DetalleABajar['id'] = $reserProdu['id'];
+                        $DetalleABajar['cantidad'] = $reserProdu['cantidad'];
+                        $DetalleABajar['casoParcial'] = 0;
+                        //debug ($DetalleABajar);
+                        if (!(array_key_exists($reserProdu['id'], $DetallesABajar)))
+                        {
+                            $DetallesABajar[$reserProdu['id']] = $DetalleABajar;
+                        }   
                     }
-                    else
-                    { 
-                        $cantidad = $resu[0]['micantidad'];
-                        if ((int)$cantidad > (int)$nuevaCantidad){
-                            //traigo por fecha ascendiente los detalles de las reservas, para generar un array de los afectados      
-                            //debug ('hay menos!!');
-                            $miquery2 = "SELECT reservas_productos.producto_id, reservas_productos.id, reservas_productos.cantidad
-                            from productos, reservas, reservas_productos 
-                            where '".$fechaIni->format('Y/m/d H:i:s')."' between reservas.no_disponible_inicio AND reservas.no_disponible_fin
-                            AND productos.id =".$id."
-                            AND productos.id = reservas_productos.producto_id
-                            AND reservas.id = reservas_productos.reserva_id
-                            order by reservas_productos.created DESC";
-                            $stmt = $conn->execute($miquery2);
-                            $resu = $stmt ->fetchAll('assoc');  
-
-                            $flagParcial = true;
-                            foreach ($resu as $reserProdu)
-                            {
-                                if (array_key_exists($reserProdu['id'], $DetallesABajar))
-                                {
-                                    $flagParcial = false;
-                                }
-                                
-                                $aDescontarHora -= $reserProdu['cantidad'];
-                                if ($aDescontarHora >= 0)
-                                {
-                                    $DetalleABajar=array();
-                                    $DetalleABajar['producto_id'] = $reserProdu['producto_id'];
-                                    $DetalleABajar['id'] = $reserProdu['id'];
-                                    $DetalleABajar['cantidad'] = $reserProdu['cantidad'];
-                                    $DetalleABajar['casoParcial'] = 0;
-                                    //debug ($DetalleABajar);
-                                    if (!(array_key_exists($reserProdu['id'], $DetallesABajar)))
-                                    {
-                                        $DetallesABajar[$reserProdu['id']] = $DetalleABajar;
-                                    }
-                                }
-                                else
-                                {
-                                    //debug($flagParcial);
-                                    if ($flagParcial == true)
-                                    {
-                                        $flagParcial = false;
-                                        $absoluto = $aDescontarHora * -1;
-                                        $DetalleABajar=array();
-                                        $DetalleABajar['producto_id'] = $reserProdu['producto_id'];
-                                        $DetalleABajar['id'] = $reserProdu['id'];
-                                        $DetalleABajar['cantidad'] = $absoluto;
-                                        $DetalleABajar['casoParcial'] = 1;
-                                        //debug ($DetalleABajar);
-                                        if (!(array_key_exists($reserProdu['id'], $DetallesABajar)))
-                                        {
-                                            $DetallesABajar[$reserProdu['id']] = $DetalleABajar;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    $i->add(new \DateInterval('PT1H'));
                 } 
             }
+            else
+            {
+                if ($producto->cantidad <= $this->request->getData()['cantidadADescontar']) {
+                   $producto->active = 0;
+                   $aDescontar = $producto->cantidad;
+                   $nuevaCantidad = 0; 
+               } 
+               else 
+               {
+                   $aDescontar = $this->request->getData()['cantidadADescontar'];
+                   $nuevaCantidad = $producto->cantidad - $aDescontar; 
+                   $producto->active = 1;
+                   $producto->cantidad = $nuevaCantidad;
+               }   
+               $fechaIni = new \DateTime('now');
+               if ($this->request->getData()['tiempoBaja'] == 'indeterminada')
+               {
+                   $agregoMeses = new \DateTime('now');
+                   $agregoMeses->add(new \DateInterval('P3M'));
+                   $fechaFin= new \DateTime(date_format($agregoMeses, 'Y/m/d H:i:s'));
+               }
+               else
+               {
+                   $fechaFin = new \DateTime($this->request->getData()['fecha']);
+               }
+               debug($fechaIni);
+               debug ($fechaFin);
+               $count = 1;
+               $aDescontarHora = 0;
+               for ($i = $fechaIni; (strtotime(date_format($i, 'Y/m/d H:i:s')) <= strtotime(date_format($fechaFin, 'Y/m/d H:i:s')))  ; ) 
+               {
+                   $aDescontarHora = $aDescontar;
+                                 //debug($aDescontarHora);
+                                 //debug($aDescontar);
+                                 //debug(strtotime(date_format($fechaIni, 'Y/m/d H:i:s')));
+                                 //debug(strtotime(date_format($fechaFin, 'Y/m/d H:i:s')));
+                                 //debug((strtotime(date_format($i, 'Y/m/d H:i:s')) <= strtotime(date_format($fechaFin, 'Y/m/d H:i:s'))));
+                                 //debug('loop'.$count++);
+                                 //reviso por hora si en algún momento, mi nueva Cantidad no satisface el stock pedido
+                   $cantidadReservada = 0;
+                   $miquery = "SELECT productos.id, sum(reservas_productos.cantidad) as micantidad
+                   from productos, reservas, reservas_productos 
+                   where '".$fechaIni->format('Y/m/d H:i:s')."' between reservas.no_disponible_inicio AND reservas.no_disponible_fin
+                   AND productos.id =".$id."
+                   AND productos.id = reservas_productos.producto_id
+                   AND reservas.id = reservas_productos.reserva_id
+                   group by productos.id";
+                   $stmt = $conn->execute($miquery);
+                   $resu = $stmt ->fetchAll('assoc');       
+                   if(sizeof($resu) == 0){
+                       $cantidadReservada = 0;
+                   }
+                   else
+                   { 
+                       $cantidad = $resu[0]['micantidad'];
+                       if ((int)$cantidad > (int)$nuevaCantidad){
+                                         //traigo por fecha ascendiente los detalles de las reservas, para generar un array de los afectados      
+                                         //debug ('hay menos!!');
+                           $miquery2 = "SELECT reservas_productos.producto_id, reservas_productos.id, reservas_productos.cantidad
+                           from productos, reservas, reservas_productos 
+                           where '".$fechaIni->format('Y/m/d H:i:s')."' between reservas.no_disponible_inicio AND reservas.no_disponible_fin
+                           AND productos.id =".$id."
+                           AND productos.id = reservas_productos.producto_id
+                           AND reservas.id = reservas_productos.reserva_id
+                           order by reservas_productos.created DESC";
+                                         //debug($miquery2);
+                           $stmt = $conn->execute($miquery2);
+                           $resu = $stmt ->fetchAll('assoc');  
+                           
+                           $flagParcial = true;
+                           foreach ($resu as $reserProdu)
+                           {
+                               if (array_key_exists($reserProdu['id'], $DetallesABajar))
+                               {
+                                   $flagParcial = false;
+                               }
+                               
+                               $aDescontarHora -= $reserProdu['cantidad'];
+                               if ($aDescontarHora >= 0)
+                               {
+                                   $DetalleABajar=array();
+                                   $DetalleABajar['producto_id'] = $reserProdu['producto_id'];
+                                   $DetalleABajar['id'] = $reserProdu['id'];
+                                   $DetalleABajar['cantidad'] = $reserProdu['cantidad'];
+                                   $DetalleABajar['casoParcial'] = 0;
+                                                 //debug ($DetalleABajar);
+                                   if (!(array_key_exists($reserProdu['id'], $DetallesABajar)))
+                                   {
+                                       $DetallesABajar[$reserProdu['id']] = $DetalleABajar;
+                                   }
+                               }
+                               else
+                               {
+                                                 //debug($flagParcial);
+                                   if ($flagParcial == true)
+                                   {
+                                       $flagParcial = false;
+                                       $absoluto = $aDescontarHora * -1;
+                                       $DetalleABajar=array();
+                                       $DetalleABajar['producto_id'] = $reserProdu['producto_id'];
+                                       $DetalleABajar['id'] = $reserProdu['id'];
+                                       $DetalleABajar['cantidad'] = $absoluto;
+                                       $DetalleABajar['casoParcial'] = 1;
+                                                     //debug ($DetalleABajar);
+                                       if (!(array_key_exists($reserProdu['id'], $DetallesABajar)))
+                                       {
+                                           $DetallesABajar[$reserProdu['id']] = $DetalleABajar;
+                                       }
+                                   }
+                               }
+                           }
+                       }
+                   }
+                   $i->add(new \DateInterval('PT1H'));
+               }
+               
+           }
             //detalle a bajar tiene de Key el id de reservas_productos, el id del producto 
             //(que se puede sacar porque todo esto es con el mismo) y la cantidad afectada
             //si casoParcial es 1, significa que la cantidad que se saca es solo 
-            debug ($DetallesABajar);    
-            exit;       
-            if ($this->Productos->save($producto))
-            {
-                $this->Flash->success(__('Se actualizó el stock.'));
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('No se pudo actualizar el stock, reintente por favor.'));
+           debug ($DetallesABajar);    
+           exit;       
+           if ($this->Productos->save($producto))
+           {
+            $this->Flash->success(__('Se actualizó el stock.'));
+            return $this->redirect(['action' => 'index']);
         }
-        $this->set(compact('producto'));
-        $this->set('_serialize', ['producto']);
-    } 
+        $this->Flash->error(__('No se pudo actualizar el stock, reintente por favor.'));
+    }
+    $this->set(compact('producto'));
+    $this->set('_serialize', ['producto']);
+} 
 }
