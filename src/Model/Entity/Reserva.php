@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\I18n\Date;
 
 /**
  * Reserva Entity
@@ -39,4 +40,20 @@ class Reserva extends Entity
         '*' => true,
         'id' => false
     ];
+    
+    
+    public function isCancelable(){
+    	$fecha = $this->_properties['fecha_inicio'];
+    	$hoy = new Date("now");
+    	$hoy->format('Y-m-d');
+    	$fecha = $fecha->format("Y-m-d");
+    	$inicio = new Date($fecha);
+    	$diferencia = date_diff($inicio, $hoy);
+    	
+    	if ($diferencia->d < 3) {
+    		return false;
+    	}
+    	
+    	return true;
+    }
 }

@@ -3,7 +3,7 @@
         <div class="col-lg-8 col-lg-offset-2">
             <?= $this->Form->create($user) ?>
             <fieldset>
-                <legend><?= __('Registro') ?></legend>
+                <legend><?= __('Actualizar datos') ?></legend>
                 <?php
                 	echo $this->Form->control('rol_id', ['options' => $roles, 'empty' => true]);
                     echo $this->Form->control('dni');

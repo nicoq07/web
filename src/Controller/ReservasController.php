@@ -545,7 +545,9 @@ class ReservasController extends AppController
         $connection= ConnectionManager::get("default");
         $connection->begin();
         $reserva = $this->Reservas->get($id);
-        if ($this->isCancelable($reserva->fecha_inicio)) {
+        //if ($this->isCancelable($reserva->fecha_inicio)) {
+        //probar esta funcion
+        if ($reserva->isCancelable()) {
             $factura = $this->Reservas->Facturas->find("all")->where(['reserva_id ='=>$id]);
             $factura = $factura->first();
             $envios = $this->Reservas->Envios->find("all")->where(['reserva_id ='=>$id]);
@@ -626,6 +628,7 @@ class ReservasController extends AppController
     }
 
     public function isCancelable($fecha){
+    	
         $hoy = new Date("now");
         $hoy->format('Y-m-d');
         $fecha = $fecha->format("Y-m-d");
