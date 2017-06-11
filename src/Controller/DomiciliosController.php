@@ -72,6 +72,7 @@ class DomiciliosController extends AppController
         $domicilio = $this->Domicilios->newEntity();
         if ($this->request->is('post')) {
             $domicilio = $this->Domicilios->patchEntity($domicilio, $this->request->getData());
+            $domicilio->active = 1;
             $user = $this->Auth->user();
             if ($user['rol_id'] == CLIENTE)
             {
@@ -109,6 +110,7 @@ class DomiciliosController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $domicilio = $this->Domicilios->patchEntity($domicilio, $this->request->getData());
+            $domicilio->active = 1;
             if ($this->Domicilios->save($domicilio)) {
                 $this->Flash->success(__('Domicilio actualizado.'));
 

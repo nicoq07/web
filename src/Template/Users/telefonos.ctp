@@ -25,7 +25,7 @@
 						<td><?= $telefono->active ? __('Si') : __('No'); ?></td>
 		                <td class="actions">
 		                    <?= $this->Html->link(__('Editar'), ['controller' =>'telefonos', 'action' => 'editcliente', $telefono->id], ['class' => 'btn btn-default ']) ?>
-	                    	<?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $telefono->id], ['class' => 'btn btn-default '], ['confirm' => __('Seguro de borrar el número # {0}?', $telefono->numero)]) ?>
+	                    	<?= $this->Form->postLink(__('Borrar'), ['controller' =>'telefonos', 'action' => 'delete', $telefono->id], ['class' => 'btn btn-default '], ['confirm' => __('Seguro de borrar el número # {0}?', $telefono->numero)]) ?>
 		                </td>
 		            </tr>
 		            <?php endforeach; ?>

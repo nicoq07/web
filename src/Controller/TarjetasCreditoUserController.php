@@ -12,9 +12,9 @@ class TarjetasCreditoUserController extends AppController
 {
     public function isAuthorized($user)
     {
-        if(isset($user['rol_id']) &&  $user['rol_id'] == BLOQUEADO)
+        if(isset($user['rol_id']) &&  ($user['rol_id'] == BLOQUEADO || $user['rol_id'] == CLIENTE))
         {
-            if(in_array($this->request->action, ['add']))
+            if(in_array($this->request->action, ['add', 'edit', 'desactivar']))
             {
                 return true;
             }
@@ -79,12 +79,13 @@ class TarjetasCreditoUserController extends AppController
         }
         if ($this->request->is('post')) {
             $tarjetasCreditoUser = $this->TarjetasCreditoUser->patchEntity($tarjetasCreditoUser, $this->request->getData());
-            
+            $tarjetasCreditoUser->user_id = $this->viewVars['current_user']['id'];
+            $tarjetasCreditoUser->active = 1;
             if ($this->TarjetasCreditoUser->save($tarjetasCreditoUser)) {
                 $this->Flash->success(__('Tarjeta agregada'));
                 if (!empty($user_id))
                 {
-                	return $this->redirect(['controller' => 'users', 'action' => 'tarjetas']);;
+                	return $this->redirect(['controller' =>'users' ,'action' => 'tarjetas']);
                 }
                 return $this->redirect($this->referer());
             }

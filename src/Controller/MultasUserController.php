@@ -39,9 +39,16 @@ class MultasUserController extends AppController
     {
         $this->paginate = [
             'contain' => ['Users']
-        ];
-        $multasUser = $this->paginate($this->MultasUser);
-
+        ];        
+        $user = $this->Auth->user();
+        if ($user['rol_id'] == CLIENTE || $user['rol_id'] == BLOQUEADO)
+        {
+            $multasUser = $this->MultasUser->find()->where(['user_id =' => $user['id']]);
+        } else {
+            $multasUser = $this->MultasUser->find();
+        }
+        
+        $multasUser = $this->paginate($multasUser);
         $this->set(compact('multasUser'));
         $this->set('_serialize', ['multasUser']);
     }

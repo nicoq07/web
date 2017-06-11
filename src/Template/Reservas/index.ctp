@@ -19,7 +19,11 @@
             echo $this->Form->control('estado_reserva_id', ['options' => $estados, 'label' => false, 'empty' => 'Todos','onchange'=>'document.getElementById("miform").submit()']); ?>
         </div>
         <div class="col-lg-3">
-            <?php echo $this->Form->control('idlistuser', ['label'=>'Filtrar por cliente:', 'list'=>'user', 'onchange'=>'document.getElementById("miform").submit()']);?>
+            <?php 
+            if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) {
+                echo $this->Form->control('idlistuser', ['label'=>'Filtrar por cliente:', 'list'=>'user', 'onchange'=>'document.getElementById("miform").submit()']);
+            }
+            ?>
         </div>
         <datalist id="user">
             <?php foreach ($users as $user): ?>

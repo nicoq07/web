@@ -68,10 +68,6 @@ class DomiciliosTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('piso', 'create')
-            ->notEmpty('piso');
-
-        $validator
             ->requirePresence('numero', 'create')
             ->notEmpty('numero');
 

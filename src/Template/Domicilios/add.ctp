@@ -12,9 +12,8 @@
        			echo $this->Form->control('user_id', ['options' => $users]);
        			
        		}
-            echo $this->Form->control('piso');
             echo $this->Form->control('numero');
-            echo $this->Form->control('active');
+            echo $this->Form->control('piso');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Agregar')) ?>

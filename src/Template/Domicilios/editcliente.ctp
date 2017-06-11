@@ -7,9 +7,8 @@
 	        <?php
 	            echo $this->Form->control('localidad_id', ['options' => $localidades]);
 	            echo $this->Form->control('direccion');
-	            echo $this->Form->control('piso');
 	            echo $this->Form->control('numero');
-	            echo $this->Form->control('active');
+	            echo $this->Form->control('piso');	            
 	        ?>
 	    </fieldset>
 	    <?= $this->Form->button('Modificar') ?>

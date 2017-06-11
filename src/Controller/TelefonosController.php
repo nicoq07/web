@@ -71,7 +71,8 @@ class TelefonosController extends AppController
         $telefono = $this->Telefonos->newEntity();
         if ($this->request->is('post')) {
         	$telefono = $this->Telefonos->patchEntity($telefono, $this->request->getData());
-        	$user = $this->Auth->user();
+        	$telefono->active = 1;
+            $user = $this->Auth->user();
         	if ($user['rol_id'] == CLIENTE)
         	{
         		$telefono->user_id = $user['id'];
@@ -151,9 +152,10 @@ class TelefonosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $telefono = $this->Telefonos->get($id);
         if ($this->Telefonos->delete($telefono)) {
-            $this->Flash->success(__('The telefono has been deleted.'));
+            $this->Flash->success(__('El teléfono fue borrado.'));
+            return $this->redirect(['controller' =>'users' ,'action' => 'telefonos']);
         } else {
-            $this->Flash->error(__('The telefono could not be deleted. Please, try again.'));
+            $this->Flash->error(__('El teléfono no pudo ser borrado, intente nuevamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

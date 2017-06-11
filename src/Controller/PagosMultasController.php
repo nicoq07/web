@@ -108,7 +108,9 @@ class PagosMultasController extends AppController
             $this->Flash->error(__('No pudo realizarse el pago. Intente nuevamente.'));
         }
         $mediosPagos = $this->PagosMultas->MediosPagos->find('list', ['limit' => 200])->where(['active =' => 1]);
-        $tarjetas = $this->PagosMultas->MultasUser->Users->TarjetasCreditoUser->find('list')->where(['user_id ='=>$multasUser->user_id]);
+        if (isset($multasUser)) {
+            $tarjetas = $this->PagosMultas->MultasUser->Users->TarjetasCreditoUser->find('list', ['limit' => 200])->where(['TarjetasCreditoUser.user_id ='=>$multasUser->user_id, 'active ='=>1]);
+        }
         $this->set(compact('pagosMulta', 'multasUser', 'mediosPagos', 'tarjetas'));
         $this->set('_serialize', ['pagosMulta']);
     }

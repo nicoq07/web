@@ -6,7 +6,6 @@
                 <legend>Agregar al stock actual</legend>
                 <h5 class="tx_gris">La cantidad actual es de <?= $producto->cantidad ?> productos.</h5>
                 <?php
-                	$this->Form->label('La cantidad actual es de '.$producto->cantidad);
                     echo $this->Form->control('stock', ['type'=>'number', 'label'=>'Cantidad a agregar']);
                 ?>
             </fieldset>

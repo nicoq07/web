@@ -81,14 +81,14 @@ class PagosReservaController extends AppController
                 $this->actualizarEstados($factura->id, $factura->monto, $lastId->reserva_id);                
                 
                 $this->Flash->success(__('Se realizó el pago con éxito.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller'=>'reservas', 'action' => 'index']);
             }
             $this->Flash->error(__('No pudo realizarse el pago. Intente nuevamente.'));
         }
         $reserva = $this->PagosReserva->Reservas->get($datos);
         $factura = $this->PagosReserva->Reservas->Facturas->find('all')->where(['Facturas.reserva_id ='=>$reserva->id]);
         $factura = $factura->first();
-        $tarjetas = $this->PagosReserva->Reservas->Users->TarjetasCreditoUser->find('list', ['limit' => 200])->where(['TarjetasCreditoUser.user_id ='=>$reserva->user_id]);
+        $tarjetas = $this->PagosReserva->Reservas->Users->TarjetasCreditoUser->find('list', ['limit' => 200])->where(['TarjetasCreditoUser.user_id ='=>$reserva->user_id, 'active ='=>1]);
         $users = $this->PagosReserva->Users->find('list', ['limit' => 200]);
         $mediosPagos = $this->PagosReserva->MediosPagos->find('list', ['limit' => 200])->where(['active =' => 1]);
         $this->set(compact('pagosReserva', 'reserva', 'users', 'mediosPagos', 'tarjetas', 'factura'));

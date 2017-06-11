@@ -11,7 +11,6 @@
 	        }
 	            echo $this->Form->control('tipo_telefono_id', ['options' => $tipoTelefonos]);
 	            echo $this->Form->control('numero');
-	            echo $this->Form->control('active');
 	        ?>
 	    </fieldset>
 	    <?= $this->Form->button(__('Agregar')) ?>

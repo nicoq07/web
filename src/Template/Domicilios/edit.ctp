@@ -13,7 +13,6 @@
             }
             echo $this->Form->control('piso');
             echo $this->Form->control('numero');
-            echo $this->Form->control('active');
         ?>
     </fieldset>
     <?= $this->Form->button('Modificar') ?>

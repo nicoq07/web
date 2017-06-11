@@ -1,9 +1,34 @@
+<script type="text/javascript">
+
+function validar(){
+    var tarjetaId = document.getElementById("tarjeta_id").value;
+    var medioPagoId = document.getElementById("medio-pago-id").value;
+    var monto = document.getElementById("monto").value;
+    if (monto == "") {
+        alert("Debe seleccionar un monto a pagar para continuar.")
+        return false;
+    }
+    if (medioPagoId == "") {
+        alert("Debe seleccionar un medio de pago para continuar.");
+        return false;
+    }
+    if (tarjetaId == 0) {
+        alert("Debe seleccionar una tarjeta para continuar.")
+        return false;
+    }
+    return true;
+}
+
+</script>
+
 <section class="duplicatable-content bkg">
     <div class="row">   
         <div class="col-lg-6 col-lg-offset-3">
             <?= $this->Form->create($pagosMulta) ?>
             <fieldset>
             <legend>Nuevo pago</legend>
+            <?php if (isset($current_user) && !empty($multasUser) && $current_user['id'] == $multasUser->user_id) { ?>
+            <?php if ($multasUser->active == 1) { ?>
             <div class="col-lg-6">
                 <?= $this->Form->input('multas_user_id', ['type' => 'text', 'value' => $multasUser->id, 'readonly' => 'readonly', 'label' => 'Código de multa']); ?>
             </div>
@@ -36,25 +61,31 @@
                 <div class="row">
                     <div class="col-lg-6">
                     <?php
-                        echo $this->Form->input('vencimientoMes', ['type'=>'number', 'placeholder'=>'MM', 'label'=>false]);
+                        echo $this->Form->input('vencimientoMes', ['type'=>'number', 'placeholder'=>'MM', 'label'=>false, 'max'=>12, 'min'=>1]);
                     ?>
                     </div>
                     <div class="col-lg-6">
                     <?php
-                        echo $this->Form->input('vencimientoAnio', ['type'=>'number', 'placeholder'=>'AAAA', 'label'=>false]);
+                        echo $this->Form->input('vencimientoAnio', ['type'=>'number', 'placeholder'=>'AAAA', 'label'=>false, 'max'=>2099, 'min'=>2017]);
                     ?>
                     </div>
                 </div>
             <?php
-                echo $this->Form->input('codSeguridad', ['type'=>'number', 'placeholder'=>'XXX']);
+                echo $this->Form->input('codSeguridad', ['type'=>'number', 'placeholder'=>'XXX', 'max'=>999, 'min'=>0]);
             ?>                        
             </div>
-        </div>            
+        </div>
+        <?php } else {
+            echo "<div class='centrar'>Ésta multa ya se encuentra paga.</div>";
+        } ?>
+        <?php } else {
+            echo "<div class='centrar'>Usted no tiene permisos para acceder a este pago.</div>";
+        } ?>
             </fieldset>
     </div>
     <div class="col-lg-6 col-lg-offset-3">
         <br>
-        <?= $this->Form->button('Realizar pago', ['class'=>'pull-right']) ?>
+        <?= $this->Form->button('Realizar pago', ['class'=>'pull-right', 'onClick'=>"return validar();"]) ?>
         <?= $this->Form->end() ?> 
     </div>
 </section>

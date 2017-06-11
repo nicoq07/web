@@ -75,6 +75,10 @@ function continuarDomicilio() {
 }
 
 function continuarProductos() {    
+    if ($("#calculoTotal").val() == 0) {
+        alert("Debe cargar el carrito para continuar.")
+        return;
+    }
     verDiv('totales');
     var fechaInicio = $("#fecha_inicio").val();
     fechaInicio = fechaInicio.split("-");
@@ -136,7 +140,11 @@ function actualizarTabla(botones, donde) {
     var diferenciaHoras= $("#diferenciaHoras").val();
     $.get('/web/reservas/actualizarTabla?horas='+diferenciaHoras+'&botones='+botones, function(d) {
         var texto = d.split('|');
-        $("#"+donde).html(texto[0]);
+        if (texto[1] == 0) {
+            $("#"+donde).html('<div class="centrar">No posee productos en el carrito.</div>');
+        } else {
+            $("#"+donde).html(texto[0]);
+        }        
         $("#calculoTotal").val(texto[1]);
     });
 }
@@ -234,7 +242,11 @@ function actualizarFechaFin(){
                                 }
                             }
 
-                            echo $this->Form->control('domicilio', ['options' => $arrayDomicilios]);
+                            if (empty($arrayDomicilios)) {
+                                echo $this->Form->control('domicilio', ['options' => [0 => 'Debe cargar un domicilio']]);
+                            } else {
+                                echo $this->Form->control('domicilio', ['options' => $arrayDomicilios]);
+                            }
                         ?>
 
                         <?= $this->Html->link('Cargar Dirección', ['controller'=>'domicilios', 'action' => 'add'], ['class' => 'btn btn-default']) ?>

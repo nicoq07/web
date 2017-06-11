@@ -207,7 +207,7 @@ class ReservasController extends AppController
         
         $users = $this->Reservas->Users->find('list', ['limit' => 200]);
         $estadosReservas = $this->Reservas->EstadosReservas->find('list', ['limit' => 200]);
-        $domicilios = $this->Reservas->Users->Domicilios->find();        
+        $domicilios = $this->Reservas->Users->Domicilios->find()->where(['user_id =' => $this->viewVars['current_user']['id']]);
         $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
         $this->set(compact('reserva', 'users', 'estadosReservas', 'productos', 'domicilios','localidades'));
         $this->set('_serialize', ['reserva']);
