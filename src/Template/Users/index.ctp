@@ -30,7 +30,7 @@
                     <td><?= h($user->apellido) ?></td>
                     <td><?= h($user->email) ?></td>
                     <td><?= $user->has('role') ? $this->Html->link($user->role->descripcion, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
-                    <td><?= h($user->active) ?></td>
+                    <td><?= $user->active ? "Si" : "No"?></td>
                     <td class="actions">
                         <?= $this->Html->link('Modificar', ['action' => 'edit', $user->id], ['class' => 'btn btn-default']) ?>
                         <?php 
@@ -38,7 +38,7 @@
                                 echo $this->Html->link('Multar', [ 'controller' => 'multasUser', 'action' => 'add', $user->id], ['class' => 'btn btn-default']);
                             }
                         ?>
-                        <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $user->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $user->id, 'class' => 'btn btn-default']) ?>
+                        <?= $this->Form->postLink('Eliminar', ['action' => 'desactivar', $user->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $user->id, 'class' => 'btn btn-default']) ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
