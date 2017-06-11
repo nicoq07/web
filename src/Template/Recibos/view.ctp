@@ -3,7 +3,30 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
+
+<section class="duplicatable-content bkg">
+    <div class="col-lg-8 col-lg-offset-2">                        
+        <div>
+            <legend>Detalle del recibo</legend>
+            <table class="table table-striped" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th scope="col"><?= __('Número') ?></th>
+                    <th scope="col"><?= __('Factura') ?></th>
+                    <th scope="col"><?= __('Monto') ?></th>
+                    <th scope="col"><?= __('Fecha de pago') ?></th>
+                </tr>
+                <tr>
+                    <td><?= h($recibo->id) ?></td>
+                    <td> <?= $this->Html->link($recibo->factura_id, ['controller' => 'Facturas', 'action' => 'view', $recibo->factura_id]) ?> </td>
+                    <td><?= "$".h($recibo->monto) ?></td>
+                    <td><?= h(date_format($recibo->created, "d/m/Y H:i"))." hs." ?></td>
+                </tr>
+            </table>
+        </div>
+    </div>                
+</section>
+
+<!--<nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('Edit Recibo'), ['action' => 'edit', $recibo->id]) ?> </li>
@@ -42,4 +65,4 @@
             <td><?= $recibo->active ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
-</div>
+</div>-->

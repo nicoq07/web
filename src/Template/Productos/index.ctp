@@ -10,9 +10,7 @@
                 </div>
             </div>
      <div class="row"> 
-        <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) :?>              
-            
-             
+        <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) :?>
                 <div class="col-lg-2 col-lg-offset-10">
                     <?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?>
                 </div>
@@ -70,9 +68,13 @@
                           echo  $this->Html->link(' + ', ['action' => 'agregarStock', $producto->id], ['class' => 'btn btn-default']);
                           echo  $this->Html->link(' - ', ['action' => 'sacarStock', $producto->id], ['class' => 'btn btn-default']);
                         }
-                        
-                        	echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-default']) ;
-                        	echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-default']) ;                         
+
+                        echo $this->Html->link('Ver', ['action' => 'view', $producto->id], ['class' => 'btn btn-default']) ;
+
+                        if (isset($current_user) && $current_user['rol_id'] == CLIENTE) 
+                        {
+                            echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-default']) ; 
+                        }                        	                        
                         ?>
                     </div>
                 </div>              

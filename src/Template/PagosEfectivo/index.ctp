@@ -3,7 +3,52 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
+
+<div class="container">
+    <br>
+    <h3 class="centrar">Pago efectivo</h3>
+    <div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?></div>
+    <div class="table-responsive">
+        <table class="table table-striped" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('reserva_id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('recibo_id') ?></th>
+                    <th scope="col"><?= __('Pagado') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pagosEfectivo as $pagoEfectivo): ?>
+                <tr>
+                    <td><?= $this->Number->format($pagoEfectivo->id) ?></td>
+                    <td><?= $this->Html->link($pagoEfectivo->reserva_id, ['controller' => 'Reservas', 'action' => 'view', $pagoEfectivo->reserva_id]) ?></td>
+                    <td><?= $this->Html->link($pagoEfectivo->recibo_id, ['controller' => 'Recibos', 'action' => 'view', $pagoEfectivo->recibo_id]) ?></td>
+                    <td>
+                        <?php 
+                        if ($pagoEfectivo->active == 1) {
+                            echo "Si";
+                        } else {
+                            echo "No";
+                        }
+                        ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="paginator centrar">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . 'Primera') ?>
+            <?= $this->Paginator->prev('< ' . 'Anterior') ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next('Siguiente' . ' >') ?>
+            <?= $this->Paginator->last('Última' . ' >>') ?>
+        </ul>
+    </div>
+</div>
+
+<!--<nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New Pagos Efectivo'), ['action' => 'add']) ?></li>
@@ -55,4 +100,4 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
-</div>
+</div>-->

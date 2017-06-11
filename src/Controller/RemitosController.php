@@ -10,6 +10,25 @@ use App\Controller\AppController;
  */
 class RemitosController extends AppController
 {
+    public function isAuthorized($user)
+    {
+        if(isset($user['role_id']) &&  $user['role_id'] == CLIENTE)
+        {
+            if(in_array($this->request->action, ['index','view']))
+            {
+                return true;
+            }
+        }
+        elseif (isset($user['role_id']) && $user['role_id'] == EMPLEADO) {
+            if(in_array($this->request->action, ['index','view']))
+            {
+                return true;
+            }
+        }
+        
+        return parent::isAuthorized($user);
+    }
+
 
     /**
      * Index method

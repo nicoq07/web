@@ -100,6 +100,69 @@
 				                    	</li>
 				                    	<?php endif; ?>
 
+				                    	<?php if (!empty($current_user) && $current_user['rol_id'] == EMPLEADO ) : ?>
+				                    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Productos <b class="caret"></b></a>
+				                    		 <ul class="dropdown-menu">
+					                    		 <li>
+					                    		 	<?= $this->Html->link('Ver productos',['controller' => 'productos', 'action' => 'index'])?>
+					                    		 </li>
+					                    		 <li>
+					                    		 	<?= $this->Html->link('Agregar productos',['controller' => 'productos', 'action' => 'add'])?>
+					                    		 </li>
+					                    		 <li>
+					                    		 	<?= $this->Html->link('ver caterogías',['controller' => 'categorias', 'action' => 'index'])?>
+					                    		 </li>
+					                    		 <li>
+					                    		 	<?= $this->Html->link('Nueva caterogía',['controller' => 'categorias', 'action' => 'add'])?>
+					                    		 </li>
+					                    		 <li>
+					                    		 	<?= $this->Html->link('Ver rangos edad',['controller' => 'rangoEdades', 'action' => 'index'])?>
+					                    		 </li>
+					                    		  <li>
+					                    		 	<?= $this->Html->link('Agregar rango edad',['controller' => 'rangoEdades', 'action' => 'add'])?>
+					                    		 </li>
+				                    		 </ul>
+				                    	</li>
+				                    	<li class="dropdown-submenu">
+				                    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios <b class="caret"></b></a>
+				                    		 <ul class="dropdown-menu">
+					                    		  <li>
+					                    		 	<?= $this->Html->link('Ver todos',['controller' => 'users', 'action' => 'index'])?>
+					                    		 </li>
+				                    		 </ul>
+				                    	</li>
+				                    	<li class="dropdown-submenu">
+				                    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Reservas <b class="caret"></b></a>
+				                    		 <ul class="dropdown-menu">
+					                    		 <li>
+					                    		 	<?= $this->Html->link('Ver reservas',['controller' => 'reservas', 'action' => 'index'])?>
+					                    		 </li>
+				                    		 </ul>
+				                    	</li>
+				                    	<li class="dropdown-submenu">
+				                    		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= h('Envíos') ?><b class="caret"></b></a>
+				                    		 <ul class="dropdown-menu">
+					                    		 <li>
+					                    		 	<?= $this->Html->link('Ver todos',['controller' => 'envios', 'action' => 'index'])?>
+					                    		 </li>
+					                    		 <li>
+					                    		 	<?= $this->Html->link('Agregar localidad',['controller' => 'localidades', 'action' => 'add'])?>
+					                    		 </li>
+				                    		 </ul>
+				                    	</li>
+				                    	<li class="dropdown-submenu">
+				                    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pagos <b class="caret"></b></a>
+				                    		 <ul class="dropdown-menu">
+					                    		  <li>
+					                    		 	<?= $this->Html->link('Nuevo pago en efectivo',['controller' => 'pagosEfectivo', 'action' => 'add'])?>
+					                    		 </li>
+					                    		 <li>
+					                    		 	<?= $this->Html->link('Ver pagos en efectivo',['controller' => 'pagosEfectivo', 'action' => 'index'])?>
+					                    		 </li>					                    		 
+				                    		 </ul>
+				                    	</li>
+				                    	<?php endif; ?>
+
 				                    	<?php if (!empty($current_user) && $current_user['rol_id'] == BLOQUEADO ) : ?>
 				                    			 <li>
 					                    		 	<?= $this->Html->link('Ver multas',['controller' => 'MultasUser', 'action' => 'index'])?>

@@ -6,7 +6,7 @@
 <div class="container">
     <br>
     <h3 class="centrar">Envíos</h3>
-    <div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?></div>
+    <!--<div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?></div>-->
     <div class="table-responsive">
         <table class="table table-striped" cellpadding="0" cellspacing="0">
             <thead>
@@ -15,8 +15,9 @@
                     <th scope="col"><?= $this->Paginator->sort('remito_id') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('reserva_id') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('domicilio_id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('fecha_evento') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('active' , ['label' => 'Activo' ]) ?></th>
-                    <th scope="col" class="actions">Acciones</th>
+                    <!--<th scope="col" class="actions">Acciones</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -25,12 +26,13 @@
                     <td><?= $this->Number->format($envio->id) ?></td>
                 <td><?= $envio->has('remito') ? $this->Html->link($envio->remito->id, ['controller' => 'Remitos', 'action' => 'view', $envio->remito->id]) : '' ?></td>
                 <td><?= $envio->has('reserva') ? $this->Html->link($envio->reserva->id, ['controller' => 'Reservas', 'action' => 'view', $envio->reserva->id]) : '' ?></td>
-                <td><?= $envio->has('domicilio') ? $this->Html->link($envio->domicilio->id, ['controller' => 'Domicilios', 'action' => 'view', $envio->domicilio->id]) : '' ?></td>
+                <td><?= $envio->has('domicilio') ? $this->Html->link($envio->domicilio->presentacion, ['controller' => 'Domicilios', 'action' => 'view', $envio->domicilio->id]) : '' ?></td>
+                <td><?= h(date_format($envio->fecha_evento, "d/m/Y H:i"))." hs." ?></td>
                 <td><?= h($envio->active) ?></td>
-                    <td class="actions">
+                    <!--<td class="actions">
                         <?= $this->Html->link('Modificar', ['action' => 'edit', $envio->id], ['class' => 'btn btn-default']) ?>
                         <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $envio->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $envio->id, 'class' => 'btn btn-default']) ?>
-                    </td>
+                    </td>-->
                 </tr>
                 <?php endforeach; ?>
             </tbody>

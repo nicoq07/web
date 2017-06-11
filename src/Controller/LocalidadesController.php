@@ -10,6 +10,20 @@ use App\Controller\AppController;
  */
 class LocalidadesController extends AppController
 {
+    public function isAuthorized($user)
+    {
+        if(isset($user['rol_id']) &&  ($user['rol_id'] == EMPLEADO || $user['rol_id'] == ADMINISTRADOR))
+        {
+            if(in_array($this->request->action, ['index', 'add', 'edit', 'delete']))
+            {
+                return true;
+            }
+        }
+        
+        return parent::isAuthorized($user);
+        
+        return true;
+    }
 
     /**
      * Index method
@@ -54,12 +68,13 @@ class LocalidadesController extends AppController
         $localidade = $this->Localidades->newEntity();
         if ($this->request->is('post')) {
             $localidade = $this->Localidades->patchEntity($localidade, $this->request->getData());
+            $localidade->active = 1;
             if ($this->Localidades->save($localidade)) {
-                $this->Flash->success(__('The localidade has been saved.'));
+                $this->Flash->success(__('La localidad fue guardada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The localidade could not be saved. Please, try again.'));
+            $this->Flash->error(__('La localidad no pudo ser guardada, intente nuevamente.'));
         }
         $provincias = $this->Localidades->Provincias->find('list', ['limit' => 200]);
         $this->set(compact('localidade', 'provincias'));
@@ -81,11 +96,11 @@ class LocalidadesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $localidade = $this->Localidades->patchEntity($localidade, $this->request->getData());
             if ($this->Localidades->save($localidade)) {
-                $this->Flash->success(__('The localidade has been saved.'));
+                $this->Flash->success(__('La localidad fue guardada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The localidade could not be saved. Please, try again.'));
+            $this->Flash->error(__('La localidad no pudo ser guardada, intente nuevamente.'));
         }
         $provincias = $this->Localidades->Provincias->find('list', ['limit' => 200]);
         $this->set(compact('localidade', 'provincias'));

@@ -26,8 +26,10 @@ class ReservasController extends AppController
 			}
 		}
 		elseif (isset($user['rol_id']) && $user['rol_id'] == EMPLEADO) {
-			
-			return true;
+			if(in_array($this->request->action, ['index', 'view']))
+            {
+                return true;
+            }
 		}
 		
 		return parent::isAuthorized($user);
@@ -62,7 +64,7 @@ class ReservasController extends AppController
 
         $where4 = null;
 
-        if(!(empty($this->Auth->user()['id'])) && $this->Auth->user()['rol_id'] != ADMINISTRADOR)
+        if(!(empty($this->Auth->user()['id'])) && ($this->Auth->user()['rol_id'] != ADMINISTRADOR && $this->Auth->user()['rol_id'] != EMPLEADO))
         {
             $userid=$this->Auth->user()['id'];
             $where4 = ['reservas.user_id' => $userid];

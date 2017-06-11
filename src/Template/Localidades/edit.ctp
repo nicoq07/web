@@ -6,9 +6,9 @@
                 <legend>Modificar localidad</legend>
                 <?php
                     echo $this->Form->control('provincia_id', ['options' => $provincias]);
-                    echo $this->Form->control('duracion_viaje');
-                    echo $this->Form->control('precio');
                     echo $this->Form->control('descripcion');
+                    echo $this->Form->control('duracion_viaje');
+                    echo $this->Form->control('precio');                    
                 ?>
             </fieldset>
             <?= $this->Form->button('Modificar') ?>

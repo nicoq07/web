@@ -6,7 +6,6 @@
                 <legend>Modificar edades</legend>
                 <?php
                     echo $this->Form->control('rango');
-                    echo $this->Form->control('active' , ['label' => 'Activo' ]);
                 ?>
             </fieldset>
             <?= $this->Form->button('Modificar') ?>

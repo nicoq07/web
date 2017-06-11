@@ -6,7 +6,6 @@
                 <legend>Nuevo rango de edades</legend>
                 <?php
                     echo $this->Form->control('rango');
-                    echo $this->Form->control('active' , ['label' => 'Activo' ]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Crear')) ?>

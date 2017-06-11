@@ -16,10 +16,9 @@ use PhpParser\Parser\Php5;
 		            echo $this->Form->control('password', ['maxlength'=>8,'minlength'=>4]);
 		            echo "<small>* El password debe tener entre 4 y 8 caracteres.</small>";
 
-		            if (!empty($current_user))
+		            if (!empty($current_user) && $current_user['rol_id'] == ADMINISTRADOR)
 		            {	
 	 		            echo $this->Form->control('rol_id', ['options' => $roles, 'empty' => true]);
-			            echo $this->Form->control('active',['label' => 'Activo']);
 		            }
 		        ?>
 		    </fieldset>

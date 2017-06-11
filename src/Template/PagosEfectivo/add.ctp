@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-lg-offset-3">
                         <?php
-                        echo $this->Form->input('reserva_id', ['type'=>'text', 'label'=>'Número de reserva']);
+                        echo $this->Form->input('reserva_id', ['type'=>'number', 'label'=>'Número de reserva', 'min'=>0]);
                         //echo $this->Form->control('user_id', ['options' => $users]);
                         ?>
                     </div>
@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-lg-offset-3">
                         <?php 
-                            echo $this->Form->input('monto', ['type'=>'text', 'label'=>'Monto abonado']);
+                            echo $this->Form->input('monto', ['type'=>'number', 'label'=>'Monto abonado', 'min'=>0]);
                          ?>
                     </div>
                 </div>

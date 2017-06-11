@@ -12,21 +12,20 @@ class FacturasController extends AppController
 {
 
 	public function isAuthorized($user)
-	{
-		if(isset($user['role_id']) &&  $user['role_id'] == CLIENTE)
-		{
-			if(in_array($this->request->action, ['index','view']))
-			{
-				return true;
-			}
-		}
-		elseif (isset($user['role_id']) && $user['role_id'] == EMPLEADO) {
-			
-			return true;
-		}
-		
-		return parent::isAuthorized($user);
-	}
+    {
+        if(isset($user['rol_id']) && ($user['rol_id'] == EMPLEADO || $user['rol_id'] == ADMINISTRADOR))
+        {
+            if(in_array($this->request->action, ['index', 'view']))
+            {
+                return true;
+            }
+        }
+        
+        return parent::isAuthorized($user);
+        
+        return true;
+    }
+
     /**
      * Index method
      *

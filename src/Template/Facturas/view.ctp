@@ -1,4 +1,60 @@
-<?php
+<section class="duplicatable-content bkg">
+    <div class="col-lg-8 col-lg-offset-2">                        
+        <div>
+            <legend>Detalle de la factura</legend>
+            <table class="table table-striped" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th scope="col"><?= __('Número') ?></th>
+                    <th scope="col"><?= __('Reserva') ?></th>
+                    <th scope="col"><?= __('Porcentaje pago') ?></th>
+                    <th scope="col"><?= __('Paga') ?></th>
+                    <th scope="col"><?= __('Estado') ?></th>
+                </tr>
+                <tr>
+                    <td><?= h($factura->id) ?></td>
+                    <td> <?= $this->Html->link($factura->reserva_id, ['controller' => 'Reservas', 'action' => 'view', $factura->reserva_id]) ?> </td>
+                    <td><?= "%".h(($factura->porcentajePago) * 100) ?></td>
+                    <td><?php
+                        if ($factura->pagado == 1) {
+                            echo "Si";
+                        } else {
+                            echo "No";
+                        } ?>
+                    </td>
+                    <td><?php
+                        if ($factura->active == 1) {
+                            echo "Vigente";
+                        } else {
+                            echo "Anulada";
+                        } ?>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <legend>Productos incluidos</legend>
+            <table class="table table-striped" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th scope="col"><?= __('Número') ?></th>
+                    <th scope="col"><?= __('Producto') ?></th>
+                    <th scope="col"><?= __('Cantidad') ?></th>
+                    <th scope="col"><?= __('Precio') ?></th>
+                </tr>
+                <?php foreach ($factura->factura_productos as $producto): ?>
+                    <tr>
+                        <td><?= h($producto->id) ?></td>
+                        <td> <?= $this->Html->link($producto->producto_id, ['controller' => 'Productos', 'action' => 'view', $producto->producto_id]) ?> </td>
+                        <td><?= h($producto->cantidad) ?></td>
+                        <td><?= h($producto->precio) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>                
+</section>
+
+
+<!--<?php
 /**
   * @var \App\View\AppView $this
   */
@@ -143,4 +199,4 @@
         </table>
         <?php endif; ?>
     </div>
-</div>
+</div>-->

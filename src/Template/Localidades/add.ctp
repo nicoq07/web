@@ -9,7 +9,6 @@
                     echo $this->Form->control('descripcion', ['label' => 'Nombre']);
                     echo $this->Form->control('duracion_viaje', ['label' => 'Duración del viaje']);
                     echo $this->Form->control('precio');
-                    echo $this->Form->control('active' , ['label' => 'Activo' ]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Crear')) ?>
