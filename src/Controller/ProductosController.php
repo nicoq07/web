@@ -91,7 +91,7 @@ class ProductosController extends AppController
         'contain' => ['RangoEdades', 'Categorias', 'Reservas', 'CalificacionesProductos', 'FacturaProductos', 'FotosProductos']]);  
         //$usoProdu = 0;
         $conn = ConnectionManager::get('default');  
-        if ($userid != null)
+        if ($userid != null && $usoProdu != 0)
         { 
             $miquery2 = "SELECT 1 from productos, reservas_productos, reservas, users
             where productos.id =".$id." 
@@ -171,8 +171,7 @@ class ProductosController extends AppController
                 }
             }    
             $tabla[$dia] = $disponibilidad;          
-        }
-
+        }        
         $this->set(compact('producto', 'tabla', 'usoProdu'));
         $this->set('_serialize', ['producto']);
     }

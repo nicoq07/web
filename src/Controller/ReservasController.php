@@ -655,23 +655,24 @@ class ReservasController extends AppController
     public function enviarMail($id=null){
         echo $id;
         $productos = $this->Reservas->ReservasProductos->find()->where(['reserva_id =' => $id]);
-        $usuario = $this->Reservas->Users->find()->where(['user_id =' => ]);
+        $reserva = $this->Reservas->get($id);
+        $usuario = $this->Reservas->Users->get($reserva->user_id);
         $arrayProductos = array();
         $cont = 0;
         foreach ($productos as $producto) {
-            $arrayProductos[$cont] = "http://localhost/web/Productos/view/".$producto->id."/#calificar?usoprodu=1&userid=".;
+            $arrayProductos[$cont] = "http://localhost/web/Productos/view/".$producto->id."?usoprodu=1&userid=".$usuario->id."#calificar";
             $cont ++;
         }
 
         $mail = array();
-        $mail['correo'] = $this->viewVars['current_user']['email'];
+        $mail['correo'] = $usuario->email;
         $mail['asunto'] = "Calificación de productos de la reserva ".$producto->reserva_id;
-        $mail['mensaje'] = $this->viewVars['current_user']['nombre'].", \n \t gracias por usar nuestros productos, a partír de este momento vas a poder calificarlos, lo cual sería de gran agrado para nosotros si lo hicieras. 
+        $mail['mensaje'] = $usuario->nombre.", \n \t gracias por usar nuestros productos, a partír de este momento vas a poder calificarlos, lo cual sería de gran agrado para nosotros si lo hicieras. 
         \n Te enviamos los enlaces para que puedas hacerlo desde aquí: \n\n";
         foreach ($arrayProductos as $key => $value) {
             $mail['mensaje'] .= $value."\n";
         }
-        $mail['mensaje'] .="\nMuchas gracias. Esperemos que vuelvas a utilizar muestros productos.";
+        $mail['mensaje'] .="\nMuchas gracias. Esperemos que vuelvas a utilizar nuestros productos.";
 
         if ($this->mailCancelacion($mail))
         {
