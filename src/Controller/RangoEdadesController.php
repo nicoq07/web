@@ -52,11 +52,11 @@ class RangoEdadesController extends AppController
         if ($this->request->is('post')) {
             $rangoEdade = $this->RangoEdades->patchEntity($rangoEdade, $this->request->getData());
             if ($this->RangoEdades->save($rangoEdade)) {
-                $this->Flash->success(__('The rango edade has been saved.'));
+                $this->Flash->success(__('Rango guardado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The rango edade could not be saved. Please, try again.'));
+            $this->Flash->error(__('El rango no pudo guardarse, reintente!'));
         }
         $this->set(compact('rangoEdade'));
         $this->set('_serialize', ['rangoEdade']);
@@ -77,11 +77,11 @@ class RangoEdadesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $rangoEdade = $this->RangoEdades->patchEntity($rangoEdade, $this->request->getData());
             if ($this->RangoEdades->save($rangoEdade)) {
-                $this->Flash->success(__('The rango edade has been saved.'));
+                $this->Flash->success(__('Rango guardado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The rango edade could not be saved. Please, try again.'));
+            $this->Flash->error(__('El rango no pudo guardarse, reintente!'));
         }
         $this->set(compact('rangoEdade'));
         $this->set('_serialize', ['rangoEdade']);
@@ -99,11 +99,24 @@ class RangoEdadesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $rangoEdade = $this->RangoEdades->get($id);
         if ($this->RangoEdades->delete($rangoEdade)) {
-            $this->Flash->success(__('The rango edade has been deleted.'));
+            $this->Flash->success(__('Rango borrado'));
         } else {
-            $this->Flash->error(__('The rango edade could not be deleted. Please, try again.'));
+            $this->Flash->error(__('El rango no pudo borrarse, reintente!'));
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+    public function desactivar($id = null)
+    {
+    	if ($this->request->is(['patch', 'post', 'put'])) {
+    		$rangoEdade= $this->RangoEdades->get($id);
+    		$rangoEdade->active = false;
+    		if ($this->RangoEdades->save($rangoEdade)) {
+    			$this->Flash->success(__('Rango borrado'));
+    			return $this->redirect($this->referer());
+    		}
+    		$this->Flash->error(__('El rango no pudo borrarse, reintente!'));
+    	}
     }
 }
