@@ -26,8 +26,8 @@ $(document).on('ready', function() {
                 <?php
                     echo $this->Form->control('rango_edad_id', ['options' => $rangoEdades]);
                     echo $this->Form->control('categoria_id', ['options' => $categorias]);
-                    echo $this->Form->control('descripcion');
-                    echo $this->Form->control('informacion');
+                    echo $this->Form->control('descripcion' ,['label' => 'Descripción']);
+                    echo $this->Form->control('informacion', ['type' => 'textarea' , 'label' => 'Información adicional']);
                     echo $this->Form->control('dimensiones');
                     echo $this->Form->control('precio');
                     echo $this->Form->control('cantidad');

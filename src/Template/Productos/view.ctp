@@ -81,11 +81,11 @@ input[type="radio"]:checked ~ label {
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <br>
+                    <br>
             <h1 style="color: black">Disponibilidad:</h1><br>
             <h4 style="color: black"><strong>Referencias: </strong></h4>
             <h4 style="color: green">Disponible</h4>
-            <h4 style="color: yellow">Existen reservas</h4>   
+            <h4 style="color: #e5e227">Existen reservas</h4>   
             <h4 style="color: red">No Disponible</h4><br>
             <br>
 
@@ -117,12 +117,12 @@ input[type="radio"]:checked ~ label {
                         <td bgcolor="
                         <?php
                         if ($hora == 0)
-                            echo "#33cc33";
+                            echo "#3eb74a";
                         else{
                             if ($hora == 1)
-                                echo "#ffcc00";
+                                echo "#e5e227";
                             else
-                                echo "#ff0000";
+                                echo "#dd2d16";
                         }
                         ?>
                         "></td>

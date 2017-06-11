@@ -1,8 +1,3 @@
-<?php
-/**
-  * @var \App\View\AppView $this
-  */
-?>
 <div class="container">
     <br>
     <h3 class="centrar">Reservas</h3>
@@ -55,7 +50,7 @@
                 <?php foreach ($reservas as $reserva): ?>
                 <tr>
                     <td><?= $this->Number->format($reserva->id) ?></td>
-                    <td><?= $reserva->has('user') ? $this->Html->link($reserva->user->id, ['controller' => 'Users', 'action' => 'view', $reserva->user->id]) : '' ?></td>
+                    <td><?= $reserva->has('user') ? $this->Html->link($reserva->user->presentacion, ['controller' => 'Users', 'action' => 'view', $reserva->user->id]) : '' ?></td>
                     <td><?= $reserva->has('estados_reserva') ? h($reserva->estados_reserva->descripcion) : '' ?></td>
                     <td><?= h($reserva->fecha_inicio->format("d/m/y, h:i A")) ?></td>
                     <td><?= h($reserva->fecha_fin->format("d/m/y, h:i A")) ?></td>
