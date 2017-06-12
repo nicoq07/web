@@ -564,12 +564,12 @@ class ProductosController extends AppController
 
                 if ($this->mailCancelacion($mail))
                 {
-                    $this->Flash->success(__('Reserva cancelada.'));
+                    $this->Flash->success(__('Mail enviado.'));
                     //return $this->redirect(['action' => 'index']);
                 }
                 else 
                 {
-                    $this->Flash->error(__('No se pudo cancelar la reserva. Por favor póngase en contacto con nosotros.'));
+                    $this->Flash->error(__('No se pudo enviar el mail.'));
                     //return $this->redirect(['action' => 'index']);
                 }
                 }
@@ -594,10 +594,8 @@ class ProductosController extends AppController
         
         if ($email->send($data['mensaje']))
         {
-            debug('mandó');
             return true;
         }
-        debug('no mandó');
         return false;       
     }
 }
