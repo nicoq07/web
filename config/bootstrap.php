@@ -218,11 +218,11 @@ Type::build('timestamp')
  * Debug Kit should not be installed on a production system
  */
 if (Configure::read('debug')) {
-    Plugin::load('DebugKit', ['bootstrap' => true]);
+    Plugin::load('DebugKit', ['bootstrap' => false]);
 }
 Plugin::loadAll();
 
-
+error_reporting(0);
 //CONSTANTES DE ROLES 
 define('ADMINISTRADOR', 1);
 define('EMPLEADO', 2);
