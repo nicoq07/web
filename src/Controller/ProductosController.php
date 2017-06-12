@@ -6,6 +6,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Time;
 use Cake\I18n\Date;
+use Cake\Mailer\Email;
 
 /**
  * Productos Controller
@@ -516,8 +517,54 @@ class ProductosController extends AppController
             //detalle a bajar tiene de Key el id de reservas_productos, el id del producto 
             //(que se puede sacar porque todo esto es con el mismo) y la cantidad afectada
             //si casoParcial es 1, significa que la cantidad que se saca es solo 
-           debug ($DetallesABajar);    
-           exit;       
+            foreach ($DetallesABajar as $detalle) {
+                $reservaProducto = $this->Productos->Reservas->ReservasProductos->get($detalle['id']);
+                $reserva = $this->Productos->Reservas->get($reservaProducto->reserva_id);
+                $user = $this->Productos->Reservas->Users->get($reserva->user_id);
+                $factura = $this->Productos->Reservas->Facturas->find()->where(["reserva_id ="=>$reserva->id]);
+                $factura = $factura->first();
+                $unProducto = $this->Productos->get($reservaProducto->producto_id);
+                $facturaProductos = $this->Productos->Reservas->Facturas->FacturaProductos->find()->where(["producto_id ="=>$unProducto->id, "factura_id ="=>$factura->id]);
+                $facturaProductos = $facturaProductos->first();
+                
+                $montoProducto = $facturaProductos->precio;
+                $descuento = $factura->monto - $montoProducto;
+                $descuento = $descuento*.2 + $montoProducto;
+
+                $entidadNota = TableRegistry::get('Notacredito');
+                $notaCredito = $entidadNota->newEntity();
+                $notaCredito->factura_id = $factura->id;
+                $notaCredito->monto = $descuento;
+                $notaCredito->active = 1;
+                $notaCredito->created = new \DateTime('now');
+                $notaCredito->modified = new \DateTime('now');
+                debug($notaCredito);
+                $lastId = $entidadNota->save($notaCredito);
+
+                $mail = array();
+                $mail['correo'] = $user->email;
+                $mail['asunto'] = "Problemas con el producto ".$unProducto->id." que reservaste";
+                $mail['mensaje'] = $user->nombre.", \n \t Lamentamos comunicarte que el producto ".$unProducto->descripcion." que tenías reservado para el ".$reserva->fecha_inicio." no podrá estar disponible.\n
+                Se generó una nota de crédito número ".$lastId->id." por el monto $".$notaCredito->monto.".
+            \n Acercate a nuestra empresa de lunes a viernes de 9 a 12.30hs y de 13.30 a 18hs para retirar el dinero. Desde ya muchas gracias.";
+                /*debug($unProducto);
+                debug($reserva);
+                debug($user);
+                debug($factura);
+                debug($facturaProductos);
+                debug ($DetallesABajar);*/
+
+                if ($this->mailCancelacion($mail))
+                {
+                    $this->Flash->success(__('Reserva cancelada.'));
+                    return $this->redirect(['action' => 'index']);
+                }
+                else 
+                {
+                    $this->Flash->error(__('No se pudo cancelar la reserva. Por favor póngase en contacto con nosotros.'));
+                    return $this->redirect(['action' => 'index']);
+                }
+                }
            if ($this->Productos->save($producto))
            {
             $this->Flash->success(__('Se actualizó el stock.'));
@@ -527,5 +574,21 @@ class ProductosController extends AppController
     }
     $this->set(compact('producto'));
     $this->set('_serialize', ['producto']);
-} 
 }
+    private function mailCancelacion(array $data)
+    {
+        $email = new Email('funclub');
+        $email
+        ->setFrom(['fun.club.srl@gmail.com' => 'Fun Club'])
+        ->setTo($data['correo'])
+        ->setSubject($data['asunto']);
+        
+        if ($email->send($data['mensaje']))
+        {
+            return true;
+        }
+        return false;       
+    }
+}
+
+
