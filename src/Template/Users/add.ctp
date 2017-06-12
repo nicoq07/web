@@ -20,6 +20,7 @@ use PhpParser\Parser\Php5;
 		            {	
 	 		            echo $this->Form->control('rol_id', ['options' => $roles, 'empty' => true]);
 		            }
+		            echo $this->Form->control('active');
 		        ?>
 		    </fieldset>
 		     <?php 
