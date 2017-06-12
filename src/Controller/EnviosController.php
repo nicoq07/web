@@ -32,9 +32,15 @@ class EnviosController extends AppController
      */
     public function index()
     {
+        $where3 = null;
+        if (!(empty($this->request->getData()['fecha'])))
+        {
+            $fechafiltro=$this->request->getData()['fecha'];
+            $where3 = ['"'.$fechafiltro.'" = DATE(envios.fecha_evento)'];
+        }
         $this->paginate = [
             'contain' => ['Remitos', 'Reservas', 'Domicilios'],
-            'conditions' => ['envios.active' => 1],
+            'conditions' => ['envios.active' => 1, $where3],
         ];
         $envios = $this->paginate($this->Envios);
 
