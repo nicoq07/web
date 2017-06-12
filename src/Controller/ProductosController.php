@@ -102,7 +102,8 @@ class ProductosController extends AppController
             where productos.id =".$id." 
             AND productos.id = reservas_productos.producto_id 
             AND reservas_productos.reserva_id = reservas.id 
-            AND reservas.estado_reserva_id = 6 
+            AND reservas.estado_reserva_id = 6
+            AND reservas.active = 1 
             AND reservas.user_id =".$userid;
             $stmt = $conn->execute($miquery2);
             $resu = $stmt ->fetchAll('assoc');
@@ -158,6 +159,7 @@ class ProductosController extends AppController
                 AND productos.id =".$id."
                 AND productos.id = reservas_productos.producto_id
                 AND reservas.id = reservas_productos.reserva_id
+                AND reservas.active = 1
                 group by productos.id";
                 $stmt = $conn->execute($miquery);
                 $resu = $stmt ->fetchAll('assoc');       
@@ -373,7 +375,8 @@ class ProductosController extends AppController
                 where reservas.no_disponible_inicio between '".$fechaIni->format('Y/m/d H:i:s')."' AND '".$fechaFin->format('Y/m/d H:i:s')."' 
                 AND productos.id = ".$id."
                 AND productos.id = reservas_productos.producto_id
-                AND reservas.id = reservas_productos.reserva_id";
+                AND reservas.id = reservas_productos.reserva_id
+                AND reservas.active = 1";
                 debug($miquery3);
                 $stmt = $conn->execute($miquery3);
                 $resu = $stmt ->fetchAll('assoc');  
@@ -401,6 +404,7 @@ class ProductosController extends AppController
             {
                 if ($producto->cantidad <= $this->request->getData()['cantidadADescontar']) {
                    $producto->active = 0;
+                   $aDescontar = 0;
                    $aDescontar = $producto->cantidad;
                    $nuevaCantidad = 0; 
                } 
@@ -443,6 +447,7 @@ class ProductosController extends AppController
                    AND productos.id =".$id."
                    AND productos.id = reservas_productos.producto_id
                    AND reservas.id = reservas_productos.reserva_id
+                   AND reservas.active = 1
                    group by productos.id";
                    $stmt = $conn->execute($miquery);
                    $resu = $stmt ->fetchAll('assoc');       
@@ -461,6 +466,7 @@ class ProductosController extends AppController
                            AND productos.id =".$id."
                            AND productos.id = reservas_productos.producto_id
                            AND reservas.id = reservas_productos.reserva_id
+                           AND reservas.active = 1
                            order by reservas_productos.created DESC";
                                          //debug($miquery2);
                            $stmt = $conn->execute($miquery2);
@@ -514,6 +520,7 @@ class ProductosController extends AppController
                }
                
            }
+           debug ($DetallesABajar);
             //detalle a bajar tiene de Key el id de reservas_productos, el id del producto 
             //(que se puede sacar porque todo esto es con el mismo) y la cantidad afectada
             //si casoParcial es 1, significa que la cantidad que se saca es solo 
@@ -538,16 +545,17 @@ class ProductosController extends AppController
                 $notaCredito->active = 1;
                 $notaCredito->created = new \DateTime('now');
                 $notaCredito->modified = new \DateTime('now');
-                debug($notaCredito);
-                $lastId = $entidadNota->save($notaCredito);
+                //debug($notaCredito);
+                //$lastId = $entidadNota->save($notaCredito);
 
                 $mail = array();
                 $mail['correo'] = $user->email;
                 $mail['asunto'] = "Problemas con el producto ".$unProducto->id." que reservaste";
                 $mail['mensaje'] = $user->nombre.", \n \t Lamentamos comunicarte que el producto ".$unProducto->descripcion." que tenías reservado para el ".$reserva->fecha_inicio." no podrá estar disponible.\n
-                Se generó una nota de crédito número ".$lastId->id." por el monto $".$notaCredito->monto.".
+                Por favor cancelá y rearmala a tu gusto. Presentando este mail, te reintegramos un 20% al momento de llevarte los productos de tu siguiente reserva.";
+                /*Se generó una nota de crédito número ".$lastId->id." por el monto $".$notaCredito->monto.".
             \n Acercate a nuestra empresa de lunes a viernes de 9 a 12.30hs y de 13.30 a 18hs para retirar el dinero. Desde ya muchas gracias.";
-                /*debug($unProducto);
+                debug($unProducto);
                 debug($reserva);
                 debug($user);
                 debug($factura);
@@ -557,14 +565,15 @@ class ProductosController extends AppController
                 if ($this->mailCancelacion($mail))
                 {
                     $this->Flash->success(__('Reserva cancelada.'));
-                    return $this->redirect(['action' => 'index']);
+                    //return $this->redirect(['action' => 'index']);
                 }
                 else 
                 {
                     $this->Flash->error(__('No se pudo cancelar la reserva. Por favor póngase en contacto con nosotros.'));
-                    return $this->redirect(['action' => 'index']);
+                    //return $this->redirect(['action' => 'index']);
                 }
                 }
+            //exit;
            if ($this->Productos->save($producto))
            {
             $this->Flash->success(__('Se actualizó el stock.'));
@@ -585,8 +594,10 @@ class ProductosController extends AppController
         
         if ($email->send($data['mensaje']))
         {
+            debug('mandó');
             return true;
         }
+        debug('no mandó');
         return false;       
     }
 }

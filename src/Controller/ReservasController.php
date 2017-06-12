@@ -517,6 +517,7 @@ class ReservasController extends AppController
                         AND productos.id =".$id."
                         AND productos.id = reservas_productos.producto_id
                         AND reservas.id = reservas_productos.reserva_id
+                        AND reservas.active = 1
                         group by productos.id";
                         $stmt = $conn->execute($miquery);
                         $resu = $stmt ->fetchAll('assoc');       
