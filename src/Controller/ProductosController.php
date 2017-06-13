@@ -58,6 +58,10 @@ class ProductosController extends AppController
         {
             $orden=$this->request->getData()['precio_ord'];
         }
+        if (isset($this->viewVars['current_user']) && $this->viewVars['current_user']['rol_id'] == CLIENTE)
+        {
+        	!empty($where) ? array_push ($where,['productos.active' => 1]) : $where=['productos.active' => 1];
+        }
         $this->paginate = [
             'contain' => ['RangoEdades', 'Categorias'],
             'conditions' => [$where],
@@ -65,11 +69,13 @@ class ProductosController extends AppController
             'Productos.precio' => $orden
             ]
         ];
-        if (isset($this->viewVars['current_user']) && $this->viewVars['current_user']['rol_id'] == CLIENTE) {
-            $productos = $this->Productos->find()->where(['active ='=>1]);
-        } else {
-            $productos = $this->Productos->find();
-        }
+        $productos = $this->paginate($this->Productos);
+//         if (isset($this->viewVars['current_user']) && $this->viewVars['current_user']['rol_id'] == CLIENTE) {
+//             $productos = $this->Productos->find()->where(['active'=>1]);
+//         } else {
+//             $productos = $this->Productos->find();
+//         }
+//         debug( $this->paginate);
         $categorias = $this->Productos->Categorias->find('list', ['limit' => 200]);
         $fotoProductos = $this->Productos->FotosProductos->find();
         $fotos = $fotoProductos->toArray();
