@@ -77,7 +77,7 @@ input[type="radio"]:checked ~ label {
             <h4 style="color: black"><strong>Precio: </strong><?= h("$".$producto->precio)?></h4><br>
             <!--button class="btn btn-default right">Reservar <i class="icon-cart"></i></button-->
             <?php 
-            if (isset($current_user) && $current_user['rol_id'] == CLIENTE) {
+            if (!isset($current_user) || $current_user['rol_id'] == CLIENTE) {
                 echo $this->Html->link('Reservar', ['action' => 'agregarCarro', $producto->id], ['class' => 'btn btn-primary']);
             }
             ?>

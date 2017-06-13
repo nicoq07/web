@@ -6,7 +6,11 @@
 <div class="container">
     <br>
     <h3 class="centrar">Multas</h3>
-    <div class="pull-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus"></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false]) ?></div>
+    <?php 
+        if (isset($current_user) && $current_user['rol_id'] == ADMINISTRADOR) {
+            echo '<div class="pull-right">'.$this->Html->link('<span class=glyphicon glyphicon-plus></span> Nuevo', ['action' => 'add'], ['class' => 'btn btn-default', 'escape' => false])."</div>";
+        }
+    ?>
     <div class="table-responsive">
         <table class="table table-striped" cellpadding="0" cellspacing="0">
             <thead>
@@ -23,7 +27,7 @@
                 <?php foreach ($multasUser as $multasUser): ?>
                 <tr>
                     <td><?= $this->Number->format($multasUser->id) ?></td>
-                    <td><?= $multasUser->has('user') ? $this->Html->link($multasUser->user->presentacion, ['controller' => 'Users', 'action' => 'view', $multasUser->user->id]) : '' ?></td>
+                    <td><?= $multasUser->has('user') ? h($multasUser->user->presentacion) : '' ?></td>
                     <td><?= h($multasUser->descripcion) ?></td>
                     <td><?= $this->Number->format($multasUser->precio) ?></td>
                     <td>

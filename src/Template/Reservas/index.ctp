@@ -52,8 +52,8 @@
             <tbody>
                 <?php foreach ($reservas as $reserva): ?>
                 <tr>
-                    <td><?= $this->Number->format($reserva->id) ?></td>
-                    <td><?= $reserva->has('user') ? $this->Html->link($reserva->user->presentacion, ['controller' => 'Users', 'action' => 'view', $reserva->user->id]) : '' ?></td>
+                    <td><?= $reserva->has('id') ? $this->Html->link($reserva->id, ['controller' => 'Reservas', 'action' => 'view', $reserva->id]) : '' ?></td>
+                    <td><?= $reserva->has('user') ? h($reserva->user->presentacion) : '' ?></td>
                     <td><?= $reserva->has('estados_reserva') ? h($reserva->estados_reserva->descripcion) : '' ?></td>
                     <td><?= h($reserva->fecha_inicio->format("d/m/y, h:i A")) ?></td>
                     <td><?= h($reserva->fecha_fin->format("d/m/y, h:i A")) ?></td>

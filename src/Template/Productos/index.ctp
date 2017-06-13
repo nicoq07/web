@@ -54,11 +54,15 @@
                     	
                        
                         <h4 class="tx_celeste marg"><?= h($producto->descripcion) ?></h4>
-                        <p><strong>Medida: </strong><?= h($producto->dimensiones) ?></p>
+                        <p><strong>Medida: </strong><?= h($producto->dimensiones) ?></p>                        
                         <p><strong>Precio: </strong><?= $this->Number->format($producto->precio,[
                                         'before' => '$',
                                         'locale' => 'es_Ar'
                                         ]) ?></p>
+                        <?php if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) 
+                        {
+                          echo '<p><strong>Cantidad: </strong>'.h($producto->cantidad).'</p>';
+                        } ?>
                        
                         <?php 
                         if (isset($current_user) && ($current_user['rol_id'] == ADMINISTRADOR || $current_user['rol_id'] == EMPLEADO)) 

@@ -15,7 +15,7 @@
                             	
                             }
 	                            echo $this->Form->control('marca', ['name' => 'marca', 'options' => $marca]);
-	                            echo $this->Form->input('numero', ['label' => 'Número de tarjeta',  'placeholder'=>'Ingrese sólo los 16 números', 'max' => 9999999999999999, 'min' => 1111111111111111, 'type'=>'number']);
+	                            echo $this->Form->input('numero', ['label' => 'Número de tarjeta',  'placeholder'=>'Ingrese sólo los 16 números', 'max' => 9999999999999999, 'min' => 1000000000000000, 'type'=>'number']);
 	                            echo $this->Form->label('Fecha de vencimiento');
                                 echo $this->Form->input('vencimientoMes', ['type' => 'number', 'placeholder' => 'MM', 'min' => 1, 'max' => 12,'label'=>false]);
                                 echo $this->Form->input('vencimientoAnio', ['type' => 'number', 'placeholder' => 'AAAA', 'max' => 2099, 'min' => 2017, 'label'=>false]);

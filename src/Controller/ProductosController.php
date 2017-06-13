@@ -238,7 +238,9 @@ class ProductosController extends AppController
         	
         	if (!empty($this->request->getData()['borrarFoto']))
         	{
+                debug($this->request->getData()['borrarFoto']); 
         		$id = $this->request->getData()['borrarFoto'];
+                unset($this->request->getData()['borrarFoto']);
         		$fotoEntity = TableRegistry::get('FotosProductos');
         		$foto = $fotoEntity->get($id);
         		if ($fotoEntity->delete($foto)) {
@@ -328,7 +330,8 @@ class ProductosController extends AppController
     private function guardarImg($data, $idProd)
     {
     	$uploadFile = WWW_ROOT  . 'imagenes' . DS;
-    	if(!empty($data))
+      //  debug($data); exit;
+    	if(!empty($data) && !empty($data[0]['tmp_name']) )
     	{
     		$connection= ConnectionManager::get("default");
     		foreach ($data as $img)
@@ -561,7 +564,7 @@ class ProductosController extends AppController
                 $mail = array();
                 $mail['correo'] = $user->email;
                 $mail['asunto'] = "Problemas con el producto ".$unProducto->id." que reservaste";
-                $mail['mensaje'] = $user->nombre.", \n \t Lamentamos comunicarte que el producto ".$unProducto->descripcion." que tenías reservado para el ".$reserva->fecha_inicio." no podrá estar disponible.\n
+                $mail['mensaje'] = $user->nombre.", \n \t Lamentamos comunicarte que el producto ".$unProducto->descripcion." que tenías reservado para el ".date_format($reserva->fecha_inicio, "d/m/Y H:i")."hs. no podrá estar disponible.\n
                 Por favor cancelá y rearmala a tu gusto. Presentando este mail, te reintegramos un 20% al momento de llevarte los productos de tu siguiente reserva.";
                 /*Se generó una nota de crédito número ".$lastId->id." por el monto $".$notaCredito->monto.".
             \n Acercate a nuestra empresa de lunes a viernes de 9 a 12.30hs y de 13.30 a 18hs para retirar el dinero. Desde ya muchas gracias.";

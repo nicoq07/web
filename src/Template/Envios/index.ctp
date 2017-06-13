@@ -37,7 +37,7 @@
                 <td><?= $envio->has('reserva') ? $this->Html->link($envio->reserva->id, ['controller' => 'Reservas', 'action' => 'view', $envio->reserva->id]) : '' ?></td>
                 <td><?= $envio->has('domicilio') ? $this->Html->link($envio->domicilio->presentacion, ['controller' => 'Domicilios', 'action' => 'view', $envio->domicilio->id]) : '' ?></td>
                 <td><?= h(date_format($envio->fecha_evento, "d/m/Y H:i"))." hs." ?></td>
-                <td><?= h($envio->active) ?></td>
+                <td><?=  $envio->active ? h("Sí") : h("No") ?></td>
                     <!--<td class="actions">
                         <?= $this->Html->link('Modificar', ['action' => 'edit', $envio->id], ['class' => 'btn btn-default']) ?>
                         <?= $this->Form->postLink('Eliminar', ['action' => 'delete', $envio->id], ['confirm' => '¿Está seguro que desea eliminarlo?', $envio->id, 'class' => 'btn btn-default']) ?>

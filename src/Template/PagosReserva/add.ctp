@@ -30,7 +30,7 @@ function validar(){
                 <legend>Nuevo pago</legend>
                 <?php if (isset($current_user) && !empty($reserva) && $current_user['id'] == $reserva->user_id) { ?>
                 <?php
-                if (isset($factura) && $factura->porcentajePago < 1) { ?>
+                if (isset($factura) && $factura->porcentajePago < 1 && $factura->active == 1) { ?>
                 <div class="row">
                     <div class="col-lg-4">
                         <?php

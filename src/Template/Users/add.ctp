@@ -19,8 +19,8 @@ use PhpParser\Parser\Php5;
 		            if (!empty($current_user) && $current_user['rol_id'] == ADMINISTRADOR)
 		            {	
 	 		            echo $this->Form->control('rol_id', ['options' => $roles, 'empty' => true]);
-		            }
-		            echo $this->Form->control('active');
+	 		            echo $this->Form->control('active');
+		            }		            
 		        ?>
 		    </fieldset>
 		     <?php 
