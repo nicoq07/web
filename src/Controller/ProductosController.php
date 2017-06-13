@@ -214,8 +214,8 @@ class ProductosController extends AppController
             }
             
         
-        $rangoEdades = $this->Productos->RangoEdades->find('list', ['limit' => 200]);
-        $categorias = $this->Productos->Categorias->find('list', ['limit' => 200]);
+            $rangoEdades = $this->Productos->RangoEdades->find('list', ['limit' => 200])->where(['active' => 1]);
+            $categorias = $this->Productos->Categorias->find('list', ['limit' => 200])->where(['active' => 1]);
 //         $reservas = $this->Productos->Reservas->find('list', ['limit' => 200]);
         $this->set(compact('producto', 'rangoEdades', 'categorias'));
         $this->set('_serialize', ['producto']);
@@ -254,14 +254,14 @@ class ProductosController extends AppController
             $producto = $this->Productos->patchEntity($producto, $this->request->getData());
             $this->guardarImg($this->request->getData()['foto'], $producto->id);
             if ($this->Productos->save($producto)) {
-                $this->Flash->success(__('The producto has been saved.'));
+                $this->Flash->success(__('Producto editado con éxito.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The producto could not be saved. Please, try again.'));
+            $this->Flash->error(__('El producto no pudo guardarse, reintentá por favor.'));
         }
-        $rangoEdades = $this->Productos->RangoEdades->find('list', ['limit' => 200]);
-        $categorias = $this->Productos->Categorias->find('list', ['limit' => 200]);
+        $rangoEdades = $this->Productos->RangoEdades->find('list', ['limit' => 200])->where(['active' => 1]);
+        $categorias = $this->Productos->Categorias->find('list', ['limit' => 200])->where(['active' => 1]);
 //         $fotos = $this->Productos->FotosProductos->find('list', ['limit' => 200]);
         $this->set(compact('producto', 'rangoEdades', 'categorias'));
         $this->set('_serialize', ['producto']);
@@ -607,6 +607,19 @@ class ProductosController extends AppController
             return true;
         }
         return false;       
+    }
+    
+    public function desactivar($id = null)
+    {
+    	if ($this->request->is(['patch', 'post', 'put'])) {
+    		$producto= $this->Productos->get($id);
+    		$producto->active = false;
+    		if ($this->Productos->save($producto)) {
+    			$this->Flash->success(__('Producto desactivado'));
+    			return $this->redirect($this->referer());
+    		}
+    		$this->Flash->error(__('El Producto no pudo desactivarse, reintente!'));
+    	}
     }
 }
 
