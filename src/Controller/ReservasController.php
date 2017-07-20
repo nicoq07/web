@@ -132,6 +132,11 @@ class ReservasController extends AppController
 
         $reserva = $this->Reservas->newEntity();
         if ($this->request->is('post')) {
+            $tarjeta = $this->Reservas->Users->TarjetasCreditoUser->get($this->request->getData()['tarjeta_id']);
+            if ($tarjeta->vencimientoMes != $this->request->getData()['vencimientoMes'] || $tarjeta->vencimientoAnio != $this->request->getData()['vencimientoAnio'] || $tarjeta->codSeguridad != $this->request->getData()['codSeguridad']) {
+                $this->Flash->error(__('Los datos de la tarjeta son incorrectos. Intente nuevamente.'));
+                return $this->redirect(['action' => 'add']);
+            }
             /*debug($this->request->getData());
             exit();*/
 
@@ -148,6 +153,7 @@ class ReservasController extends AppController
             $fechaFin =  $this->request->getData()['fecha_fin'];
             $horaIni =  $this->request->getData()['hora_inicio'];
             $horaFin =  $this->request->getData()['hora_fin'];
+            $horas = $this->calcularHoras($fechaIni, $horaIni, $fechaFin, $horaFin);
             $totalReserva =  $this->request->getData()['totalReserva'];
             $horaDisponibilidadInicio = $horaIni - $tiempoEnvio;
             $horaDisponibilidadFin = $horaFin + $tiempoEnvio + 1;
@@ -156,7 +162,10 @@ class ReservasController extends AppController
                 $horaDisponibilidadFin = 23;
             }
 
-            /*debug($disponibilidadFin);
+            /*debug($horas);
+            debug($totalReserva);
+            debug($horaDisponibilidadInicio);
+            debug($horaDisponibilidadFin);
             exit();*/
 
             $disponibilidadInicio = new \DateTime($fechaIni." ".$horaDisponibilidadInicio.":00:00");
@@ -165,6 +174,7 @@ class ReservasController extends AppController
             $disponibilidadFin = date_format($disponibilidadFin, 'Y/m/d H:i:s');
             
             /*debug($disponibilidadInicio);
+            debug($disponibilidadFin);
             exit();*/
 
             $fechaIni = new \DateTime($fechaIni." ".$horaIni.":00:00");
@@ -190,18 +200,21 @@ class ReservasController extends AppController
             $miReserva['active'] = 1; 
 
             $reserva = $this->Reservas->patchEntity($reserva, $miReserva); 
-            /*debug($reserva);
+            
+            /*debug($bandera);
+            debug($reserva);
             exit();*/
 
             if ($lastId = $this->Reservas->save($reserva)) {
                 $this->guardarProductos($session->read('cart'), $lastId->id);
                 $idFactura = $this->guardarFactura($lastId->id, $totalReserva);
-                $this->guardarFacturaProductos($idFactura->id, $session->read('cart'), $this->request->getData()['diferenciaHoras']);
+                $this->guardarFacturaProductos($idFactura->id, $session->read('cart'), $horas);
                 $idEnvio = $this->guardarEnvio($lastId->id, $idFactura->id, $session->read('cart'), $this->request->getData()['domicilio'], $disponibilidadInicio);
+                $this->guardarPago($lastId->id);
                 $session->delete('cart');
                 $this->Flash->success(__('Reserva creada.'));
 
-                return $this->redirect(['controller' => 'PagosReserva', 'action' => 'add', $lastId->id]);
+                return $this->redirect(['controller'=>'reservas', 'action' => 'index']);
             }
             $this->Flash->error(__('Error al cargar la reserva, reintente por favor.'));
             return $this->redirect(['action' => 'add']);
@@ -288,12 +301,77 @@ class ReservasController extends AppController
                 $idRemito = $this->Reservas->Facturas->Remitos->save($remito);
 
                 $envio = $this->Reservas->Facturas->Remitos->Envios->newEntity();
-                $miEnvio = array('remito_id' => $idRemito->id, 'reserva_id' => $idReserva, 'domicilio_id' => $idDomicilio, 'fecha_evento' => $fechaEvento, 'active' => 0);
+                $miEnvio = array('remito_id' => $idRemito->id, 'reserva_id' => $idReserva, 'domicilio_id' => $idDomicilio, 'fecha_evento' => $fechaEvento, 'active' => 1);
                 $envio = $this->Reservas->Facturas->Remitos->Envios->patchEntity($envio, $miEnvio);
                 $this->Reservas->Facturas->Remitos->Envios->save($envio);
             }            
         }
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
+    }
+
+    private function guardarPago($idReserva){
+        $pagosReserva = $this->Reservas->PagosReserva->newEntity();
+
+        $miPago = array();
+        $miPago['reserva_id'] = $idReserva;
+        $miPago['tarjeta_id'] = $this->request->getData()['tarjeta_id'];
+        $miPago['medio_pago_id'] = $this->request->getData()['medio_pago_id'];
+        $miPago['pagado'] = 1;
+        $miPago['user_id'] = $this->viewVars['current_user']['id'];
+
+        $pagosReserva = $this->Reservas->PagosReserva->patchEntity($pagosReserva, $miPago);
+
+        if ($this->Reservas->PagosReserva->save($pagosReserva)) {
+            $factura = $this->Reservas->Facturas->find('all')->where(['Facturas.reserva_id ='=>$idReserva]);
+            $factura = $factura->first();
+            $this->crearRecibo($factura->id, $this->request->getData()['monto']);
+            $this->actualizarEstados($factura->id, $factura->monto, $idReserva);                
+            
+            $this->Flash->success(__('Se realizó el pago con éxito.'));
+        }
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
+    }
+
+    public function crearRecibo($idFactura, $monto){
+        $factura = $this->Reservas->Facturas->get($idFactura);
+
+        $connection= ConnectionManager::get("default");
+        $connection->insert('recibos', [
+        'factura_id' => $idFactura,
+        'monto' => $monto*$factura->monto,
+        'active' => 1,
+        'modified' => new \DateTime('now'),
+        'created' => new \DateTime('now')], 
+        ['created' => 'datetime' , 'modified' => 'datetime']);
+
+        $connection->update('facturas', [
+            'porcentajePago' => $factura->porcentajePago + $monto,
+            'pagado' => 0,
+            'modified' => new \DateTime('now')],
+            [ 'id' => $idFactura ],
+            ['modified' => 'datetime']);
+    }
+
+    public function actualizarEstados($idFactura, $facturaMonto, $idReserva){
+        $connection= ConnectionManager::get("default");
+        $factura = $this->Reservas->Facturas->get($idFactura);
+        $estadoReserva;
+        if ($factura->porcentajePago == 1) {
+            $connection->update('facturas', [
+            'pagado' => 1,
+            'modified' => new \DateTime('now')],
+            [ 'id' => $idFactura ],
+            ['modified' => 'datetime']);
+            $estadoReserva = 3;
+        } else {
+            $estadoReserva = 2;
+        }
+
+        $connection->update('reservas', [
+        'estado_reserva_id' => $estadoReserva,
+        'modified' => new \DateTime('now')],
+        [ 'id' => $idReserva ],
+        ['modified' => 'datetime']);
     }
 
     /**
@@ -362,31 +440,8 @@ class ReservasController extends AppController
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 
-    /*public function actualizarEnvio()
-    {
-        if($this->request->is('ajax')) {
-            $session = $this->request->session();
-            $allProducts = $session->read('cart');
-            $cantidad = 0;
-            if (null!=$allProducts) {
-                foreach ($allProducts as $id => $count) {
-                    $cantidad = $cantidad+$count;
-                }
-            }
-            $idDomicilio = $this->request->query['id'];
-            $domicilio = $this->Reservas->Users->Domicilios->get($idDomicilio);
-            $localidad = $this->Reservas->Users->Domicilios->Localidades->get($domicilio->localidad_id);
-            echo $localidad->precio."|".$cantidad."|".$localidad->duracion_viaje;
-        }
-        $this->autoRender = false; // No renderiza mediate el fichero .ctp
-    }*/
-
     public function calcularHoras($fIni, $hIni, $fFin, $hFin){        
         $session = $this->request->session();
-        $fIni = $this->request->query['fIni'];
-        $hIni = $this->request->query['hIni'];
-        $fFin = $this->request->query['fFin'];
-        $hFin = $this->request->query['hFin'];
         $fechaInicio = new Time($fIni." ".$hIni.":00:00"); 
         $fechaFin = new Time($fFin." ".$hFin.":00:00");
         $diferencia = $fechaInicio->diff($fechaFin);
@@ -402,30 +457,7 @@ class ReservasController extends AppController
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 
-    /*public function calcularHoras(){        
-        $session = $this->request->session();
-        $fIni = $this->request->query['fIni'];
-        $hIni = $this->request->query['hIni'];
-        $fFin = $this->request->query['fFin'];
-        $hFin = $this->request->query['hFin'];
-        $fechaInicio = new Time($fIni." ".$hIni.":00:00"); 
-        $fechaFin = new Time($fFin." ".$hFin.":00:00");
-        $diferencia = $fechaInicio->diff($fechaFin);
-        $dias = $diferencia->format("%d");       
-        $totalHoras;
-        if($hFin < $hIni) {
-            $totalHoras = (23-$hIni)+($hFin-9)+($dias*14);
-        } else {
-            $horas = $diferencia->format("%h");                       
-            $totalHoras = $dias*14+$horas;            
-        }
-        echo $totalHoras;
-        $this->autoRender = false; // No renderiza mediate el fichero .ctp
-    }*/
-
     public function actualizarTabla(){
-        //$horas = $this->request->query['horas'];
-        //$botones = $this->request->query['botones'];
         $fIni = $this->request->query['fIni'];
         $hIni = $this->request->query['hIni'];
         $fFin = $this->request->query['fFin'];
@@ -477,9 +509,6 @@ class ReservasController extends AppController
                         $totalReserva = $totalReserva + $totalProducto;
                     $tabla = $tabla."$".$totalProducto."</td>
                         <td>";
-                    /*if ($botones == 'true') {
-                        $tabla = $tabla."<input type='button' value='X' class='btn btn-default' onclick='bajaCarro(".$producto->id.")'/>";
-                    }*/
                     $tabla = $tabla."</td>
                     </tr>";
                     $contador = $contador+1;
@@ -491,9 +520,7 @@ class ReservasController extends AppController
         $idDom = $this->request->query['idDom'];
         $datosEnvio = $this->actualizarEnvio($idDom);
         echo $tabla."|".$totalReserva."|".$datosEnvio;
-        
-        //echo sizeof($allProducts);
-        //echo $tabla."|".$totalReserva;
+
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 
@@ -511,8 +538,7 @@ class ReservasController extends AppController
                 $cantidad[]=$count;
             }
         }
-        /*$contador = 0;
-        $totalReserva = 0;*/
+
         $tabla = "";
 
         if (sizeof($allProducts) == 0) {
@@ -540,14 +566,9 @@ class ReservasController extends AppController
                         </td>";
                 }
             $tabla = $tabla."</tr>";
-            //$contador = $contador+1;
             $tabla = $tabla."</tbody>
             </table></div>";
         }
-
-        /*$idDom = $this->request->query['idDom'];
-        $datosEnvio = $this->actualizarEnvio($idDom);
-        echo $tabla."|".$totalReserva."|".$datosEnvio;*/
 
         echo $tabla;
         $this->autoRender = false; // No renderiza mediate el fichero .ctp

@@ -1,7 +1,6 @@
 <script type="text/javascript">
 
 function mostrarPrecioEnvio(id) {
-    //verDiv('productos');
     $.get('/web/reservas/actualizarEnvio?id='+id, function(d) {        
         if (d) {
             var texto = d.split('|');
@@ -12,12 +11,10 @@ function mostrarPrecioEnvio(id) {
                 cantidadEnvios = Math.floor((texto[1]/4)+1)
             }
             $("#envio").html("$"+(texto[0]*cantidadEnvios));
-            $("#precioEnvio").val(texto[0]*cantidadEnvios);
-            $("#tiempoEnvio").val(texto[2]);
+            $("#tiempoEnvio").val(texto[4]);
         }
         else {
             $("#envio").html("");
-            $("#precioEnvio").val("");
             $("#tiempoEnvio").val("");
         }          
     });
@@ -56,55 +53,8 @@ function validarFecha() {
         }
     }
 
-    /*var inicioEvento = $("#fecha_inicio").val() + " " + $("#hora_inicio").val();
-    var finEvento = $("#fecha_fin").val() + " " + $("#hora_fin").val();
-    $.get('/web/reservas/calcularHoras?fIni='+$("#fecha_inicio").val()+'&hIni='+$("#hora_inicio").val()+'&fFin='+$("#fecha_fin").val()+'&hFin='+$("#hora_fin").val(), function(d) {
-        $("#diferenciaHoras").val(d);
-    });*/
     return true;
-    //verDiv('lugar');
 }
-
-/*function continuarFecha() {
-    var fechaInicio = $("#fecha_inicio").val();
-    var fechaFin = $("#fecha_fin").val();
-    var horaInicio = parseInt($("#hora_inicio").val());
-    var horaFin = parseInt($("#hora_fin").val());
-    var inicioMin = document.getElementById("fecha_inicio").min;
-    var inicioMax = document.getElementById("fecha_inicio").max;
-    var finMin = document.getElementById("fecha_fin").min;
-    var finMax = document.getElementById("fecha_fin").max;
-
-    //Valido que las fechas estén en el rango posible de fechas.
-    if (fechaInicio < inicioMin || fechaInicio > inicioMax) {
-        alert("La fecha de inicio es incorrecta. Por favor intente nuevamente");
-        return;
-    }
-
-    if (fechaFin < finMin || fechaFin > finMax) {
-        alert("La fecha de finalización es incorrecta. Por favor intente nuevamente");
-        return;
-    }
-
-    if (fechaInicio == fechaFin) {
-        if (horaInicio >= horaFin) {
-            alert("La finalización del evento debe ser posterior a su inicio.");
-            return;
-        }
-    } else {
-        if (fechaInicio > fechaFin) {
-            alert("La finalización del evento debe ser posterior a su inicio.");
-            return;
-        }
-    }
-
-    var inicioEvento = $("#fecha_inicio").val() + " " + $("#hora_inicio").val();
-    var finEvento = $("#fecha_fin").val() + " " + $("#hora_fin").val();
-    $.get('/web/reservas/calcularHoras?fIni='+$("#fecha_inicio").val()+'&hIni='+$("#hora_inicio").val()+'&fFin='+$("#fecha_fin").val()+'&hFin='+$("#hora_fin").val(), function(d) {
-        $("#diferenciaHoras").val(d);
-    });
-    verDiv('lugar');
-}*/
 
 function validarDomicilio() {
     var id;
@@ -147,16 +97,6 @@ function validarPago(){
     return true;
 }
 
-/*function continuarDomicilio() {
-    var id;
-    id = $("#domicilio").val();
-    if (id != 0) {
-        mostrarPrecioEnvio(id);
-    } else {
-        alert("Debe seleccionar una dirección para continuar.");
-    }    
-}*/
-
 function btnContinuar() {    
     verDiv('detalle');
     actualizarTabla();
@@ -171,37 +111,6 @@ function btnContinuar() {
     $("#eventoFin").html(eventoF);
     $("#eventoDireccion").html(domicilio);
 }
-
-/*function continuarProductos() {    
-    if ($("#calculoTotal").val() == 0) {
-        alert("Debe cargar el carrito para continuar.")
-        return;
-    }
-    verDiv('totales');
-    var fechaInicio = $("#fecha_inicio").val();
-    fechaInicio = fechaInicio.split("-");
-    var eventoI = fechaInicio[2] + "/" + fechaInicio[1] + "/" + fechaInicio[0] + " " + $("#hora_inicio").val() + ":00 hs.";
-    var fechaFin = $("#fecha_fin").val();
-    fechaFin = fechaFin.split("-");
-    var eventoF = fechaFin[2] + "/" + fechaFin[1] + "/" + fechaFin[0] + " " + $("#hora_fin").val() + ":00 hs.";
-    var domicilio = $("#domicilio option:selected").html();
-    var total = parseInt($("#calculoTotal").val());
-    var envio = parseInt($("#precioEnvio").val());
-    var totalReserva = total + envio;
-    if (totalReserva >= 2000) {        
-        totalReserva = totalReserva*.85;
-        $("#descuento").show();
-    }
-    else {
-        $("#descuento").hide();  
-    }
-    
-    $("#total").html("$"+parseFloat(totalReserva).toFixed(2));
-    $("#totalReserva").val(totalReserva);
-    $("#eventoInicio").html(eventoI);
-    $("#eventoFin").html(eventoF);
-    $("#eventoDireccion").html(domicilio);
-}*/
 
 function verDiv(ver) {
     if (ver== 'evento') {
@@ -230,42 +139,7 @@ function verDiv(ver) {
     }
 }
 
-/*function verDiv(ver) {
-    if (ver== 'fecha') {
-        $("#"+'fechaEvento').show();
-        $("#"+'lugarEvento').hide();        
-        $("#"+'productosEvento').hide();
-        $("#"+'totales').hide();
-        return;
-    }
-    if (ver== 'lugar') {
-        $("#"+'fechaEvento').hide();
-        $("#"+'lugarEvento').show();        
-        $("#"+'productosEvento').hide();
-        $("#"+'totales').hide();
-        return;
-    }
-    if (ver== 'productos') {
-        $("#"+'fechaEvento').hide();
-        $("#"+'lugarEvento').hide();        
-        $("#"+'productosEvento').show();
-        $("#"+'totales').hide();
-        return;
-    }
-    if (ver== 'totales') {
-        $("#"+'fechaEvento').hide();
-        $("#"+'lugarEvento').hide();        
-        $("#"+'productosEvento').hide();
-        $("#"+'totales').show();
-        return;
-    }
-}*/
-
 function actualizarTabla() {
-    /*alert("actualizarTabla");
-    alert(botones);
-    alert(donde);
-    var diferenciaHoras= $("#diferenciaHoras").val();*/
     var fIni = $("#fecha_inicio").val();
     var hIni = $("#hora_inicio").val();
     var fFin = $("#fecha_fin").val();
@@ -275,20 +149,12 @@ function actualizarTabla() {
     $.get('/web/reservas/actualizarTabla?fIni='+fIni+'&hIni='+hIni+'&fFin='+fFin+'&hFin='+hFin+'&idDom='+idDomicilio, function(d) {
         //alert(d);
         var texto = d.split('|');
-        /*if (texto[1] == 0) {
-            $("#tablaDetalleProductos").html('<div class="centrar">No posee productos en el carrito.</div>');
-        } else {
-            $("#tablaDetalleProductos").html(texto[0]);
-        }*/
-        //return texto[1];
-        //$("#calculoTotal").val(texto[1]);
         $("#tablaDetalleProductos").html(texto[0]);
 
         var total = parseInt(texto[1]);
         var precioEnvio = parseInt(texto[2]);
         //alert(envio);
 
-        //var texto = d.split('|');
         var cantidadEnvios = 0;
         if (texto[3]%4 == 0) {
             cantidadEnvios = texto[3]/4;
@@ -297,8 +163,7 @@ function actualizarTabla() {
         }
         var totalEnvio = texto[2]*cantidadEnvios;
         $("#envio").html("$"+totalEnvio);
-        //$("#precioEnvio").val(texto[0]*cantidadEnvios);
-        //$("#tiempoEnvio").val(texto[2]);
+        $("#tiempoEnvio").val(texto[4]);
 
         var totalReserva = total + totalEnvio;
         if (totalReserva >= 2000) {        
@@ -317,26 +182,14 @@ function actualizarTabla() {
 function bajaCarro(idCarrito) {
     /*var idDomicilio = $("#domicilio").val();
     mostrarPrecioEnvio(idDomicilio);*/
-    //alert("BajaCarro");
-    //alert(idCarrito);
     $.get('/web/reservas/bajaCarro?idCarrito='+idCarrito, function(d) {
         $('#cantProductos').val(d);
         actualizarTablaProductos();
-        //actualizarTabla(true,'tablaProductos');
     });
 }
 
-/*function bajaCarro(idCarrito) {
-    var idDomicilio = $("#domicilio").val();
-    mostrarPrecioEnvio(idDomicilio);
-    $.get('/web/reservas/bajaCarro?idCarrito='+idCarrito, function(d) {
-        actualizarTabla(true,'tablaProductos');
-    });
-}*/
-
 function actualizarTablaProductos() {
     $.get('/web/reservas/actualizarTablaProductos', function(d) {
-        //alert(d);
         $("#productosEvento").html(d);
     });
 }
@@ -351,9 +204,11 @@ function actualizarFechaFin(){
 function cargarMonto(){
     var totalReserva = $("#totalReserva").val();
     //alert(totalReserva);
-    $('#monto').append(new Option('%50 - $'+totalReserva*.5, '<?= number_format(0.5, 2, ".", "") ?>', true, true));
-    $('#monto').append(new Option('%75 - $'+totalReserva*.75, '<?= number_format(0.75, 2, ".", "") ?>', true, true));
-    $('#monto').append(new Option('%100 - $'+totalReserva, '<?= number_format(1, 2, ".", "") ?>', true, true));
+    $('#monto').empty();
+    $('#monto').append(new Option('Seleccione % a pagar', '0', true, true));
+    $('#monto').append(new Option('%50 - $'+(totalReserva*.5).toFixed(2), '0.50', true, true));
+    $('#monto').append(new Option('%75 - $'+(totalReserva*.75).toFixed(2), '0.75', true, true));
+    $('#monto').append(new Option('%100 - $'+parseFloat(totalReserva).toFixed(2), '1', true, true));
     $('#monto').val("0");
 }
 
@@ -372,10 +227,10 @@ function cargarMonto(){
             <?= $this->Form->create($reserva) ?>            
             <fieldset>
                 <input type='hidden' name='cantProductos' id='cantProductos' value="<?= sizeof($productos) ?>">
+                <input type="hidden" id="tiempoEnvio" name="tiempoEnvio">
+                <input type="hidden" id="diferenciaHoras" name="diferenciaHoras">
                 <legend>Productos seleccionados</legend>
                 <div class="row" id="productosEvento">
-                <!--<div class="row" id="productosEvento" style="display: none">-->
-                    <!--<input type="hidden" id="diferenciaHoras" name="diferenciaHoras">-->
                     <div class="col-lg-10 col-lg-offset-1">                                                
                         <?php echo $this->Form->input( 
                            'user_id', 
@@ -415,11 +270,9 @@ function cargarMonto(){
                         <?php endif ?>
                         </div> <!--Acá se va a cargar dinámicamente la tabla-->
                     </div>
-                    <!--<div class="pull-right"><?= $this->Form->button('Volver', ['id' => 'volver', 'onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['id' => 'continuar', 'onclick'=>"continuarProductos(); actualizarTabla(false, 'tablaDetalleProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>-->
                 </div>
 
                 <legend>Datos del evento</legend>
-                <!--<legend>Fecha del evento</legend>-->
                 <div class="row" id="fechaEvento">
                     <div class="col-lg-10 col-lg-offset-1">
                         <div class="col-lg-6">
@@ -468,12 +321,8 @@ function cargarMonto(){
                         ?>
                         </div>
                     </div>
-
-                    <!--<div class="pull-right"><br><?= $this->Form->button('Continuar', ['onclick'=>"continuarFecha()", 'class' => 'btn btn-default', 'type'=>'button']) ?><br> </div>-->
                 </div>
-                <!--<legend>Lugar del evento</legend>-->
                 <div class="row" id="lugarEvento">
-                <!--<div class="row" id="lugarEvento" style="display: none">-->
                     <div class="col-lg-10 col-lg-offset-1">
                     <?php
                         $arrayDomicilios = array();
@@ -495,8 +344,7 @@ function cargarMonto(){
                     ?>
 
                     <?= $this->Html->link('Cargar Dirección', ['controller'=>'domicilios', 'action' => 'add'], ['class' => 'btn btn-default']) ?>
-                    <div class="pull-right"><!--<?= $this->Form->button('Volver', ['onclick'=>"verDiv('fecha')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['onclick'=>"continuarDomicilio(); actualizarTabla(true, 'tablaProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?>--> 
-                        <?= $this->Form->button('Continuar', ['onclick'=>"javascript: if (validarProductos() && validarFecha() && validarDomicilio()) btnContinuar();" , 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>
+                    <div class="pull-right"><?= $this->Form->button('Continuar', ['onclick'=>"javascript: if (validarProductos() && validarFecha() && validarDomicilio()) btnContinuar();" , 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>
                     </div>
                 </div>
 
@@ -527,13 +375,8 @@ function cargarMonto(){
                         <div class="col-lg-10 col-lg-offset-1">
                             <div class="row">
                                 <div class="col-lg-4">
-                                    
                                     <?php 
-                                        echo $this->Form->control('monto', ['options' => array('0' => 'Seleccione % a pagar')]);
-                                        /*echo $this->Form->control('monto', ['options' => array(
-                                        number_format(0.5, 2, '.', '') =>'%50 - $'.$reserva->total*.5,
-                                        number_format(0.75, 2, '.', '') =>'%75 - $'.$reserva->total*.75,
-                                        number_format(1, 2, '.', '')=>'%100 - $'.$reserva->total), 'empty' => 'Seleccione % a pagar']);*/
+                                        echo $this->Form->control('monto', ['options' => array()]);
                                      ?>
                                 </div>
                                 <div class="col-lg-4">
@@ -590,139 +433,6 @@ function cargarMonto(){
         </div>
     </div>
 </section>
-
-
-
-<!--<section class="duplicatable-content bkg">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-            <?= $this->Form->create($reserva) ?>            
-            <fieldset>
-                <legend>Fecha del evento</legend>
-                <div class="row" id="fechaEvento">
-                    <div class="col-lg-6">
-                    <?php
-                        echo $this->Form->label('Inicio del evento');
-                    ?>
-                    <br>
-                    <?php
-                        $arrayHorarios = [
-                            '9'=> '09:00',
-                            '10'=> '10:00',
-                            '11'=> '11:00',
-                            '12'=> '12:00',
-                            '13'=> '13:00',
-                            '14'=> '14:00',
-                            '15'=> '15:00',
-                            '16'=> '16:00',
-                            '17'=> '17:00',
-                            '18'=> '18:00',
-                            '19'=> '19:00',
-                            '20'=> '20:00',
-                            '21'=> '21:00',
-                            '22'=> '22:00',
-                        ];
-
-                        echo $this->Form->label('Fecha');
-                        $fecha = date('Y-m-d');
-                        $minfecha = strtotime ('+3 day', strtotime ($fecha));
-                        $minfecha = date ('Y-m-d', $minfecha);
-                        $maxfecha = strtotime ('+3 month', strtotime ($fecha));
-                        $maxfecha = date ('Y-m-d', $maxfecha);
-
-                        echo $this->Form->text('fecha_inicio', array('id'=>'fecha_inicio', 'type' => 'date', 'min'=> $minfecha, 'max'=> $maxfecha, 'value'=> $minfecha, 'onchange'=>'actualizarFechaFin()'));
-                        echo $this->Form->label('Horario');
-                        echo $this->Form->select('hora_inicio', $arrayHorarios, ['id' => 'hora_inicio']);
-                    ?>
-                    </div>
-                    <div class="col-lg-6">
-                    <?php echo $this->Form->label('Fin del evento'); ?>
-                    <br>
-                    <?php
-                        echo $this->Form->label('Fecha');
-                        echo $this->Form->text('fecha_fin', array('id'=>'fecha_fin', 'type' => 'date', 'min'=> $minfecha, 'max'=> $maxfecha, 'value'=> $minfecha));
-                        echo $this->Form->label('Horario');
-                        echo $this->Form->select('hora_fin', $arrayHorarios, ['id' => 'hora_fin']);
-                    ?>
-                    </div>
-
-                    <div class="pull-right"><br><?= $this->Form->button('Continuar', ['onclick'=>"continuarFecha()", 'class' => 'btn btn-default', 'type'=>'button']) ?><br> </div>
-                </div>
-                <div>
-                    <legend>Lugar del evento</legend>
-                    <div class="row" id="lugarEvento" style="display: none">
-                        <?php
-                            $arrayDomicilios = array();
-                            foreach ($domicilios as $domicilio) {
-                                $localidad;
-                                $arrayDomicilios[0] = "Seleccione dirección...";
-                                foreach ($localidades as $localidade) {
-                                    if ($localidade->id == $domicilio->localidad_id) {
-                                        $arrayDomicilios[$domicilio->id] = $domicilio->presentacion." ".$localidade->descripcion;
-                                    }
-                                }
-                            }
-
-                            if (empty($arrayDomicilios)) {
-                                echo $this->Form->control('domicilio', ['options' => [0 => 'Debe cargar un domicilio']]);
-                            } else {
-                                echo $this->Form->control('domicilio', ['options' => $arrayDomicilios]);
-                            }
-                        ?>
-
-                        <?= $this->Html->link('Cargar Dirección', ['controller'=>'domicilios', 'action' => 'add'], ['class' => 'btn btn-default']) ?>
-                        <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('fecha')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['onclick'=>"continuarDomicilio(); actualizarTabla(true, 'tablaProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>
-                    </div>
-                    <br>    
-                </div>               
-                             
-                <div>
-                    <legend>Productos seleccionados</legend>
-                    <div class="row" id="productosEvento" style="display: none">                        
-                        <input type="hidden" id="diferenciaHoras" name="diferenciaHoras">                                                
-                        <?php echo $this->Form->input( 
-                           'user_id', 
-                           array ( 
-                              'type'=>'hidden', 
-                              'value'=> $session->read('Auth.User.id') 
-                           ) 
-                        ); ?>
-                        <div id="tablaProductos"></div>--> <!--Acá se va a cargar dinámicamente la tabla-->
-
-                        <!--<div class="pull-right"><?= $this->Form->button('Volver', ['id' => 'volver', 'onclick'=>"verDiv('lugar')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Continuar', ['id' => 'continuar', 'onclick'=>"continuarProductos(); actualizarTabla(false, 'tablaDetalleProductos')", 'class' => 'btn btn-default', 'type'=>'button']) ?> </div>            
-                        </div>
-                    </div>
-                    <div>
-                        <legend>Detalle Reserva</legend>
-                        <div class="row" id="totales" style="display: none">
-                            <input type="hidden" id="precioEnvio" name="precioEnvio">
-                            <input type="hidden" id="tiempoEnvio" name="tiempoEnvio">
-                            <input type="hidden" id="totalReserva" name="totalReserva">
-                            <input type="hidden" id="calculoTotal" name="calculoTotal">
-                            <h4><strong>Inicio del evento: </strong></h4><h6 id="eventoInicio" class="tx_gris"></h6><br>
-                            <h4><strong>Finalización del evento: </strong></h4><h6 id="eventoFin" class="tx_gris"></h6><br>
-                            <h4><strong>Dirección: </strong></h4><h6 id="eventoDireccion" class="tx_gris"></h6><br>
-                            <div id="tablaDetalleProductos"></div>--> <!--Acá se va a cargar dinámicamente la tabla-->
-
-                            <!--<p>*El costo de envío puede variar de acuerdo a la cantidad de productos solicitados.</p>
-                            <h4><strong>Costo de envío:</strong></h4><h6 id='envio' name='envio' class="tx_gris"></h6>
-                            <div id="descuento" style="display: none"><h4><strong>Descuento:</strong></h4><h6 class="tx_gris">%15</h6><br></div>
-                            <div class="row">
-                                <div class="col-lg-2 col-lg-offset-5 well rojo centrar standard-radius">
-                                    <h4 class="text-white"><strong>Total a pagar:</strong></h4>
-                                    <h4 id="total" name="total" class="text-white"></h4>
-                                </div>
-                            </div>
-                            <div class="pull-right"><?= $this->Form->button('Volver', ['onclick'=>"verDiv('productos')", 'class' => 'btn btn-default', 'type'=>'button']) ?><?= $this->Form->button('Reservar') ?> </div>
-                        </div>
-                    </div>
-                </div>           
-            </fieldset>            
-            <br>            
-            <?= $this->Form->end() ?>
-        </div>
-    </div>
-</section>-->
 
 <!--<?php
 /**
