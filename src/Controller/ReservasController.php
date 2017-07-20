@@ -20,7 +20,7 @@ class ReservasController extends AppController
 	{
 		if(isset($user['rol_id']) &&  $user['rol_id'] == CLIENTE)
 		{
-			if(in_array($this->request->action, ['add', 'index', 'view', 'guardarProductos', 'guardarFactura', 'guardarFacturaProductos', 'guardarEnvio', 'actualizarEnvio', 'calcularHoras', 'actualizarTabla', 'bajaCarro', 'contarProductos', 'ValidarReserva', 'cancelar', 'isCancelable', 'mailCancelacion']))
+			if(in_array($this->request->action, ['add', 'index', 'view', 'guardarProductos', 'guardarFactura', 'guardarFacturaProductos', 'guardarEnvio', 'actualizarEnvio', 'calcularHoras', 'actualizarTabla', 'bajaCarro', 'contarProductos', 'ValidarReserva', 'cancelar', 'isCancelable', 'mailCancelacion', 'actualizarTablaProductos']))
 			{
 				return true;
 			}            
@@ -117,15 +117,16 @@ class ReservasController extends AppController
     public function add()
     {      
         $session = $this->request->session();
-        $allProducts = $session->read('cart');
 
         $productos = array();
+        $cantidad = array();
         $session = $this->request->session();
         $allProducts = $session->read('cart');
         if (null!=$allProducts) {
             foreach ($allProducts as $id => $count) {
                 $producto = $this->Reservas->Productos->get($id);
-                $productos[]=$producto;                
+                $productos[]=$producto;
+                $cantidad[]=$count;
             }
         }
 
@@ -211,7 +212,9 @@ class ReservasController extends AppController
         $estadosReservas = $this->Reservas->EstadosReservas->find('list', ['limit' => 200]);
         $domicilios = $this->Reservas->Users->Domicilios->find()->where(['user_id =' => $this->viewVars['current_user']['id']]);
         $localidades = $this->Reservas->Users->Domicilios->Localidades->find();
-        $this->set(compact('reserva', 'users', 'estadosReservas', 'productos', 'domicilios','localidades'));
+        $mediosPagos = $this->Reservas->PagosReserva->MediosPagos->find('list', ['limit' => 200])->where(['active =' => 1]);
+        $tarjetas = $this->Reservas->Users->TarjetasCreditoUser->find('list', ['limit' => 200])->where(['TarjetasCreditoUser.user_id =' => $this->viewVars['current_user']['id'], 'active ='=>1]);
+        $this->set(compact('reserva', 'users', 'estadosReservas', 'productos', 'domicilios','localidades', 'cantidad', 'mediosPagos', 'tarjetas'));
         $this->set('_serialize', ['reserva']);
     }
 
@@ -340,7 +343,26 @@ class ReservasController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function actualizarEnvio()
+    public function actualizarEnvio($idDom = null)
+    {
+        if($this->request->is('ajax')) {
+            $session = $this->request->session();
+            $allProducts = $session->read('cart');
+            $cantidad = 0;
+            if (null!=$allProducts) {
+                foreach ($allProducts as $id => $count) {
+                    $cantidad = $cantidad+$count;
+                }
+            }
+            //$idDomicilio = $this->request->query['id'];
+            $domicilio = $this->Reservas->Users->Domicilios->get($idDom);
+            $localidad = $this->Reservas->Users->Domicilios->Localidades->get($domicilio->localidad_id);
+            return $localidad->precio."|".$cantidad."|".$localidad->duracion_viaje;
+        }
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
+    }
+
+    /*public function actualizarEnvio()
     {
         if($this->request->is('ajax')) {
             $session = $this->request->session();
@@ -357,9 +379,30 @@ class ReservasController extends AppController
             echo $localidad->precio."|".$cantidad."|".$localidad->duracion_viaje;
         }
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
+    }*/
+
+    public function calcularHoras($fIni, $hIni, $fFin, $hFin){        
+        $session = $this->request->session();
+        $fIni = $this->request->query['fIni'];
+        $hIni = $this->request->query['hIni'];
+        $fFin = $this->request->query['fFin'];
+        $hFin = $this->request->query['hFin'];
+        $fechaInicio = new Time($fIni." ".$hIni.":00:00"); 
+        $fechaFin = new Time($fFin." ".$hFin.":00:00");
+        $diferencia = $fechaInicio->diff($fechaFin);
+        $dias = $diferencia->format("%d");       
+        $totalHoras;
+        if($hFin < $hIni) {
+            $totalHoras = (23-$hIni)+($hFin-9)+($dias*14);
+        } else {
+            $horas = $diferencia->format("%h");                       
+            $totalHoras = $dias*14+$horas;            
+        }
+        return $totalHoras;
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 
-    public function calcularHoras(){        
+    /*public function calcularHoras(){        
         $session = $this->request->session();
         $fIni = $this->request->query['fIni'];
         $hIni = $this->request->query['hIni'];
@@ -378,19 +421,23 @@ class ReservasController extends AppController
         }
         echo $totalHoras;
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
-    }
+    }*/
 
     public function actualizarTabla(){
-        $horas = $this->request->query['horas'];
-        $botones = $this->request->query['botones'];
+        //$horas = $this->request->query['horas'];
+        //$botones = $this->request->query['botones'];
+        $fIni = $this->request->query['fIni'];
+        $hIni = $this->request->query['hIni'];
+        $fFin = $this->request->query['fFin'];
+        $hFin = $this->request->query['hFin'];
+        $horas = $this->calcularHoras($fIni, $hIni, $fFin, $hFin);        
 
         $session = $this->request->session();
         $allProducts = $session->read('cart');
 
         $productos = array();
         $cantidad = array();
-        $session = $this->request->session();
-        $allProducts = $session->read('cart');
+
         if (null!=$allProducts) {
             foreach ($allProducts as $id => $count) {
                 $producto = $this->Reservas->Productos->get($id);
@@ -402,7 +449,10 @@ class ReservasController extends AppController
         $totalReserva = 0;
         $tabla = "";
 
-        $tabla = "<table class='table table-striped'>
+        if (sizeof($allProducts) == 0) {
+            $tabla = '<div class="centrar">No posee productos en el carrito.</div><br>';
+        } else {
+            $tabla = "<table class='table table-striped'>
             <thead>
                 <tr>
                     <th>Código</th>
@@ -427,16 +477,79 @@ class ReservasController extends AppController
                         $totalReserva = $totalReserva + $totalProducto;
                     $tabla = $tabla."$".$totalProducto."</td>
                         <td>";
-                    if ($botones == 'true') {
+                    /*if ($botones == 'true') {
                         $tabla = $tabla."<input type='button' value='X' class='btn btn-default' onclick='bajaCarro(".$producto->id.")'/>";
-                    }
+                    }*/
                     $tabla = $tabla."</td>
                     </tr>";
                     $contador = $contador+1;
                 }
             $tabla = $tabla."</tbody>
         </table>";
-        echo $tabla."|".$totalReserva;
+        }        
+
+        $idDom = $this->request->query['idDom'];
+        $datosEnvio = $this->actualizarEnvio($idDom);
+        echo $tabla."|".$totalReserva."|".$datosEnvio;
+        
+        //echo sizeof($allProducts);
+        //echo $tabla."|".$totalReserva;
+        $this->autoRender = false; // No renderiza mediate el fichero .ctp
+    }
+
+    public function actualizarTablaProductos(){
+        $session = $this->request->session();
+        $allProducts = $session->read('cart');
+
+        $productos = array();
+        $cantidad = array();
+
+        if (null!=$allProducts) {
+            foreach ($allProducts as $id => $count) {
+                $producto = $this->Reservas->Productos->get($id);
+                $productos[]=$producto;
+                $cantidad[]=$count;
+            }
+        }
+        /*$contador = 0;
+        $totalReserva = 0;*/
+        $tabla = "";
+
+        if (sizeof($allProducts) == 0) {
+            $tabla = '<div class="centrar">No posee productos en el carrito.</div><br>';
+        } else {
+            $tabla = "<div class='col-lg-10 col-lg-offset-1'><table class='table table-striped'>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Cantidad</th>
+                        <th>Descripción</th>
+                        <th>Precio p/hora</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>";
+                foreach ($productos as $producto){
+                    $tabla = $tabla."<tr>
+                        <td>".$producto->id."</td>
+                        <td>".$cantidad[$contador]."</td>
+                        <td>".$producto->descripcion."</td>
+                        <td>$".$producto->precio."</td>
+                        <td>
+                        <input type='button' value='X' class='btn btn-default' onclick='bajaCarro(".$producto->id.")'/>
+                        </td>";
+                }
+            $tabla = $tabla."</tr>";
+            //$contador = $contador+1;
+            $tabla = $tabla."</tbody>
+            </table></div>";
+        }
+
+        /*$idDom = $this->request->query['idDom'];
+        $datosEnvio = $this->actualizarEnvio($idDom);
+        echo $tabla."|".$totalReserva."|".$datosEnvio;*/
+
+        echo $tabla;
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 
@@ -471,9 +584,9 @@ class ReservasController extends AppController
         if (null!=$allProducts) {
             foreach ($allProducts as $id => $count) {
                 $cantidad = $cantidad+$count;
-            }
-            echo $cantidad;
+            }            
         }
+        echo $cantidad;
         $this->autoRender = false; // No renderiza mediate el fichero .ctp
     }
 
