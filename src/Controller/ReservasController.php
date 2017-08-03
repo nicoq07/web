@@ -26,7 +26,7 @@ class ReservasController extends AppController
 			}            
 		}
 		elseif (isset($user['rol_id']) && ($user['rol_id'] == EMPLEADO || $user['rol_id'] == ADMINISTRADOR)) {
-			if(in_array($this->request->action, ['index', 'view']))
+			if(in_array($this->request->action, ['index', 'view', 'enviarMail']))
             {
                 return true;
             }

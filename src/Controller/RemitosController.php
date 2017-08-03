@@ -59,7 +59,10 @@ class RemitosController extends AppController
             'contain' => ['Facturas', 'Envios']
         ]);
 
-        $this->set('remito', $remito);
+        $productos = $this->Remitos->Facturas->FacturaProductos->find('all')->where(['factura_id ='=>$remito->factura_id]);
+        $this->set(compact('remito', 'productos'));
+
+        //$this->set('remito', $remito);
         $this->set('_serialize', ['remito']);
     }
 
